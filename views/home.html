@@ -1,0 +1,1075 @@
+
+<!doctype html>
+<html>
+	<head>
+		<title>Home</title>
+
+		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,100italic,300italic,400italic|Open+Sans:300italic,400italic,600italic,400,300,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="app.css">
+		<link rel="stylesheet" type="text/css" href="vendor/foundation/css/foundation.min.css">
+
+		<link rel="stylesheet" href="animated.css">
+		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js"></script>
+    <script src="vendor/jquery.easing.min.js"></script> 
+    <script src="vendor/jquery.scrollTo.js"></script>
+    <script src="vendor/wow.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="vendor/custom.js"></script>
+
+    <!-- Custom CSS -->
+    <!-- <link href="style.css" rel="stylesheet"> -->
+    <link href="default.css" rel="stylesheet">
+	</head>
+
+	<script type="text/javascript">
+
+  // ********************** These are the arrays of url's to be sent to stupeflex. ******************
+  // Every 30 second interval (6 months) will add exactly one url to each of these arrays.
+  // Note: creating the video will dynmically iterate through each of these.
+  var video_url = [];
+  var video_info = [];
+  var post_1 = [];
+  var post_2 = [];
+  var first_pic = [];
+  var first_pic_info = [];
+  var second_pic = [];
+  var second_pic_info = [];
+  var third_pic = [];
+  var fourth_pic = [];
+
+  // these are our extra variables
+  var extra_photos = [];
+  var extra_videos = [];
+  var extra_posts = [];
+
+  // this is how many elements should be in each array at the end of each 6 motnh loop.
+  var iteration = 0;
+  var photo_api_complete = 0;
+  var video_api_complete = 0;
+  var post_api_complete = 0;
+
+  // ********************************* date variables ************
+  var start_year;
+  var start_month;
+  var start_day;
+  var end_year;
+  var end_month;
+  var end_day;
+
+
+  // *********************** This determines which extra content to fill in, **********************
+  var photo_index = 0;
+  var post_index = 0;
+  var video_index = 0;
+  var which_one = 0;
+  var check_complete = 0;
+
+
+
+
+
+  // *************************************************************************************************
+
+  // Getting the current day, month, and year.
+  var current_date = new Date();
+  var current_day = current_date.getDate();
+  var current_month = current_date.getMonth() + 1; // b/c its 0 indexed.
+  var current_year = current_date.getFullYear();
+
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      var access_token = response.authResponse.accessToken;
+      console.log("Connected: " + access_token);
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      console.log('Not authorized');
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      console.log('Please log ' + 'into Facebook.');
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '1517847781810201',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+
+  function upload_to_facebook(vid_url) {
+    FB.api(
+      "/me/feed",
+      "POST",
+      {
+        "message": vid_url
+      },
+    function (response) {
+      if (response && !response.error) {
+        alert('Post successful!');
+      }
+    }
+  );
+
+  }
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome! Fetching your information.... ');
+
+    // ********************** Clearing the data before **********************
+    // video_url = [];
+    // video_info = [];
+    // post_1 = [];
+    // post_2 = [];
+    // first_pic = [];
+    // first_pic_info = [];
+    // second_pic = [];
+    // second_pic_info = [];
+    // third_pic = [];
+    // fourth_pic = [];
+    // extra_photos = [];
+    video_url.length = 0;
+    video_info.length = 0;
+    post_1.length = 0;
+    post_2.length = 0;
+    first_pic.length = 0;
+    first_pic_info.length = 0;
+    second_pic.length = 0;
+    second_pic_info.length = 0;
+    third_pic.length = 0;
+    fourth_pic.length = 0;
+    extra_photos.length = 0;
+    iteration = 0;
+
+    photo_index = 0;
+    post_index = 0;
+    video_index = 0;
+    which_one = 0;
+
+    // ****************** finding out our starting date ***********************
+
+    // using a test value of 1:30 minutes, in other words, two years of FB data.
+    how_long_ago = 1.5; // years.
+
+    // since
+    start_year = current_year;
+    start_month = current_month;
+    start_day = current_day;
+
+    // if its a whole number, just adjust the year.
+    if (how_long_ago % 1 == 0) {
+      start_year -= how_long_ago;
+    }
+    // otherwise, subtract the year, then adjust the months.
+    else {
+      start_year -= (how_long_ago - 0.5);
+
+      // if subtracting 6 months takes you into the previous year.
+      if (start_month - 6 < 1) {
+        --start_year;
+      }
+      start_month = (start_month + 6) % 12;
+    }
+
+    // until
+    end_year = start_year;
+    end_month = start_month + 6;
+    end_day = start_day;
+
+    if (end_month > 12) {
+      end_month = end_month % 12;
+      ++end_year;
+    }
+    
+    // var i = 0;
+
+    // starting the photo loop.
+    // while (!(start_year == current_year && start_month == current_month)) {
+
+      // if (iteration == 0 || checkLength()) {
+
+        console.log("we are on iteration: " + iteration);
+
+        // resetting the extra variables for this 6 month period.
+        extra_photos = [];
+        extra_videos = [];
+        extra_posts = [];
+        photo_index = 0;
+        post_index = 0;
+        video_index = 0;
+        api_complete = 0;
+
+        photo_api_complete = 0;
+        video_api_complete = 0;
+        post_api_complete = 0;
+
+        
+        function photo_API_request(callback, callback_2, callback_3, callback_4) {
+
+          var FB_photo_request = '/me/photos?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
+
+          // making the api call - once for all photos
+          FB.api(FB_photo_request, function(response) {
+
+            console.log("photo called");
+
+            var xml_photo;
+            var xml_photo_info;
+
+            // sorting the photos by the most likes.
+            response.data.sort(function(a, b) {
+
+              // if its a tie, it doesn't matter which is first.
+              if (typeof a.likes == "undefined")
+                return 1; // so b is ranked higher
+              else if (typeof b.likes == "undefined")
+                return -1; // so a is ranked higher
+
+              return b.likes.data.length - a.likes.data.length;
+            });
+
+            // if we dont have enough photos
+            if (response.data.length < 4) {
+
+              // pushing what we do have onto the array.
+              for (var i = 0; i < response.data.length; i++) {
+
+                xml_photo = "<image filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "'><track type='caption'>";
+
+                // if its the first pic.
+                if (i == 0) {
+                  first_pic.push(xml_photo);
+
+                  if (typeof response.data[i].name != "undefined") {
+                    xml_photo_info =  "<text>" + response.data[i].name.split('&').join('&amp;') + "</text></track></image>";
+
+                    first_pic_info.push(xml_photo_info);
+                  }
+                  else
+                    first_pic_info.push("</track></image>");
+                }
+                // if its the second pic.
+                else if (i == 1) {
+                  second_pic.push(xml_photo);
+                  if (typeof response.data[i].name != "undefined") {
+                    xml_photo_info =  "<text>" + response.data[i].name.split('&').join('&amp;') + "</text></track></image>";
+
+                    second_pic_info.push(xml_photo_info);
+                  }
+                  else
+                    second_pic_info.push("</track></image>");
+                }
+                // if its the third pic
+                else if (i == 2) {
+                  xml_photo = "<image filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "'></image>";
+
+                  third_pic.push(xml_photo);
+                }
+                photo_api_complete = 1;
+
+              }
+              
+              // first_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
+              // first_pic_info.push("this is rickey bobbyyy");
+              // second_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
+              // second_pic_info.push("swagmoney6969");
+              // third_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
+              // fourth_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
+            }
+
+            else {
+              // updating our arrays.
+              xml_photo = "<image filename='" + encodeURI(response.data[0].source).split('&').join('&amp;') + "'><track type='caption'>";
+              first_pic.push(xml_photo);
+
+              if (typeof response.data[0].name != "undefined") {
+                xml_photo_info =  "<text>" + response.data[0].name.split('&').join('&amp;') + "</text></track></image>";
+                first_pic_info.push(xml_photo_info);
+              }
+              else
+                first_pic_info.push("</track></image>");
+
+              // second photo & its caption.
+              xml_photo = "<image filename='" + encodeURI(response.data[1].source).split('&').join('&amp;') + "'><track type='caption'>";
+              second_pic.push(xml_photo);
+
+              if (typeof response.data[1].name != "undefined") {
+                xml_photo_info =  "<text>" + response.data[1].name.split('&').join('&amp;') + "</text></track></image>";
+                second_pic_info.push(xml_photo_info);
+              }
+              else
+                second_pic_info.push("</track></image>");
+
+              xml_photo = "<image filename='" + encodeURI(response.data[2].source).split('&').join('&amp;') + "'></image>";
+              third_pic.push(xml_photo);
+              xml_photo = "<image filename='" + encodeURI(response.data[3].source).split('&').join('&amp;') + "'></image>";
+              fourth_pic.push(xml_photo);
+
+              // storing our extra variables in an array.
+              var photo_stop = Math.min(response.data.length, 10);
+              for (var i = 4; i < photo_stop; i++) {
+                xml_photo = "<image filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "'></image>";
+                extra_photos.push(xml_photo);
+              }
+
+              photo_api_complete = 1;
+
+            }
+
+            callback(callback_2, callback_3, callback_4);
+
+          });
+
+        }
+
+        function video_API_request(callback, callback_2, callback_3) {
+
+          while (photo_api_complete != 1) {
+            setTimeout(function() { video_API_request(post_API_request, checkLength, final_check); }, 500);
+            return;
+          }
+          var FB_video_request = '/me/videos?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
+
+          // making the api call - once for all photos
+          FB.api(FB_video_request, function(response) {
+
+            console.log("video called");
+
+            var xml_video;
+            var xml_video_info;
+
+            // adding a video if there is one.
+            if (typeof response.data[0] != "undefined") {
+
+              // picking a random video to use. (no like data is in API)
+              // var video_index = Math.floor(Math.random() * response.data.length);
+
+              xml_video = "<video filename='" + encodeURI(response.data[0].source).split('&').join('&amp;') + "' duration='5.0' volume='0.05' audio='false'/>";
+
+              // updating our arrays.
+              video_url.push(xml_video);
+              video_info.push(response.data[0].description);          
+            }
+
+            // adding the extra videos to the mix.
+            var end_limit = Math.min(response.data.length, 6);
+            for (var i = 1; i < end_limit; i++) {
+              xml_video = "<video filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "' duration='5.0' volume='0.05' audio='false'/>";
+              extra_videos.push(xml_video);
+            }
+            video_api_complete = 1;
+
+          });
+
+          callback(callback_2, callback_3);
+        }
+
+        
+        function post_API_request(callback, callback_2) {
+
+          while (video_api_complete != 1) {
+            setTimeout(function() { post_API_request(checkLength, final_check); }, 500);
+            return;
+          }
+
+          var FB_post_request = '/me/statuses?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
+
+          // making the api call - once for all posts
+          FB.api(FB_post_request, function(response) {
+
+            console.log("post called");
+
+
+            console.log(FB_post_request);
+            console.dir(response);
+
+            var xml_post;
+
+            // sorting the photos by the most likes.
+            response.data.sort(function(a, b) {
+
+              // if its a tie, it doesn't matter which is first.
+              if (typeof a.likes == "undefined")
+                return 1; // so b is ranked higher
+              else if (typeof b.likes == "undefined")
+                return -1; // so a is ranked higher
+
+              return b.likes.data.length - a.likes.data.length;
+            });
+
+            var end_limit = Math.min(response.data.length, 2);
+            for (var i = 0; i < end_limit; i++) {
+              xml_post = "<text>" + response.data[i].message.split('&').join('&amp;') + "</text>";
+              if (i == 0) {
+                post_1.push(xml_post);
+              }
+              else if (i == 1) {
+                post_2.push(xml_post);
+              }
+            }
+
+            // adding to the extras.
+            if (response.data.length > 2) {
+              end_limit = Math.min(response.data.length, 6);
+              for (var i = 2; i < end_limit; i++) {
+                xml_post = "<text>" + response.data[i].message.split('&').join('&amp;') + "</text>";
+                extra_posts.push(xml_post);
+              }
+            }
+
+            post_api_complete = 1;       
+
+          });
+
+          callback(callback_2);   
+
+        }
+
+        function returnExtra() {
+
+          which_one = which_one % 3;
+
+          if (which_one == 0) {
+            which_one++;
+            if (typeof extra_photos[photo_index] != "undefined") {
+              photo_index++;
+              console.log("returning photo");
+              return extra_photos[photo_index - 1];
+            }
+          }
+          if (which_one == 1) {
+            which_one++;
+            if (typeof extra_photos[photo_index] != "undefined") {
+              post_index++;
+              console.log("returning post");
+              return extra_posts[post_index - 1];
+            }
+          }
+          if (which_one == 2) {
+            which_one++;
+            if (typeof extra_photos[photo_index] != "undefined") {
+              video_index++;
+              console.log("returning video");
+              return extra_videos[video_index - 1];
+            }
+          }
+          // else 
+          //   return " ";
+        }
+
+        function final_check() {
+
+          while (check_complete != 1) {
+                  setTimeout(function() { checkLength(final_check); }, 500);
+                  return;
+                }
+
+          if (!(start_year == current_year && start_month == current_month)) {
+
+              console.log("we are on iteration: " + iteration);
+
+              // resetting the extra variables for this 6 month period.
+              extra_photos = [];
+              extra_videos = [];
+              extra_posts = [];
+              photo_index = 0;
+              post_index = 0;
+              video_index = 0;
+              api_complete = 0;
+
+              photo_api_complete = 0;
+              video_api_complete = 0;
+              post_api_complete = 0;
+              check_complete = 0;
+
+              // moving to the next 6 month interval.
+              start_year = end_year;
+              start_month = end_month;
+
+              end_month += 6;
+
+              if (end_month > 12) {
+                end_month = end_month % 12;
+                ++end_year;
+              }
+
+              photo_API_request(video_API_request, post_API_request, checkLength, final_check);
+
+
+
+          }
+
+
+        }
+
+        function checkLength(callback) {
+            var my_var;
+            // var done_yet = 0;
+            while (photo_api_complete != 1 || video_api_complete != 1 || post_api_complete != 1) {
+              my_var = setTimeout(function() { checkLength(final_check); }, 500);
+              console.log("NOT YET! api is not complete!");
+              return 0;
+            }
+            iteration++;
+            console.log("we checked it - api_complete is: " + api_complete);
+            console.log("iteration is: " + iteration);
+            console.log("video_url length is: " + video_url.length);
+            console.log("first_pic length is: " + first_pic.length);
+
+            if (video_url.length < iteration) {
+              // video_url.push(returnExtra());
+              console.log("splicing at: " + iteration)
+              video_url.splice(iteration - 1, 0, returnExtra());
+            }
+            if (video_info.length < iteration) {
+              // video_info.push(returnExtra());
+              video_info.splice(iteration - 1, 0, returnExtra());
+
+            }
+            if (post_1.length < iteration) {
+              post_1.splice(iteration - 1, 0, returnExtra());
+            }
+            if (post_2.length < iteration) {
+              post_2.splice(iteration - 1, 0, returnExtra());
+            }
+            if (first_pic.length < iteration) {
+              first_pic.splice(iteration - 1, 0, returnExtra());
+            }
+            if (first_pic_info.length < iteration) {
+              first_pic_info.push(" ");
+            }
+            if (second_pic.length < iteration) {
+              second_pic.splice(iteration - 1, 0, returnExtra());
+            }
+            if (second_pic_info.length < iteration) {
+              second_pic_info.push(" ");
+            }
+            if (third_pic.length < iteration) {
+              third_pic.splice(iteration - 1, 0, returnExtra());
+            }
+            if (fourth_pic.length < iteration) {
+              fourth_pic.splice(iteration - 1, 0, returnExtra());
+            }
+
+            // while (extra_calls >= 0) {
+            //   if (extra_calls == 0) {
+            //     check_complete = 1;
+            //     break;
+            //   }
+            // }
+            // return 1;
+
+            check_complete = 1;
+            callback(); // final check.
+
+        }
+
+        photo_API_request(video_API_request, post_API_request, checkLength, final_check);
+
+
+        
+
+        // // moving to the next 6 month interval.
+        // start_year = end_year;
+        // start_month = end_month;
+
+        // end_month += 6;
+
+        // if (end_month > 12) {
+        //   end_month = end_month % 12;
+        //   ++end_year;
+        // }
+
+        // filling in from extras if needed.
+        // console.log("check complete is: " + check_complete);
+
+      // }
+
+      
+
+    // } // while loop 
+
+    console.dir(first_pic);
+    console.dir(video_url);
+    console.dir(post_1);
+    // console.dir(first_pic.length);
+
+  } // testAPI()
+
+	</script>
+
+	<script type="text/javascript">
+
+/* After each 6 month period loop, check if we had enough in each cagtegory.
+if not, add the extra XML code (that cycles with the above function call) until
+they are filled.
+
+I need to change the way we construct the XML such that it doesn't actually 
+construct the XML code then append it. i should create the XML code as i go and
+store it in the array to make this a lot cleaner. debateably. lolz.
+
+*/
+
+	// ************************** Calling Stupeflix API **************************** 
+
+  // creating the XML file.
+
+function create_XML(songs_array) {
+
+    // console.dir(first_pic.length);
+
+    var stupeflix_xml = "<movie service='craftsman-1.0'><body>";
+
+    var stupeflix_templates = ["director.theme.humble", "director.theme.1901", "director.theme.scrapbook","director.theme.tiles",
+    "director.theme.martini","director.theme.outline"];
+
+    var stupeflix_random = Math.floor(Math.random() * (stupeflix_templates.length));
+
+    // dynamically create the xml file.
+    for (var i = 0; i < first_pic.length; i++) {
+      stupeflix_xml +=  "<stack><widget type='" + stupeflix_templates[stupeflix_random] + "'>";
+      stupeflix_xml +=  "<track type='video'>";
+
+      // new attempt;
+      stupeflix_xml += video_url[i] + fourth_pic[i] + third_pic[i] + post_2[i] + second_pic[i] + second_pic_info[i];
+      stupeflix_xml += post_1[i] + first_pic[i] + first_pic_info[i];
+
+
+      // stupeflix_xml +=  "<video filename='" + encodeURI(video_url[i]).split('&').join('&amp;') + "' volume='0.05' audio='false'/>";
+      // stupeflix_xml +=  "<image filename='" + encodeURI(fourth_pic[i]).split('&').join('&amp;') + "'></image>";
+      // stupeflix_xml +=  "<image filename='" + encodeURI(third_pic[i]).split('&').join('&amp;') + "'></image>";
+      // stupeflix_xml +=  "<text>" + post_2[i].split('&').join('&amp;') + "</text>";
+      // stupeflix_xml +=  "<image filename='" + encodeURI(second_pic[i]).split('&').join('&amp;') + "'><track type='caption'>";
+      // stupeflix_xml +=  "<text>" + second_pic_info[i].split('&').join('&amp;') + "</text></track></image>";
+      // stupeflix_xml +=  "<text>" + post_1[i].split('&').join('&amp;') + "</text>";
+      // stupeflix_xml +=  "<image filename='" + encodeURI(first_pic[i]).split('&').join('&amp;') + "'><track type='caption'>";
+      // stupeflix_xml +=  "<text>" + first_pic_info[i].split('&').join('&amp;') + "</text></track></image>";
+
+
+      stupeflix_xml +=  "</track><track type='audio'>";
+      stupeflix_xml +=  "<audio filename='" + encodeURI(songs_array[i]).split('&').join('&amp;') + "' fadein='1.0' fadeout='4.0' duration='..' volume='0.7'/>";
+      stupeflix_xml +=  "</track></widget></stack>";
+
+        // if we're not at the end, add a transition.
+        if (i < first_pic.length - 1) {
+          stupeflix_xml += "<transition type='crossfade' duration='2' />";
+        }
+      }
+
+    // end while loop.
+    stupeflix_xml += "</body></movie>";
+
+    console.dir(stupeflix_xml);
+
+    var data = {};
+    data.title = String(stupeflix_xml);
+    data.message = "message";
+
+    $.ajax({
+    	type: 'POST',
+    	data: JSON.stringify(data),
+    	contentType: 'application/json',
+    	url: 'http://localhost:5000/video',					
+    	success: function(video_URL) {
+        console.log('success2');
+    		console.log(video_URL);
+        var video_div = '<video width="500px" controls><source src="' + video_URL + '" type="video/mp4"></video>';
+
+        var video_share = '<button id="share-to-fb" value="' + video_URL + '" class="button radius">Share to Facebook</button>';
+        $('.video-share').append(video_share);
+    		$('#loading-contents').addClass('none');
+        $('#video-paste').append(video_div);
+    		$('#video-contents').removeClass('none');
+    	},
+      error: function(error) {
+        console.log("error: " + error);
+      }
+    });
+
+}
+
+	</script>
+
+	<body>
+		
+		<header>
+
+			<div class="row">
+				
+				<div class="medium-8 medium-centered text-center columns">
+
+					<div class="top-container">
+
+						<div class="row">
+
+							<h1 class="white">
+								Memories In Motion
+							</h1>
+
+							<p>
+								Sign in with Facebook and Spotify and we will create a short video summarizing the last year of your life!
+							</p>
+
+						</div>
+
+						<div id="one" class="row login-buttons">
+
+							<div class="medium-4 columns">
+
+								<div class="number text-center">1</div>
+
+							</div>
+
+							<div class="medium-8 columns" style="line-height: 4">
+								
+								<label><p>Select video duration:
+								<select class="radius duration">
+										<option value="">Duration</option>
+										<option value="1">1:00</option>
+										<option value="1.5">1:30</option>
+										<option value="2">2:00</option>
+										<option value="2.5">2:30</option>
+									</select>
+                  </p> 
+								</label>
+
+							</div>
+
+						</div>
+
+						<div id="two" class="row login-buttons hidden">
+
+							<div class="medium-4 columns">
+
+								<div class="number text-center">2</div>
+
+							</div>
+
+							<div class="medium-8 columns">
+								
+								<button id="facebook-login" class="button radius facebook login-button">Login with <strong>Facebook</strong></button>
+
+							<div id="fb-root"></div>
+
+
+							</div>
+
+						</div>
+
+						<div id="three" class="row login-buttons hidden">
+
+							<div class="medium-4 columns">
+								
+								<div class="number text-center">3</div>
+
+							</div>
+							
+							<div class="medium-8 columns">
+
+								<a href="/login" target="_blank"><button id="spotify-login" class="button radius spotify login-button">Login with <strong>Spotify</strong></button></a>
+
+							</div>
+
+						</div>
+
+						<div class="row">
+							
+							<button id="submit-video" class="disabled button radius make-video">MAKE VIDEO</button>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</header>
+
+		<section class="video-container" style="display: none">
+
+			<div id="loading-contents">
+				
+				<div class="row">
+					
+					<div class="medium-12 columns" style="height: 240px;">
+						
+						<div id="loader-wrapper">
+							<div id="loader"></div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="video-contents" class="none">
+				
+				<div class="row">
+				
+					<div id="video-paste" class="medium-12 columns">
+
+						<!--<video width="320" height="240" controls>
+              <source id="video-source" src="movie.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+            </video>-->
+
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="video-share medium-12 columns text-center">
+
+						<!--<p>This is where the share content will go.</p>-->
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</section>
+
+		<!-- <section>
+
+			<div class="row">
+				
+				<div class="medium-8 medium-centered columns text-center ">
+					
+					<h2 class="dark-font">About Us</h2>
+
+					<p class="dark-font">Blah dee deah we are so cool with our APIs so much fun stuff.</p>
+
+				</div>
+
+			</div>
+
+			<div class="row text-center">
+				
+				<div class="small-12 medium-6 columns">
+					
+					<h1 class="dark-font">Michael Copley</h1>
+
+				</div>
+
+				<div class="small-12 medium-6 columns">
+					
+					<h1 class="dark-font">Carson Covell</h1>
+
+				</div>
+
+			</div>
+
+		</section> -->
+
+    <!-- Section: about -->
+    <section id="about" class="home-section text-center">
+    <div class="heading-about">
+      <div class="container">
+      <div class="row">
+        <div class="large-10 large-offset-1 columns">
+          <div class="wow bounceInDown" data-wow-delay="0.4s">
+          <div class="section-heading">
+          <h1>Meet the Developers</h1>
+          <i class="fa fa-2x fa-angle-down"></i>
+          </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="container">
+
+    <div class="row">
+      <div class="large-2 large-offset-5 columns">
+        <hr class="marginbot-50">
+      </div>
+    </div>
+        <div class="row">
+            
+      <div class="small-offset-3 small-3 medium-3 columns">
+        <div class="wow bounceInUp" data-wow-delay="0.2s">
+                <div class="team boxed-grey">
+                    <div class="inner">
+            <p>Michael Copley</p>
+                        <h5 class="subtitle">Web Developer/Writer</h5>
+                        <div class="avatar text-center"><a href="http://www-personal.umich.edu/~mdcopley/"><img src="img/team/michael_copley1.jpg" alt="" class="img-responsive img-circle" style="border-radius:125px"/></a></div>
+
+                    </div>
+                </div>
+        </div>
+            </div>
+      <div class="small-3 medium-3 columns">
+        <div class="wow bounceInUp" data-wow-delay="0.5s">
+                <div class="team boxed-grey">
+                    <div class="inner">
+            <p>Carson Covell</p>
+                        <h5 class="subtitle">Web Design/Bachelor</h5>
+                        <div class="avatar text-center"><a href="http://carsoncovell.com/"><img src="img/team/carons.jpg" alt="" class="img-responsive img-circle" style="border-radius:125px"/></a></div>
+
+                    </div>
+                </div>
+        </div>
+            </div>
+      <div class="small-3 medium-3 columns">
+        <!-- <div class="wow bounceInUp" data-wow-delay="1s">
+                <div class="team boxed-grey">
+                    <div class="inner">
+            <h5>Tom Petterson</h5>
+                        <p class="subtitle">Typographer</p>
+                        <div class="avatar"><img src="img/team/4.jpg" alt="" class="img-responsive img-circle" /></div>
+
+                    </div>
+                </div>
+        </div> -->
+            </div>
+        </div>    
+    </div>
+  </section>
+  <!-- /Section: about -->
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+
+    $(document).on('click', '#share-to-fb', function() {
+      console.log('here');
+      upload_to_facebook($(this).attr('value'));
+    });
+
+    $('.duration').change(function() {
+      how_long_ago = $(this).val();
+    });
+
+    var qs = window.location.hash;
+    if (qs.length) {
+      window.close();
+    }
+
+		$(document).on('change', '.duration', function() {
+			$('#two').addClass('animated fadeInUp').removeClass('hidden');
+		});
+
+		$(document).on('click', '#facebook-login', function() {
+			if (!$(this).parent().parent().hasClass('hidden')) {
+				$('#three').addClass('animated fadeInUp').removeClass('hidden');
+				FB.login(function(response) {
+					if (response.authResponse) {
+						console.log(response.authResponse);
+						console.log('Welcome!  Fetching your information.... ');
+						testAPI();
+						//$.cookie('FBID', response.authResponse.userId);
+						//FB.api('/me', function(response) {
+						//	console.log('Good to see you, ' + response.name + '.');
+						//});
+					} else {
+						console.log('User cancelled login or did not fully authorize.');
+					}
+				}, {scope: 'user_photos,user_status,user_videos,publish_actions'});
+			}
+		});
+
+		$(document).on('click', '#spotify-login', function() {
+			if(!$(this).parent().parent().hasClass('hidden')) {
+				$('#submit-video').removeClass('disabled');
+			}
+		});
+
+		// Video loading elements
+		$(document).on('click', '#submit-video', function() {
+			if (!$(this).hasClass('disabled')) {
+				$('.video-container').slideDown();
+
+				var data = {};
+					data.title = "title";
+					data.message = "message";
+          data.number_songs = 
+
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify(data),
+          tryCount: 0,
+          retryLimit: 15,
+					contentType: 'application/json',
+					url: 'http://localhost:5000/endpoint',						
+					success: function(data) {
+						console.log('success');
+						console.log(JSON.stringify(data));
+            // $('#submit-video').removeClass('disabled');
+						create_XML(data);
+					},
+          error: function(error) {
+            // retrying the request again if its not ready.
+            console.log("we have an error, CARSON ");
+            // if (this.tryCount <= this.retryLimit) {
+            //     $.ajax(this);
+            //     return;
+            //   }
+            // setTimeout(function() { $.ajax(this).delay(800); }, 1000); 
+            // $.delay(800); 
+            $.ajax(this);
+            return;
+
+
+          }
+				});
+			}
+		})
+
+	});
+
+	</script>
+
+	</body>
+
+<html>
