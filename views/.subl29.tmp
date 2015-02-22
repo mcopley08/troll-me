@@ -128,7 +128,7 @@ var funny_quotes = ['"I just ate some garlic, so I can\'t talk." -',
                     '"from my understanding, groundhogs day is more of an illuminati thing. but don\'t quote me on that.." -'];
 
 
-var friends = 0, bands = 0, birthday = 0;
+
 // this function generates a random comment and may/may not take in the
 // name for consideration.
 function generateComment(person_name) {
@@ -214,11 +214,11 @@ function generateComment(person_name) {
 
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '480747342080039',
+    appId      : '1517847781810201',
     cookie     : true,  // enable cookies to allow the server to access 
                         // the session
     xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.2' // use version 2.1
+    version    : 'v2.1' // use version 2.1
   });
 
   // Now that we've initialized the JavaScript SDK, we call 
@@ -288,9 +288,7 @@ function generateComment(person_name) {
     video_index = 0;
     which_one = 0;
 
-    friends = 0;
-    bands = 0;
-    birthday = 0;
+    chosen_comments = {};
 
     // ****************** finding out our starting date ***********************
 
@@ -342,13 +340,10 @@ function generateComment(person_name) {
         video_api_complete = 0;
         post_api_complete = 0;
 
-
         // we need to make an array of comment post requests and append to it
         // everytime then suggest it to the user so they can approve!
 
         function photo_API_request(callback, callback_2) {
-
-          // photo_comments.length = 0;
 
           var FB_photo_request = '/me/photos?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
 
@@ -429,8 +424,8 @@ function generateComment(person_name) {
           }
           else {
             console.dir(photo_comments);
-            // console.dir(video_url);
-            // console.dir(post_1);
+            console.dir(video_url);
+            console.dir(post_1);
             populatePosts();
           }
 
@@ -453,53 +448,7 @@ function generateComment(person_name) {
             callback(); // final check.
         }
 
-        function displayData() {
-
-          $('#video-paste').empty();
-
-
-          while (friends != 1 || bands != 1 || birthday != 1) {
-            setTimeout(function() { displayData(); }, 500);
-            return;
-          }
-          console.log("ESTOY AQUIII");
-
-          var your_trolls = "";
-
-          // console.log(chosen_comments);
-
-          for (var i = 0; i < photo_comments.length; i++) {
-            // console.log("WERE IN!");
-            your_trolls += '<div class = "medium-4 columns">';
-            your_trolls += '<ul class="pricing-table">';
-            your_trolls += '<li class="title">Photo Comment</li>';
-            your_trolls += '<li class="price">'+ photo_comments[i] + '</li>';
-            your_trolls += '<li class="description">In response to: </li>';
-            // your_trolls += '<li class="bullet-item">1 Database</li>';
-            your_trolls += '<li class="cta-button"><a class="button round" href="#">Troll!</a></li></ul></div>';
-            if (i != 0 && i % 3 == 0) {
-              your_trolls += '</row><row>';
-            }
-          }
-
-          console.log(your_trolls);
-
-
-          $('#loading-contents').addClass('none');
-
-          $('#video-paste').append(your_trolls);
-          $('#video-contents').removeClass('none');
-
-          console.log(chosen_posts); 
-          your_trolls = "";
-          photo_comments = [];         
-          console.log(photo_comments);
-
-        }
-
         function populatePosts() {
-          chosen_posts = [];
-
           var user_birthday, random_band, random_friend;
 
           // grabbing the user's birthday.
@@ -510,16 +459,14 @@ function generateComment(person_name) {
             console.log(response.birthday);
             user_birthday = response.birthday;
 
-            user_birthday = user_birthday.substring(0, user_birthday.length - 5);
+            // user_birthday = user_birthday.substring(0, user_birthday.length - 5);
             
-
             if (random % 2 == 0) {
               chosen_posts.push(user_birthday + post_birthday_templates[random % 3]);
             }
             else {
               chosen_posts.push(post_birthday_templates_alt[random % 2] + user_birthday);
             }
-            birthday = 1;
 
           });
 
@@ -529,39 +476,25 @@ function generateComment(person_name) {
             var random = Math.floor(Math.random()*response.data.length);
             random_band = response.data[random].name;
 
-            console.log(response.data[random].name); 
-
-            if (random % 2 == 0) {
-              chosen_posts.push(post_band_templates[random % 5] + random_band);
-            }
-            else {
-              chosen_posts.push(random_band + post_band_templates_alt[random % 5]);
-            }          
-            bands = 1;
-
+            console.log(response.data[random].name);           
           });
 
           // grabbing one of the user's friends.
-          FB.api("/me/taggable_friends?limit=25", function(response) {
+          FB.api("/me/friends", function(response) {
 
             console.log(response);           
 
             var random = Math.floor(Math.random()*response.data.length);
             random_friend = response.data[random].name;
 
-            chosen_posts.push(funny_quotes[random % 8] + random_friend);
-            friends = 1;
-
           });
 
           var random = Math.floor(Math.random()*101);
-          displayData();
           
         }
 
-        
-
         photo_API_request(checkLength, final_check); 
+        populatePosts();
 
         console.log("we got here COMPLETE");
 
@@ -668,7 +601,7 @@ and provide them with a summary of what was posted to their timeline and the lin
 				<div class="row">
 					
 					<div class="medium-12 columns" style="height: 240px;">
-					
+						
 						<div id="loader-wrapper">
 							<div id="loader"></div>
 						</div>
@@ -681,16 +614,18 @@ and provide them with a summary of what was posted to their timeline and the lin
 
 			<div id="video-contents" class="none">
 				
-					<div id="video-paste" class="row">
+				<div class="row">
+				
+					<div id="video-paste" class="medium-12 columns">
 
 						<!--<video width="320" height="240" controls>
               <source id="video-source" src="movie.mp4" type="video/mp4">
                   Your browser does not support the video tag.
             </video>-->
 
-            
-
 					</div>
+
+				</div>
 
 				<div class="row">
 
@@ -705,8 +640,6 @@ and provide them with a summary of what was posted to their timeline and the lin
 			</div>
 
 		</section>
-
-
 
 
     <!-- Section: about -->
@@ -805,7 +738,39 @@ and provide them with a summary of what was posted to their timeline and the lin
 			if (!$(this).hasClass('disabled')) {
 				$('.video-container').slideDown();
 
-				
+				var data = {};
+					data.title = "title";
+					data.message = "message";
+          data.number_songs = 
+
+				$.ajax({
+					type: 'POST',
+					data: JSON.stringify(data),
+          tryCount: 0,
+          retryLimit: 15,
+					contentType: 'application/json',
+					url: 'http://localhost:5000/endpoint',						
+					success: function(data) {
+						console.log('success');
+						console.log(JSON.stringify(data));
+            // $('#submit-video').removeClass('disabled');
+						create_XML(data);
+					},
+          error: function(error) {
+            // retrying the request again if its not ready.
+            console.log("we have an error, CARSON ");
+            // if (this.tryCount <= this.retryLimit) {
+            //     $.ajax(this);
+            //     return;
+            //   }
+            // setTimeout(function() { $.ajax(this).delay(800); }, 1000); 
+            // $.delay(800); 
+            $.ajax(this);
+            return;
+
+
+          }
+				});
 			}
 		})
 
