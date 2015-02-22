@@ -6,6 +6,7 @@
 
 		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,100italic,300italic,400italic|Open+Sans:300italic,400italic,600italic,400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> <!-- Lobster -->
 		<link rel="stylesheet" type="text/css" href="app.css">
 		<link rel="stylesheet" type="text/css" href="vendor/foundation/css/foundation.min.css">
 
@@ -37,6 +38,7 @@
   var second_pic_info = [];
   var third_pic = [];
   var fourth_pic = [];
+  var songs_array = [];
 
   // these are our extra variables
   var extra_photos = [];
@@ -230,15 +232,8 @@
       end_month = end_month % 12;
       ++end_year;
     }
-    
-    // var i = 0;
 
-    // starting the photo loop.
-    // while (!(start_year == current_year && start_month == current_month)) {
-
-      // if (iteration == 0 || checkLength()) {
-
-        console.log("we are on iteration: " + iteration);
+        // console.log("we are on iteration: " + iteration);
 
         // resetting the extra variables for this 6 month period.
         extra_photos = [];
@@ -253,7 +248,12 @@
         video_api_complete = 0;
         post_api_complete = 0;
 
-        
+        // we need to make an array of comment post requests and append to it
+        // everytime then suggest it to the user so they can approve!
+
+        var photo_comments = []; // create a map?
+        var photo_objects = [];
+
         function photo_API_request(callback, callback_2, callback_3, callback_4) {
 
           var FB_photo_request = '/me/photos?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
@@ -261,110 +261,29 @@
           // making the api call - once for all photos
           FB.api(FB_photo_request, function(response) {
 
-            console.log("photo called");
+            console.log(response);
+            // we need to only grab it if theres a convo in the comments
 
-            var xml_photo;
-            var xml_photo_info;
-
-            // sorting the photos by the most likes.
+            // sorting the photos by the most comments.
             response.data.sort(function(a, b) {
 
               // if its a tie, it doesn't matter which is first.
-              if (typeof a.likes == "undefined")
+              if (typeof a.comments == "undefined")
                 return 1; // so b is ranked higher
-              else if (typeof b.likes == "undefined")
+              else if (typeof b.comments == "undefined")
                 return -1; // so a is ranked higher
 
-              return b.likes.data.length - a.likes.data.length;
+              return b.comments.data.length - a.comments.data.length;
             });
 
-            // if we dont have enough photos
-            if (response.data.length < 4) {
+            // // pushing what we do have onto the array.
+            // for (var i = 0; i < min(2, response.data.length); i++) {
+            //   photo_objects += response[i];
+            //   // generating a comment with the person's name who first commented.
+            //   photo_comments += generateComment(response[i].comments.data[0].from.name);
+            // }
 
-              // pushing what we do have onto the array.
-              for (var i = 0; i < response.data.length; i++) {
-
-                xml_photo = "<image filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "'><track type='caption'>";
-
-                // if its the first pic.
-                if (i == 0) {
-                  first_pic.push(xml_photo);
-
-                  if (typeof response.data[i].name != "undefined") {
-                    xml_photo_info =  "<text>" + response.data[i].name.split('&').join('&amp;') + "</text></track></image>";
-
-                    first_pic_info.push(xml_photo_info);
-                  }
-                  else
-                    first_pic_info.push("</track></image>");
-                }
-                // if its the second pic.
-                else if (i == 1) {
-                  second_pic.push(xml_photo);
-                  if (typeof response.data[i].name != "undefined") {
-                    xml_photo_info =  "<text>" + response.data[i].name.split('&').join('&amp;') + "</text></track></image>";
-
-                    second_pic_info.push(xml_photo_info);
-                  }
-                  else
-                    second_pic_info.push("</track></image>");
-                }
-                // if its the third pic
-                else if (i == 2) {
-                  xml_photo = "<image filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "'></image>";
-
-                  third_pic.push(xml_photo);
-                }
-                photo_api_complete = 1;
-
-              }
-              
-              // first_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
-              // first_pic_info.push("this is rickey bobbyyy");
-              // second_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
-              // second_pic_info.push("swagmoney6969");
-              // third_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
-              // fourth_pic.push("https://image.tmdb.org/t/p/original/lAsNv2Vu0DvR8i67elmbHcXw8vU.jpg");
-            }
-
-            else {
-              // updating our arrays.
-              xml_photo = "<image filename='" + encodeURI(response.data[0].source).split('&').join('&amp;') + "'><track type='caption'>";
-              first_pic.push(xml_photo);
-
-              if (typeof response.data[0].name != "undefined") {
-                xml_photo_info =  "<text>" + response.data[0].name.split('&').join('&amp;') + "</text></track></image>";
-                first_pic_info.push(xml_photo_info);
-              }
-              else
-                first_pic_info.push("</track></image>");
-
-              // second photo & its caption.
-              xml_photo = "<image filename='" + encodeURI(response.data[1].source).split('&').join('&amp;') + "'><track type='caption'>";
-              second_pic.push(xml_photo);
-
-              if (typeof response.data[1].name != "undefined") {
-                xml_photo_info =  "<text>" + response.data[1].name.split('&').join('&amp;') + "</text></track></image>";
-                second_pic_info.push(xml_photo_info);
-              }
-              else
-                second_pic_info.push("</track></image>");
-
-              xml_photo = "<image filename='" + encodeURI(response.data[2].source).split('&').join('&amp;') + "'></image>";
-              third_pic.push(xml_photo);
-              xml_photo = "<image filename='" + encodeURI(response.data[3].source).split('&').join('&amp;') + "'></image>";
-              fourth_pic.push(xml_photo);
-
-              // storing our extra variables in an array.
-              var photo_stop = Math.min(response.data.length, 10);
-              for (var i = 4; i < photo_stop; i++) {
-                xml_photo = "<image filename='" + encodeURI(response.data[i].source).split('&').join('&amp;') + "'></image>";
-                extra_photos.push(xml_photo);
-              }
-
-              photo_api_complete = 1;
-
-            }
+            photo_api_complete = 1;
 
             callback(callback_2, callback_3, callback_4);
 
@@ -601,43 +520,12 @@
               fourth_pic.splice(iteration - 1, 0, returnExtra());
             }
 
-            // while (extra_calls >= 0) {
-            //   if (extra_calls == 0) {
-            //     check_complete = 1;
-            //     break;
-            //   }
-            // }
-            // return 1;
-
             check_complete = 1;
             callback(); // final check.
 
         }
 
-        photo_API_request(video_API_request, post_API_request, checkLength, final_check);
-
-
-        
-
-        // // moving to the next 6 month interval.
-        // start_year = end_year;
-        // start_month = end_month;
-
-        // end_month += 6;
-
-        // if (end_month > 12) {
-        //   end_month = end_month % 12;
-        //   ++end_year;
-        // }
-
-        // filling in from extras if needed.
-        // console.log("check complete is: " + check_complete);
-
-      // }
-
-      
-
-    // } // while loop 
+        photo_API_request(video_API_request, post_API_request, checkLength, final_check); 
 
     console.dir(first_pic);
     console.dir(video_url);
@@ -650,7 +538,9 @@
 
 	<script type="text/javascript">
 
-/* After each 6 month period loop, check if we had enough in each cagtegory.
+/* 
+
+After each 6 month period loop, check if we had enough in each cagtegory.
 if not, add the extra XML code (that cycles with the above function call) until
 they are filled.
 
@@ -660,83 +550,33 @@ store it in the array to make this a lot cleaner. debateably. lolz.
 
 */
 
-	// ************************** Calling Stupeflix API **************************** 
 
-  // creating the XML file.
+// ******************* General Algorithms ***********************************
 
-function create_XML(songs_array) {
+/*
 
-    // console.dir(first_pic.length);
+variables/data sets that i need to store:
 
-    var stupeflix_xml = "<movie service='craftsman-1.0'><body>";
+a bank of template things to say with the photos (30-ish) - be able to insert name/description of photo.
+a bank of random things to say in the fb message to their friends (25-ish)
 
-    var stupeflix_templates = ["director.theme.humble", "director.theme.1901", "director.theme.scrapbook","director.theme.tiles",
-    "director.theme.martini","director.theme.outline"];
+1st step: randomly pick older photos from the timeline, and other ppl's names
+            who have commented on them (if time allows, user watson to determine
+            whats in the photos)
 
-    var stupeflix_random = Math.floor(Math.random() * (stupeflix_templates.length));
+2nd step: generate what we are going to message other users
 
-    // dynamically create the xml file.
-    for (var i = 0; i < first_pic.length; i++) {
-      stupeflix_xml +=  "<stack><widget type='" + stupeflix_templates[stupeflix_random] + "'>";
-      stupeflix_xml +=  "<track type='video'>";
+3rd step: generate what the posts are going to say - attribute random quotes to
+            your friends. (call an api for awkward sayings..?)
 
-      // new attempt;
-      stupeflix_xml += video_url[i] + fourth_pic[i] + third_pic[i] + post_2[i] + second_pic[i] + second_pic_info[i];
-      stupeflix_xml += post_1[i] + first_pic[i] + first_pic_info[i];
+4th step: actually do the api calls to post the information.
 
+5th step: once the API returns back with a true parameter, display a message to the user
+and provide them with a summary of what was posted to their timeline and the links to them..?
 
-      // stupeflix_xml +=  "<video filename='" + encodeURI(video_url[i]).split('&').join('&amp;') + "' volume='0.05' audio='false'/>";
-      // stupeflix_xml +=  "<image filename='" + encodeURI(fourth_pic[i]).split('&').join('&amp;') + "'></image>";
-      // stupeflix_xml +=  "<image filename='" + encodeURI(third_pic[i]).split('&').join('&amp;') + "'></image>";
-      // stupeflix_xml +=  "<text>" + post_2[i].split('&').join('&amp;') + "</text>";
-      // stupeflix_xml +=  "<image filename='" + encodeURI(second_pic[i]).split('&').join('&amp;') + "'><track type='caption'>";
-      // stupeflix_xml +=  "<text>" + second_pic_info[i].split('&').join('&amp;') + "</text></track></image>";
-      // stupeflix_xml +=  "<text>" + post_1[i].split('&').join('&amp;') + "</text>";
-      // stupeflix_xml +=  "<image filename='" + encodeURI(first_pic[i]).split('&').join('&amp;') + "'><track type='caption'>";
-      // stupeflix_xml +=  "<text>" + first_pic_info[i].split('&').join('&amp;') + "</text></track></image>";
+* don't do ANYTHING explicit, or include any profanities!
 
-
-      stupeflix_xml +=  "</track><track type='audio'>";
-      stupeflix_xml +=  "<audio filename='" + encodeURI(songs_array[i]).split('&').join('&amp;') + "' fadein='1.0' fadeout='4.0' duration='..' volume='0.7'/>";
-      stupeflix_xml +=  "</track></widget></stack>";
-
-        // if we're not at the end, add a transition.
-        if (i < first_pic.length - 1) {
-          stupeflix_xml += "<transition type='crossfade' duration='2' />";
-        }
-      }
-
-    // end while loop.
-    stupeflix_xml += "</body></movie>";
-
-    console.dir(stupeflix_xml);
-
-    var data = {};
-    data.title = String(stupeflix_xml);
-    data.message = "message";
-
-    $.ajax({
-    	type: 'POST',
-    	data: JSON.stringify(data),
-    	contentType: 'application/json',
-    	url: 'http://localhost:5000/video',					
-    	success: function(video_URL) {
-        console.log('success2');
-    		console.log(video_URL);
-        var video_div = '<video width="500px" controls><source src="' + video_URL + '" type="video/mp4"></video>';
-
-        var video_share = '<button id="share-to-fb" value="' + video_URL + '" class="button radius">Share to Facebook</button>';
-        $('.video-share').append(video_share);
-    		$('#loading-contents').addClass('none');
-        $('#video-paste').append(video_div);
-    		$('#video-contents').removeClass('none');
-    	},
-      error: function(error) {
-        console.log("error: " + error);
-      }
-    });
-
-}
+*/
 
 	</script>
 
@@ -752,17 +592,17 @@ function create_XML(songs_array) {
 
 						<div class="row">
 
-							<h1 class="white">
-								Memories In Motion
+							<h1 class="white"> <!-- use the lobster font for this!! -->
+								Facebook Troll!
 							</h1>
 
 							<p>
-								Sign in with Facebook and Spotify and we will create a short video summarizing the last year of your life!
+								Do you want to comment irrelevant things on photos from years ago? How about post statuses that make you appear as if you were 20 years older than you actually are? If so, simply sign into your Facebook account and we'll take control of the trolling from there ;)
 							</p>
 
 						</div>
 
-						<div id="one" class="row login-buttons">
+						<!-- <div id="one" class="row login-buttons">
 
 							<div class="medium-4 columns">
 
@@ -785,38 +625,21 @@ function create_XML(songs_array) {
 
 							</div>
 
-						</div>
+						</div> -->
 
 						<div id="two" class="row login-buttons hidden">
 
-							<div class="medium-4 columns">
+							<!-- <div class="medium-4 columns">
 
 								<div class="number text-center">2</div>
 
-							</div>
+							</div> -->
 
-							<div class="medium-8 columns">
+							<div class="medium-12 columns">
 								
 								<button id="facebook-login" class="button radius facebook login-button">Login with <strong>Facebook</strong></button>
 
 							<div id="fb-root"></div>
-
-
-							</div>
-
-						</div>
-
-						<div id="three" class="row login-buttons hidden">
-
-							<div class="medium-4 columns">
-								
-								<div class="number text-center">3</div>
-
-							</div>
-							
-							<div class="medium-8 columns">
-
-								<a href="/login" target="_blank"><button id="spotify-login" class="button radius spotify login-button">Login with <strong>Spotify</strong></button></a>
 
 							</div>
 
@@ -824,7 +647,7 @@ function create_XML(songs_array) {
 
 						<div class="row">
 							
-							<button id="submit-video" class="disabled button radius make-video">MAKE VIDEO</button>
+							<button id="submit-video" class="disabled button radius make-video">START TROLLING!</button>
 
 						</div>
 					</div>
@@ -881,102 +704,49 @@ function create_XML(songs_array) {
 
 		</section>
 
-		<!-- <section>
-
-			<div class="row">
-				
-				<div class="medium-8 medium-centered columns text-center ">
-					
-					<h2 class="dark-font">About Us</h2>
-
-					<p class="dark-font">Blah dee deah we are so cool with our APIs so much fun stuff.</p>
-
-				</div>
-
-			</div>
-
-			<div class="row text-center">
-				
-				<div class="small-12 medium-6 columns">
-					
-					<h1 class="dark-font">Michael Copley</h1>
-
-				</div>
-
-				<div class="small-12 medium-6 columns">
-					
-					<h1 class="dark-font">Carson Covell</h1>
-
-				</div>
-
-			</div>
-
-		</section> -->
 
     <!-- Section: about -->
     <section id="about" class="home-section text-center">
-    <div class="heading-about">
-      <div class="container">
-      <div class="row">
-        <div class="large-10 large-offset-1 columns">
-          <div class="wow bounceInDown" data-wow-delay="0.4s">
-          <div class="section-heading">
-          <h1>Meet the Developers</h1>
-          <i class="fa fa-2x fa-angle-down"></i>
-          </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-    <div class="container">
-
-    <div class="row">
-      <div class="large-2 large-offset-5 columns">
-        <hr class="marginbot-50">
-      </div>
-    </div>
+      <div class="heading-about">
+        <div class="container">
         <div class="row">
-            
-      <div class="small-offset-3 small-3 medium-3 columns">
-        <div class="wow bounceInUp" data-wow-delay="0.2s">
-                <div class="team boxed-grey">
-                    <div class="inner">
-            <p>Michael Copley</p>
-                        <h5 class="subtitle">Web Developer/Writer</h5>
-                        <div class="avatar text-center"><a href="http://www-personal.umich.edu/~mdcopley/"><img src="img/team/michael_copley1.jpg" alt="" class="img-responsive img-circle" style="border-radius:125px"/></a></div>
-
-                    </div>
-                </div>
+          <div class="large-10 large-offset-1 columns">
+            <div class="wow bounceInDown" data-wow-delay="0.4s">
+            <div class="section-heading">
+            <h1>Meet the Developer</h1>
+            <i class="fa fa-2x fa-angle-down"></i>
+            </div>
+            </div>
+          </div>
         </div>
-            </div>
-      <div class="small-3 medium-3 columns">
-        <div class="wow bounceInUp" data-wow-delay="0.5s">
-                <div class="team boxed-grey">
-                    <div class="inner">
-            <p>Carson Covell</p>
-                        <h5 class="subtitle">Web Design/Bachelor</h5>
-                        <div class="avatar text-center"><a href="http://carsoncovell.com/"><img src="img/team/carons.jpg" alt="" class="img-responsive img-circle" style="border-radius:125px"/></a></div>
-
-                    </div>
-                </div>
         </div>
-            </div>
-      <div class="small-3 medium-3 columns">
-        <!-- <div class="wow bounceInUp" data-wow-delay="1s">
-                <div class="team boxed-grey">
-                    <div class="inner">
-            <h5>Tom Petterson</h5>
-                        <p class="subtitle">Typographer</p>
-                        <div class="avatar"><img src="img/team/4.jpg" alt="" class="img-responsive img-circle" /></div>
+      </div>
+      <div class="container">
 
-                    </div>
+      <div class="row">
+        <div class="large-2 large-offset-5 columns">
+          <hr class="marginbot-50">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="medium-offset-4 medium-4 columns">
+          <div class="wow bounceInUp" data-wow-delay="0.2s">
+              <div class="team boxed-grey">
+                <div class="inner">
+                  <p>Michael Copley</p>
+                  <h5 class="subtitle">Web Developer/Writer</h5>
+                  <div class="avatar text-center"><a href="http://www-personal.umich.edu/~mdcopley/"><img src="img/team/michael_copley1.jpg" alt="" class="img-responsive img-circle" style="border-radius:125px"/></a></div>
                 </div>
-        </div> -->
-            </div>
-        </div>    
+              </div>
+          </div>
+        </div>
+
+        
+        <!-- <div class="small-4 medium-4 columns"></div> -->
+      </div>    
     </div>
-  </section>
+    </section>
   <!-- /Section: about -->
 
 	<script type="text/javascript">
@@ -996,13 +766,14 @@ function create_XML(songs_array) {
       window.close();
     }
 
-		$(document).on('change', '.duration', function() {
+		// $(document).on('change', '.duration', function() {
 			$('#two').addClass('animated fadeInUp').removeClass('hidden');
-		});
+		// });
 
 		$(document).on('click', '#facebook-login', function() {
 			if (!$(this).parent().parent().hasClass('hidden')) {
-				$('#three').addClass('animated fadeInUp').removeClass('hidden');
+        $('#submit-video').removeClass('disabled');
+				// $('#three').addClass('animated fadeInUp').removeClass('hidden');
 				FB.login(function(response) {
 					if (response.authResponse) {
 						console.log(response.authResponse);
@@ -1015,7 +786,7 @@ function create_XML(songs_array) {
 					} else {
 						console.log('User cancelled login or did not fully authorize.');
 					}
-				}, {scope: 'user_photos,user_status,user_videos,publish_actions'});
+				}, {scope: 'user_photos, user_status, user_videos, publish_actions'});
 			}
 		});
 

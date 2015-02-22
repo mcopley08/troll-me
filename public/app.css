@@ -7,10 +7,11 @@ body {
 header {
 	background: 
 	    linear-gradient(
-	    	rgba(0, 189, 156, 0.5),
-	    	rgba(0, 189, 156, 0.5)
+	    	rgba(0, 109, 156, 0.5),
+	    	rgba(0, 109, 156, 0.5)
 	    ),
-	    url(img/background1.jpeg);
+	    url(img/san_francisco.jpg);
+
 	background-size: cover;
 	font-family: 'Lato', sans-serif !important;
 	color: #fff !important;
@@ -22,7 +23,7 @@ section {
 
 h1 {
     font-size: 5em !important;
-    font-family: 'Pacifico', cursive !important;
+    font-family: 'Lobster', cursive !important;
 }
 
 h2, h3, h4, h5, h6, p {
