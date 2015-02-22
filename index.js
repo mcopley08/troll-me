@@ -78,7 +78,6 @@ var generateRandomString = function(length) {
 
 
 
-
 /*** End of Spotify ***/
 
 app.get('/about', function (req, res) {

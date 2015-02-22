@@ -70,6 +70,8 @@
 var photo_comments = []; // create a map?
 var photo_objects = [];
 var photo_link_to_comment = [];
+var like_objects = [];
+var like_comments = [];
 var chosen_comments = {};
 var photo_counter = 0;
 
@@ -188,7 +190,20 @@ function postComment(obj_id, new_msg, btn) {
   FB.api(first_param, "POST", { "message": new_msg },
     function (response) {
       if (response && !response.error) {
-        alert("it was successful!");
+        // alert("it was successful!");
+        $(btn).fadeOut("slow");
+      }
+    }
+  );
+}
+
+function postLike(obj_id, btn) {
+  var first_param = "/" + obj_id + "/likes";
+  FB.api(
+    first_param, "POST",
+    function (response) {
+      if (response && !response.error) {
+        // alert("holllaaaa!");
         $(btn).fadeOut("slow");
       }
     }
@@ -289,7 +304,7 @@ function postAll() {
       },
     function (response) {
       if (response && !response.error) {
-        alert('Post successful!');
+        // alert('Post successful!');
         $(btn).fadeOut("slow");
       }
     }
@@ -413,7 +428,14 @@ function postAll() {
               console.log(response.data[i].comments.data[0].from.name);
               photo_comments.push(generateComment(response.data[i].comments.data[0].from.name, response.data[i].source));
               photo_link_to_comment.push(response.data[i].link);
+
+              // sneaking some likes in there as well!
+              var random = Math.floor(Math.random()*response.data[i].comments.data.length);
+              like_objects.push(response.data[i].comments.data[random].id);
+              like_comments.push(response.data[i].comments.data[random].message);
             }
+
+
 
             photo_api_complete = 1;
 
@@ -499,6 +521,7 @@ function postAll() {
             return;
           }
           console.log("ESTOY AQUIII");
+          console.log(like_comments);
 
           var your_trolls = "";
 
@@ -513,12 +536,12 @@ function postAll() {
             your_trolls += '<li class="description" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
             // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
             your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
-            if (i != 0 && i % 3 == 0) {
-              your_trolls += '</row><row>';
-            }
+            // if (i != 0 && i % 3 == 0) {
+            //   your_trolls += '</div><div class = "row">';
+            // }
           }
 
-          your_trolls += '</row><row>';
+          // your_trolls += '</div><div class = "row">';
 
           for (var i = 0; i < chosen_posts.length; i++) {
             // console.log("WERE IN!");
@@ -529,9 +552,25 @@ function postAll() {
             your_trolls += '<li class="description" style="font-size: 1.2em">On your wall</li>';
             // your_trolls += '<li class="bullet-item">1 Database</li>';
             your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="upload_to_facebook(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
-            if (i != 0 && i % 3 == 0) {
-              your_trolls += '</div><div class="row">';
-            }
+            // if (i != 0 && i % 3 == 0) {
+            //   your_trolls += '</div><div class="row">';
+            // }
+          }
+
+          // your_trolls += '</div><div class = "row">';
+
+          for (var i = 0; i < like_comments.length; i++) {
+            // console.log("WERE IN!");
+            your_trolls += '<div class = "medium-4 columns">';
+            your_trolls += '<ul class="pricing-table">';
+            your_trolls += '<li class="title">Like a comment</li>';
+            your_trolls += '<li class="price">'+ like_comments[i] + '</li>';
+            your_trolls += '<li class="description" style="font-size: 1.2em">See the comment <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
+            // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
+            your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postLike(\'' + like_objects[i] + '\', this);">Troll!</a></li></ul></div>';
+            // if (i != 0 && i % 3 == 0) {
+            //   your_trolls += '</div><div class = "row">';
+            // }
           }
 
           your_trolls += '</div><div class="row"><div class="medium-offset-2 medium-8 columns text-center">';
@@ -549,7 +588,9 @@ function postAll() {
           your_trolls = "";
           photo_comments = [];
           photo_link_to_comment = [];
-          photo_objects = [];         
+          photo_objects = [];      
+          like_objects = [];
+          like_comments = [];   
           console.log(photo_comments);
 
         }
