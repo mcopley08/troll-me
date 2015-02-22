@@ -88,7 +88,7 @@ var photo_comment_templates = ["what a great day",
 var photo_comment_template_names = [", what are u doing today?", 
                                     ", i definitely agree with you.", 
                                     ", excuse me..?  hahaha just-kidding.",
-                                    ", you left your 'john deere' trucker hat at my place",
+                                    ", you left your \'john deere\' trucker hat at my place",
                                     ", you still have my copy of mario sunshine! ha-ha.",
                                     ", so true, lol"];
 var photo_comment_template_names_alt = ["im going to remember this one for a while, ", 
@@ -102,7 +102,7 @@ var chosen_posts = [];
 
 var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
                                " is the only day of the year i get socks from dockers, and i want to keep it that way.",
-                               " gives me an excuse to spend $35 on doritos and say to myself 'its okay, today is MY day'"];
+                               " gives me an excuse to spend $35 on doritos and say to myself \'its okay, today is MY day\'"];
 
 var post_birthday_templates_alt = ["take a wild guess at what happens on the following data, and ill give you a hint, it has to do it being my birthday: ",
                                    "ill give you $10 if you chill with me on: "];
@@ -116,17 +116,17 @@ var post_band_templates = ["i should really do more than eat sun chips and liste
 var post_band_templates_alt = [" is the reason i never get my homework done, but im okay with it. its a mutual relationship.",
                                " was playing music when i had my first kiss. on the cheek. from my mom.",
                                ", homemade baklava, pictures of sad monkeys. all of those are essential.",
-                               " and i have been together for 18 month now, & ive loved every second of it. you make me feel like i can be myself around you, and i wouldn't trade that for the entire world <3 happy 18 months, babe! :))",
-                               " should do a cover of that weird-ass 'witch doctor' song."];
+                               " and i have been together for 18 month now, and ive loved every second of it. you make me feel like i can be myself around you, and i wouldn\'t trade that for the entire world, happy 18 months, babe!",
+                               " should do a cover of that weird-ass \'witch doctor\' song."];
 
-var funny_quotes = ['"I just ate some garlic, so I can\'t talk." -',
-                    '"I hate when I\'m on a flight and I wake up with a water bottle next to me like oh great now I gotta be responsible for this water bottle." -',
-                    '"You put the boom-boom into my heart, You send my soul sky high when your lovin\' starts" - ',
-                    '"It’s grind-day, from Friday, to next Friday. I been up straight for nine days, I need a spa day" -',
-                    '"Tomorrow is Saturday, and Sunday comes after ... wards - I don\'t want this weekend to end!!!" -',
-                    '"just picked up some dish detergent from target." -',
-                    '"my dad says the amount of nutella i eat in a weak is unattractive." -',
-                    '"from my understanding, groundhogs day is more of an illuminati thing. but don\'t quote me on that.." -'];
+var funny_quotes = ['I just ate some garlic, so I cant talk. -',
+                    'I hate when Im on a flight and I wake up with a water bottle next to me like oh great now I gotta be responsible for this water bottle. -',
+                    'You put the boom-boom into my heart, You send my soul sky high when your lovin starts - ',
+                    'It’s grind-day, from Friday, to next Friday. I been up straight for nine days, I need a spa day -',
+                    'Tomorrow is Saturday, and Sunday comes after ... wards - I dont want this weekend to end!!! -',
+                    'just picked up some dish detergent from target. -',
+                    'my dad says the amount of nutella i eat in a weak is unattractive. -',
+                    'from my understanding, groundhogs day is more of an illuminati thing. but dont quote me on that.. -'];
 
 
 var friends = 0, bands = 0, birthday = 0;
@@ -170,6 +170,20 @@ function generateComment(person_name) {
       }
     }
   }
+}
+
+// ******************** Function to actally post to FB ***********************
+function postComment(obj_id, new_msg, btn) {
+  console.log("in the function!");
+  var first_param = "/" + obj_id + "/comments";
+  FB.api(first_param, "POST", { "message": new_msg },
+    function (response) {
+      if (response && !response.error) {
+        alert("it was successful!");
+        $(btn).fadeOut("slow");
+      }
+    }
+  );
 }
 
 
@@ -250,16 +264,17 @@ function generateComment(person_name) {
   }(document, 'script', 'facebook-jssdk'));
 
 
-  function upload_to_facebook(vid_url) {
+  function upload_to_facebook(status_msg, btn) {
     FB.api(
       "/me/feed",
       "POST",
       {
-        "message": vid_url
+        "message": status_msg
       },
     function (response) {
       if (response && !response.error) {
         alert('Post successful!');
+        $(btn).fadeOut("slow");
       }
     }
   );
@@ -342,6 +357,9 @@ function generateComment(person_name) {
         photo_api_complete = 0;
         video_api_complete = 0;
         post_api_complete = 0;
+
+        
+        
 
 
         // we need to make an array of comment post requests and append to it
@@ -477,8 +495,8 @@ function generateComment(person_name) {
             your_trolls += '<li class="title">Photo Comment</li>';
             your_trolls += '<li class="price">'+ photo_comments[i] + '</li>';
             your_trolls += '<li class="description">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
-            // your_trolls += '<li class="bullet-item">1 Database</li>';
-            your_trolls += '<li class="cta-button"><a class="button round" href="#">Troll!</a></li></ul></div>';
+            // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
+            your_trolls += '<li class="cta-button"><a class="button round" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
             if (i != 0 && i % 3 == 0) {
               your_trolls += '</row><row>';
             }
@@ -494,7 +512,7 @@ function generateComment(person_name) {
             your_trolls += '<li class="price">'+ chosen_posts[i] + '</li>';
             your_trolls += '<li class="description">On your wall</li>';
             // your_trolls += '<li class="bullet-item">1 Database</li>';
-            your_trolls += '<li class="cta-button"><a class="button round" href="#">Troll!</a></li></ul></div>';
+            your_trolls += '<li class="cta-button"><a class="button round" onclick="upload_to_facebook(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
             if (i != 0 && i % 3 == 0) {
               your_trolls += '</row><row>';
             }
@@ -552,10 +570,10 @@ function generateComment(person_name) {
             console.log(response.data[random].name); 
 
             if (random % 2 == 0) {
-              chosen_posts.push(post_band_templates[random % 5] + random_band);
+              chosen_posts.push(post_band_templates[random % 5] + random_band.replace("'","\'"));
             }
             else {
-              chosen_posts.push(random_band + post_band_templates_alt[random % 5]);
+              chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[random % 5]);
             }          
             bands = 1;
 
@@ -784,6 +802,12 @@ and provide them with a summary of what was posted to their timeline and the lin
     $('.duration').change(function() {
       how_long_ago = $(this).val();
     });
+
+    $('.the_trolls').on('click', function() {
+      var new_msg = $(this).parent().prevAll("li:price").text();
+      console.log(new_msg);
+      postComment(new_msg);
+    })
 
     var qs = window.location.hash;
     if (qs.length) {
