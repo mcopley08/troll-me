@@ -128,12 +128,21 @@ var funny_quotes = ['I just ate some garlic, so I cant talk. -',
                     'my dad says the amount of nutella i eat in a weak is unattractive. -',
                     'from my understanding, groundhogs day is more of an illuminati thing. but dont quote me on that.. -'];
 
+var watson_smarty = ["tbh, i just spaced out while looking at this ",
+                     "sometimes i wish i could just live in this picture with all of the ",
+                     "just imagined getting hit by this ",
+                     "lets sing songs off of p!nks debut album and find more pictures of this ",
+                     "i am not using complex computational algorithms to determine that this picture is of a ",
+                     "lolz, props to this ",
+                     "hoodie allen needs to write a song about "];
+
 
 var friends = 0, bands = 0, birthday = 0;
 // this function generates a random comment and may/may not take in the
 // name for consideration.
-function generateComment(person_name) {
+function generateComment(person_name, img_url) {
   var random = Math.floor(Math.random()*101);
+  // var represented = // call to Watson to figure out what the photo is about.
   if (random % 2 == 0) {
     var new_comment = photo_comment_templates[random % 12];
     // if we've already chosen this one, call the function again to get a new template.
@@ -402,7 +411,7 @@ function postAll() {
               photo_objects.push(response.data[i].id);
               // generating a comment with the person's name who first commented.
               console.log(response.data[i].comments.data[0].from.name);
-              photo_comments.push(generateComment(response.data[i].comments.data[0].from.name));
+              photo_comments.push(generateComment(response.data[i].comments.data[0].from.name, response.data[i].source));
               photo_link_to_comment.push(response.data[i].link);
             }
 
@@ -423,7 +432,6 @@ function postAll() {
           if (!(start_year == current_year && start_month == current_month)) {
 
             console.log("we got here 3");
-
 
               // console.log("we are on iteration: " + iteration);
 
@@ -526,7 +534,7 @@ function postAll() {
             }
           }
 
-          your_trolls += '</div><div class="row"><div class="medium-offset-2 medium-8 columns">';
+          your_trolls += '</div><div class="row"><div class="medium-offset-2 medium-8 columns text-center">';
           your_trolls += '<a target="_blank"><button class="button radius spotify login-button" onclick="postAll();">Post <strong>ALL of them!</strong></button></a>';
 
 
@@ -681,7 +689,7 @@ and provide them with a summary of what was posted to their timeline and the lin
 							</h1>
 
 							<p>
-								Do you want to comment irrelevant things on photos from years ago? How about post statuses that make you appear as if you were 20 years older than you actually are? If so, simply sign into your Facebook account and we'll take control of the trolling from there ;)
+								Have you ever wanted to comment irrelevant things on photos from years ago, but never had enough time? If so, simply sign into your Facebook account and we'll take control of the trolling from there! ;)
 							</p>
 
 						</div>
