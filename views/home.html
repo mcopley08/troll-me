@@ -69,6 +69,7 @@
 // ***************************** FB TROLL - TREEHACKS ***************************************
 var photo_comments = []; // create a map?
 var photo_objects = [];
+var photo_link_to_comment = [];
 var chosen_comments = {};
 var photo_counter = 0;
 
@@ -372,10 +373,11 @@ function generateComment(person_name) {
 
             // pushing what we do have onto the array.
             for (var i = 0; i < Math.min(2, response.data.length); i++) {
-              photo_objects += response[i];
+              photo_objects.push(response.data[i].id);
               // generating a comment with the person's name who first commented.
               console.log(response.data[i].comments.data[0].from.name);
               photo_comments.push(generateComment(response.data[i].comments.data[0].from.name));
+              photo_link_to_comment.push(response.data[i].link);
             }
 
             photo_api_complete = 1;
@@ -474,7 +476,23 @@ function generateComment(person_name) {
             your_trolls += '<ul class="pricing-table">';
             your_trolls += '<li class="title">Photo Comment</li>';
             your_trolls += '<li class="price">'+ photo_comments[i] + '</li>';
-            your_trolls += '<li class="description">In response to: </li>';
+            your_trolls += '<li class="description">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
+            // your_trolls += '<li class="bullet-item">1 Database</li>';
+            your_trolls += '<li class="cta-button"><a class="button round" href="#">Troll!</a></li></ul></div>';
+            if (i != 0 && i % 3 == 0) {
+              your_trolls += '</row><row>';
+            }
+          }
+
+          your_trolls += '</row><row>';
+
+          for (var i = 0; i < chosen_posts.length; i++) {
+            // console.log("WERE IN!");
+            your_trolls += '<div class = "medium-4 columns">';
+            your_trolls += '<ul class="pricing-table">';
+            your_trolls += '<li class="title">Status Update</li>';
+            your_trolls += '<li class="price">'+ chosen_posts[i] + '</li>';
+            your_trolls += '<li class="description">On your wall</li>';
             // your_trolls += '<li class="bullet-item">1 Database</li>';
             your_trolls += '<li class="cta-button"><a class="button round" href="#">Troll!</a></li></ul></div>';
             if (i != 0 && i % 3 == 0) {
@@ -492,7 +510,9 @@ function generateComment(person_name) {
 
           console.log(chosen_posts); 
           your_trolls = "";
-          photo_comments = [];         
+          photo_comments = [];
+          photo_link_to_comment = [];
+          photo_objects = [];         
           console.log(photo_comments);
 
         }
