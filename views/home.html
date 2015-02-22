@@ -88,7 +88,7 @@ var photo_comment_templates = ["what a great day",
 var photo_comment_template_names = [", what are u doing today?", 
                                     ", i definitely agree with you.", 
                                     ", excuse me..?  hahaha just-kidding.",
-                                    ", you left your \'john deere\' trucker hat at my place",
+                                    ", you left your john deere trucker hat at my place",
                                     ", you still have my copy of mario sunshine! ha-ha.",
                                     ", so true, lol"];
 var photo_comment_template_names_alt = ["im going to remember this one for a while, ", 
@@ -102,7 +102,7 @@ var chosen_posts = [];
 
 var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
                                " is the only day of the year i get socks from dockers, and i want to keep it that way.",
-                               " gives me an excuse to spend $35 on doritos and say to myself \'its okay, today is MY day\'"];
+                               " gives me an excuse to spend $35 on doritos and say to myself: its okay, today is MY day"];
 
 var post_birthday_templates_alt = ["take a wild guess at what happens on the following data, and ill give you a hint, it has to do it being my birthday: ",
                                    "ill give you $10 if you chill with me on: "];
@@ -116,8 +116,8 @@ var post_band_templates = ["i should really do more than eat sun chips and liste
 var post_band_templates_alt = [" is the reason i never get my homework done, but im okay with it. its a mutual relationship.",
                                " was playing music when i had my first kiss. on the cheek. from my mom.",
                                ", homemade baklava, pictures of sad monkeys. all of those are essential.",
-                               " and i have been together for 18 month now, and ive loved every second of it. you make me feel like i can be myself around you, and i wouldn\'t trade that for the entire world, happy 18 months, babe!",
-                               " should do a cover of that weird-ass \'witch doctor\' song."];
+                               " and i have been together for 18 month now, time flies when youre scared about your future..",
+                               " should do a cover of that weird-ass witch doctor song."];
 
 var funny_quotes = ['I just ate some garlic, so I cant talk. -',
                     'I hate when Im on a flight and I wake up with a water bottle next to me like oh great now I gotta be responsible for this water bottle. -',
@@ -184,6 +184,13 @@ function postComment(obj_id, new_msg, btn) {
       }
     }
   );
+}
+
+function postAll() {
+  var items = document.querySelectorAll(".trollz");
+  for (var i = 0; i < items.length; i++) {
+      items[i].click();
+  }
 }
 
 
@@ -390,6 +397,7 @@ function postComment(obj_id, new_msg, btn) {
             });
 
             // pushing what we do have onto the array.
+
             for (var i = 0; i < Math.min(2, response.data.length); i++) {
               photo_objects.push(response.data[i].id);
               // generating a comment with the person's name who first commented.
@@ -494,9 +502,9 @@ function postComment(obj_id, new_msg, btn) {
             your_trolls += '<ul class="pricing-table">';
             your_trolls += '<li class="title">Photo Comment</li>';
             your_trolls += '<li class="price">'+ photo_comments[i] + '</li>';
-            your_trolls += '<li class="description">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
+            your_trolls += '<li class="description" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
             // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
-            your_trolls += '<li class="cta-button"><a class="button round" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
+            your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
             if (i != 0 && i % 3 == 0) {
               your_trolls += '</row><row>';
             }
@@ -510,16 +518,19 @@ function postComment(obj_id, new_msg, btn) {
             your_trolls += '<ul class="pricing-table">';
             your_trolls += '<li class="title">Status Update</li>';
             your_trolls += '<li class="price">'+ chosen_posts[i] + '</li>';
-            your_trolls += '<li class="description">On your wall</li>';
+            your_trolls += '<li class="description" style="font-size: 1.2em">On your wall</li>';
             // your_trolls += '<li class="bullet-item">1 Database</li>';
-            your_trolls += '<li class="cta-button"><a class="button round" onclick="upload_to_facebook(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
+            your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="upload_to_facebook(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
             if (i != 0 && i % 3 == 0) {
-              your_trolls += '</row><row>';
+              your_trolls += '</div><div class="row">';
             }
           }
 
-          console.log(your_trolls);
+          your_trolls += '</div><div class="row"><div class="medium-offset-2 medium-8 columns">';
+          your_trolls += '<a target="_blank"><button class="button radius spotify login-button" onclick="postAll();">Post <strong>ALL of them!</strong></button></a>';
 
+
+          // console.log(your_trolls);
 
           $('#loading-contents').addClass('none');
 
