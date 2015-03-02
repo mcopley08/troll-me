@@ -13,7 +13,7 @@ var redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
 
 var scopes = 'user-read-private user-read-email playlist-read-private user-library-read'
 
-var router = express.Router();
+var router = express.Router(); 
 
 // create application/json parser
 var jsonParser = bodyParser.json()
