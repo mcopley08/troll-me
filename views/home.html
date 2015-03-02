@@ -144,10 +144,12 @@ var friends = 0, bands = 0, birthday = 0;
 // this function generates a random comment and may/may not take in the
 // name for consideration.
 function generateComment(person_name, img_url) {
-  var random = Math.floor(Math.random()*101);
-  // var represented = // call to Watson to figure out what the photo is about.
-  if (random % 2 == 0) {
-    var new_comment = photo_comment_templates[random % 12];
+  var random = Math.floor(Math.random()*30);
+
+  // random comment - no name
+  if (0 <= random && random < 10) {
+    var new_comment = photo_comment_templates[Math.floor(Math.random()*photo_comment_templates.length)];
+
     // if we've already chosen this one, call the function again to get a new template.
     if (new_comment in chosen_comments) {
       return generateComment(person_name);
@@ -157,29 +159,30 @@ function generateComment(person_name, img_url) {
       return new_comment;
     }
   }
-  else {
-    random = Math.floor(Math.random() * 101);
-    if (random % 2 == 0) {
-      var new_comment = photo_comment_template_names[random % 6];
-      // if we've already chosen this one, call the function again to get a new template.
-      if (new_comment in chosen_comments) {
-        return generateComment(person_name);
-      }
-      else {
-        chosen_comments[new_comment] = true;
-        return person_name + new_comment;
-      }
+  // random comment - name before
+  else if (10 <= random && random < 20) {
+    var new_comment = photo_comment_template_names[Math.floor(Math.random()*photo_comment_template_names.length)];
+
+    // if we've already chosen this one, call the function again to get a new template.
+    if (new_comment in chosen_comments) {
+      return generateComment(person_name);
     }
     else {
-      var new_comment = photo_comment_template_names_alt[random % 6];
-      // if we've already chosen this one, call the function again to get a new template.
-      if (new_comment in chosen_comments) {
-        return generateComment(person_name);
-      }
-      else {
-        chosen_comments[new_comment] = true;
-        return new_comment + person_name;
-      }
+      chosen_comments[new_comment] = true;
+      return person_name + new_comment;
+    }
+  }
+  // random comment - name after
+  else if (20 <= random && random < 30) {
+    var new_comment = photo_comment_template_names_alt[Math.floor(Math.random()*photo_comment_template_names.length)];
+
+    // if we've already chosen this one, call the function again to get a new template.
+    if (new_comment in chosen_comments) {
+      return generateComment(person_name);
+    }
+    else {
+      chosen_comments[new_comment] = true;
+      return new_comment + person_name;
     }
   }
 }
@@ -628,6 +631,7 @@ function postAll() {
           // grabbing the user's birthday.
           FB.api("/me", function(response) {
 
+            // the upper limit of 100 is an arbitrary random number (it can be anything).
             var random = Math.floor(Math.random()*101);
 
             console.log(response.birthday);
@@ -635,12 +639,14 @@ function postAll() {
 
             user_birthday = user_birthday.substring(0, user_birthday.length - 5);
             
-
+            // the even/odd division is simply there just to randomly select
+            // which bank we're grabbing it from, if we need to b-day info before
+            // or after our template.
             if (random % 2 == 0) {
-              chosen_posts.push(user_birthday + post_birthday_templates[random % 3]);
+              chosen_posts.push(user_birthday + post_birthday_templates[Math.floor(Math.random()*post_birthday_templates.length)]);
             }
             else {
-              chosen_posts.push(post_birthday_templates_alt[random % 2] + user_birthday);
+              chosen_posts.push(post_birthday_templates_alt[Math.floor(Math.random()*post_birthday_templates_alt.length)] + user_birthday);
             }
             birthday = 1;
 
@@ -655,24 +661,24 @@ function postAll() {
             console.log(response.data[random].name); 
 
             if (random % 2 == 0) {
-              chosen_posts.push(post_band_templates[random % 5] + random_band.replace("'","\'"));
+              chosen_posts.push(post_band_templates[Math.floor(Math.random()*post_band_templates.length)] + random_band.replace("'","\'"));
             }
             else {
-              chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[random % 5]);
+              chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[Math.floor(Math.random()*post_band_templates_alt.length)]);
             }          
             bands = 1;
 
           });
 
           // grabbing one of the user's friends.
-          FB.api("/me/taggable_friends?limit=25", function(response) {
+          FB.api("/me/taggable_friends?limit=100", function(response) {
 
             console.log(response);           
 
             var random = Math.floor(Math.random()*response.data.length);
             random_friend = response.data[random].name;
 
-            chosen_posts.push(funny_quotes[random % 8] + random_friend);
+            chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
             friends = 1;
 
           });
@@ -682,8 +688,6 @@ function postAll() {
           console.log("FINISHING LOG POSTS");
 
         }
-
-        
 
         photo_API_request(checkLength, final_check); 
 

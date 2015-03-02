@@ -58,8 +58,6 @@ From my understanding, it is due to loading multiple version of the Facebook Jav
 ## Improvements
 
 - Fixing the already "Like"-d issue.
-- Generating a more random algorithm for photos/likes.
-- Separating the likes from the photos.
 - Making sure it reaches all of our word banks.
 
 ## Suggestions for Further Enhancements
@@ -71,3 +69,7 @@ From my understanding, it is due to loading multiple version of the Facebook Jav
 - Getting rid of the bank of comment/status templates and use NLP algorithms to generate them dynamically.
 - Post random photos/links to weird & funny things from the user.
 - Share random status updates from public users (political figures, department stores, artists, etc.)
+
+## Things to Note
+
+- "Taggable Friends" which is used to mention random friends in statuses, requires additional approval to be used in the application.
