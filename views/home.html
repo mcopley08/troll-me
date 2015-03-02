@@ -2,7 +2,9 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Home</title>
+		<title>troll-me</title>
+
+    <meta name="viewport" content="width=device-width, target-densitydpi=high-dpi" />
 
 		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,100italic,300italic,400italic|Open+Sans:300italic,400italic,600italic,400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
@@ -264,8 +266,8 @@ function displayData() {
     });
   }
   // changing 'start trolling' to 'troll again'
-  if ($('#submit-video').text() == "START TROLLING!") {
-    $('#submit-video').text("TROLL AGAIN!");
+  if ($('#submit-video').text() == "Start Trolling!") {
+    $('#submit-video').text("Troll Again!");
   }
 
   console.log(chosen_posts); 
@@ -933,7 +935,7 @@ and provide them with a summary of what was posted to their timeline and the lin
 		// $(document).on('change', '.duration', function() {
       // $('#two').removeClass('hidden');
       $('#facebook-login').delay(400).addClass('animated fadeInUp');
-      
+
 		// });
 
 		$(document).on('click', '#facebook-login', function() {
