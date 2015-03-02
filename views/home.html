@@ -501,15 +501,10 @@ function postAll() {
 
         function photo_API_request(callback, callback_2) {
 
-          // photo_comments.length = 0;
-
           var FB_photo_request = '/me/photos?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
 
           // making the api call - once for all photos
           FB.api(FB_photo_request, function(response) {
-
-            console.log(response);
-            // we need to only grab it if theres a convo in the comments
 
             // sorting the photos by the most comments.
             response.data.sort(function(a, b) {
@@ -522,36 +517,54 @@ function postAll() {
 
               return b.comments.data.length - a.comments.data.length;
             });
+              // console.log(response2.data[0].comments);
 
-            // pushing what we do have onto the array.
-
-            for (var i = 0; i < Math.min(1, response.data.length); i++) {
-              photo_objects.push(response.data[i].id);
-              // generating a comment with the person's name who first commented.
-              console.log(response.data[i].comments.data[0].from.name);
-
-              photo_comments.push(generateComment(response.data[i].comments.data[0].from.name, response.data[i].source));
-              photo_link_to_comment.push(response.data[i].link);
-
-              // sneaking some likes in there as well!
-              var random = Math.floor(Math.random()*response.data[i].comments.data.length);
-              like_objects.push(response.data[i].comments.data[random].id);
-              like_comments.push(response.data[i].comments.data[random].message);
+            // deleting all photo objects with no comments.
+            for (var i = 0; i < response.data.length; i++) {
+              if (typeof response.data[i].comments == "undefined") {
+                response.data.splice(i, 1);
+                i--;
+              }
             }
 
+            console.log("CHECK THIS!");
+            console.log(response);
+            console.log(response.data.length);
+
+            // pushing what we do have onto the array.
+            // change the first parameter to Math.min() in order to grab the desired number
+            // of photos in that six month time frame.
+            for (var i = 0; i < Math.min(1, response.data.length); i++) {
+
+              var random_pic = Math.floor(Math.random()*response.data.length);
+              console.log(random_pic);
+
+              photo_objects.push(response.data[random_pic].id);
+              // generating a comment with the person's name who first commented.
+              console.log(response.data[random_pic].comments.data[0].from.name);
+
+              photo_comments.push(generateComment(response.data[random_pic].comments.data[0].from.name, response.data[random_pic].source));
+              photo_link_to_comment.push(response.data[random_pic].link);
+
+              random_pic = Math.floor(Math.random()*response.data.length);
+
+              // sneaking some likes in there as well!
+              var random_com = Math.floor(Math.random()*response.data[random_pic].comments.data.length);
+
+              like_objects.push(response.data[random_pic].comments.data[random_com].id);
+              like_comments.push(response.data[random_pic].comments.data[random_com].message);
+
+            }
             photo_api_complete = 1;
-
             callback(callback_2);
-
           });
-
         }
 
         function final_check() {
 
           while (check_complete != 1) {
-                  setTimeout(function() { checkLength(final_check); }, 500);
-                  return;
+            setTimeout(function() { checkLength(final_check); }, 500);
+            return;
           }
           if (!(start_year == current_year && start_month == current_month)) {
 
