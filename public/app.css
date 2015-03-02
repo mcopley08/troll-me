@@ -2,17 +2,17 @@
 
 body {
 	font-family: 'Lato', sans-serif;
+    height: 100%;
+    overflow-y: hidden;
 }
 
 header {
-	background: 
-	    linear-gradient(
-	    	rgba(0, 109, 156, 0.5),
-	    	rgba(0, 109, 156, 0.5)
-	    ),
-	    url(img/san_francisco.jpg);
+	background-image: url(img/main-page/2.png);
 
+    width: 100%;
+    height: 100%;
 	background-size: cover;
+    background-position: center;
 	font-family: 'Lato', sans-serif !important;
 	color: #fff !important;
 }
@@ -22,8 +22,9 @@ section {
 }
 
 h1 {
-    font-size: 5em !important;
-    font-family: 'Lobster', cursive !important;
+    font-size: 4em !important;
+    letter-spacing: 5px;
+    font-family: 'Raleway', sans-serif !important;
 }
 
 h2, h3, h4, h5, h6, p {
@@ -44,6 +45,13 @@ video {
     position: relative;
     left: 50%;
     margin-left: -250px;
+}
+
+.description {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.5em !important;
 }
 
 .duration {
@@ -71,16 +79,16 @@ video {
 .top-container {
 	font-weight: 700;
 	font-size: 1rem;
-	margin-top: 150px;
+	margin-top: 50px;
 	margin-bottom: 60px;
 }
 
 .facebook {
-	background-color: #297FB8 !important;
+	background-color: rgba(255,255,255,0.2) !important;
 }
 
 .facebook:hover {
-	background-color: #1F618C !important;
+	background-color: rgba(0,0,0,0.5) !important;
 }
 
 .spotify {
@@ -116,13 +124,13 @@ video {
 }
 
 .make-video {
-	background-color: #E74C3C !important;
+	background-color: rgba(255,255,255,0.2) !important;
 	font-weight: 700 !important;
 	letter-spacing: 1.5px !important;
 }
 
 .make-video:hover {
-	background-color: #C53F31 !important;
+	background-color: rgba(0,0,0,0.5) !important;
 }
 
 .make-video.disabled:hover {

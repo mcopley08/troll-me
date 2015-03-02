@@ -6,7 +6,7 @@
 
 		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,100italic,300italic,400italic|Open+Sans:300italic,400italic,600italic,400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'> <!-- Lobster -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'> <!-- Raleway Regular and Bold -->
 		<link rel="stylesheet" type="text/css" href="app.css">
 		<link rel="stylesheet" type="text/css" href="vendor/foundation/css/foundation.min.css">
 
@@ -769,39 +769,50 @@ and provide them with a summary of what was posted to their timeline and the lin
 
 			<div class="row">
 				
-				<div class="medium-8 medium-centered text-center columns">
+				<div class="medium-10 medium-centered text-center columns">
 
 					<div class="top-container">
 
 						<div class="row">
 
-							<h1 class="white"> <!-- use the lobster font for this!! -->
-								Facebook Troll!
-							</h1>
+              <div class="medium-10 medium-centered text-center columns">
 
-							<p>
-								Have you ever wanted to comment irrelevant things on photos from years ago, but never had enough time? If so, simply sign into your Facebook account and we'll take control of the trolling from there! ;)
-							</p>
+  							<h1 class="white" style="display:inline"> 
+  								<b>troll </b></h1><h1 class="white" style="padding: 4px; display:inline; border: white 3px solid">ME
+  							</h1>
 
-						</div>
+            </div>
 
-						<div id="two" class="row login-buttons hidden">
+            <div class="row" style="margin-top:10px">
+							<h2 class="description">
+								Don't take life too seriously
+							</h2>
 
-							<div class="medium-12 columns">
+						</div> 
+
+						<div id="two" class="row login-buttons">
+
+							<div class="medium-6 columns">
 								
 								<button id="facebook-login" class="button radius facebook login-button">Login with <strong>Facebook</strong></button>
 
-							<div id="fb-root"></div>
+							  <div id="fb-root"></div>
 
 							</div>
 
+              <div id="submit-video-div" class="medium-6 columns hidden">
+
+                <button id="submit-video" class="disabled button radius make-video">Start <strong>Trolling!</strong></button>
+
+              </div>
+
 						</div>
 
-						<div class="row">
+						<!-- <div class="row">
 							
 							<button id="submit-video" class="disabled button radius make-video">START TROLLING!</button>
 
-						</div>
+						</div> -->
 					</div>
 				</div>
 
@@ -851,9 +862,6 @@ and provide them with a summary of what was posted to their timeline and the lin
 			</div>
 
 		</section>
-
-
-
 
     <!-- Section: about -->
     <section id="about" class="home-section text-center">
@@ -923,11 +931,14 @@ and provide them with a summary of what was posted to their timeline and the lin
     }
 
 		// $(document).on('change', '.duration', function() {
-			$('#two').addClass('animated fadeInUp').removeClass('hidden');
+      // $('#two').removeClass('hidden');
+      $('#facebook-login').delay(400).addClass('animated fadeInUp');
+      
 		// });
 
 		$(document).on('click', '#facebook-login', function() {
 			if (!$(this).parent().parent().hasClass('hidden')) {
+        $('#submit-video-div').addClass('animated fadeInUp').removeClass('hidden');
         $('#submit-video').removeClass('disabled');
 				// $('#three').addClass('animated fadeInUp').removeClass('hidden');
 				FB.login(function(response) {
@@ -946,11 +957,6 @@ and provide them with a summary of what was posted to their timeline and the lin
 			}
 		});
 
-		// $(document).on('click', '#spotify-login', function() {
-		// 	if(!$(this).parent().parent().hasClass('hidden')) {
-		// 		$('#submit-video').removeClass('disabled');
-		// 	}
-		// });
 
 		// Video loading elements
 		$(document).on('click', '#submit-video', function() {
