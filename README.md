@@ -58,7 +58,6 @@ From my understanding, it is due to loading multiple version of the Facebook Jav
 ## Improvements
 
 - Fixing the already "Like"-d issue.
-- Making sure it reaches all of our word banks.
 
 ## Suggestions for Further Enhancements
 

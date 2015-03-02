@@ -70,6 +70,7 @@
 var photo_comments = []; // create a map?
 var photo_objects = [];
 var photo_link_to_comment = [];
+var like_link_to_comment = [];
 var like_objects = [];
 var like_comments = [];
 var chosen_comments = {};
@@ -241,7 +242,7 @@ function displayData() {
     your_trolls += '<ul class="pricing-table">';
     your_trolls += '<li class="title">Like a comment</li>';
     your_trolls += '<li class="price">'+ like_comments[i] + '</li>';
-    your_trolls += '<li class="description" style="font-size: 1.2em">See the comment <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
+    your_trolls += '<li class="description" style="font-size: 1.2em">See the comment <a href="' + like_link_to_comment[i] + '" target="_blank">here</a></li>';
     // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postLike(\'' + like_objects[i] + '\', this);">Troll!</a></li></ul></div>';
     // if (i != 0 && i % 3 == 0) {
@@ -272,6 +273,7 @@ function displayData() {
   photo_comments = [];
   chosen_posts = [];
   photo_link_to_comment = [];
+  like_link_to_comment = [];
   photo_objects = [];      
   like_objects = [];
   like_comments = []; 
@@ -425,6 +427,7 @@ function postAll() {
     your_trolls = "";
           photo_comments = [];
           photo_link_to_comment = [];
+          like_link_to_comment = [];
           photo_objects = [];      
           like_objects = [];
           like_comments = []; 
@@ -552,10 +555,27 @@ function postAll() {
               random_pic = Math.floor(Math.random()*response.data.length);
 
               // sneaking some likes in there as well!
-              var random_com = Math.floor(Math.random()*response.data[random_pic].comments.data.length);
+              var random_com; // = Math.floor(Math.random()*response.data[random_pic].comments.data.length);
 
-              like_objects.push(response.data[random_pic].comments.data[random_com].id);
-              like_comments.push(response.data[random_pic].comments.data[random_com].message);
+              // trying ten times (to avoid infinite loop if user likes all comments) to pick
+              // a comment that the user hasn't already liked - then after gets a new photo.
+              // gets a new photo a max number of 10 times.
+              for (var j = 0; j < 100; j++) {
+
+                // getting a new picture after 10 tries.
+                if (j % 10 == 0) {
+                  random_pic = Math.floor(Math.random()*response.data.length);
+                }
+
+                random_com = Math.floor(Math.random()*response.data[random_pic].comments.data.length);
+
+                if (!response.data[random_pic].comments.data[random_com].user_likes) {
+                  like_objects.push(response.data[random_pic].comments.data[random_com].id);
+                  like_comments.push(response.data[random_pic].comments.data[random_com].message);
+                  like_link_to_comment.push(response.data[random_pic].link);
+                  break;
+                }
+              }             
 
             }
             photo_api_complete = 1;
