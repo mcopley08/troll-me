@@ -47,7 +47,11 @@ video {
     margin-left: -250px;
 }
 
-.description {
+.cta-button > .button {
+    background-color: #0B243B !important;
+}
+
+.info {
     letter-spacing: 5px;
     text-transform: uppercase;
     color: white;
@@ -84,19 +88,19 @@ video {
 }
 
 .facebook {
-	background-color: rgba(255,255,255,0.2) !important;
-}
-
-.facebook:hover {
 	background-color: rgba(0,0,0,0.5) !important;
 }
 
+.facebook:hover {
+	background-color: rgba(0,0,0,0.7) !important;
+}
+
 .spotify {
-	background-color: #84BD00 !important;
+	background-color: rgba(80,80,80,1) !important;
 }
 
 .spotify:hover {
-	background-color: #659100 !important;
+	background-color: rgba(40,40,40,1) !important;
 }
 
 .hidden {
@@ -124,13 +128,13 @@ video {
 }
 
 .make-video {
-	background-color: rgba(255,255,255,0.2) !important;
+	background-color: rgba(0,0,0,0.5) !important;
 	font-weight: 700 !important;
 	letter-spacing: 1.5px !important;
 }
 
 .make-video:hover {
-	background-color: rgba(0,0,0,0.5) !important;
+	background-color: rgba(0,0,0,0.7) !important;
 }
 
 .make-video.disabled:hover {

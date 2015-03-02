@@ -785,10 +785,12 @@ and provide them with a summary of what was posted to their timeline and the lin
 
             </div>
 
-            <div class="row" style="margin-top:10px">
-							<h2 class="description">
-								Don't take life too seriously
-							</h2>
+            <div class="row" style="margin-top:10px; margin-bottom: 15px">
+              <div class="medium-12 medium-centered text-center columns">
+  							<h2 class="info">
+  								Don't take life too seriously
+  							</h2>
+              </div>
 
 						</div> 
 
@@ -963,17 +965,26 @@ and provide them with a summary of what was posted to their timeline and the lin
 		// Video loading elements
 		$(document).on('click', '#submit-video', function() {
 
+      
       if ($('#loading-contents').hasClass('none')) {
         $.when( $('.video-container').slideUp() ).then(function() {
           $('#loading-contents').removeClass('none');
           $('#video-contents').addClass('none');
           $('.video-container').slideDown();
+          $('html, body').animate({
+            scrollTop: $("#loading-contents").offset().top
+          }, 1000);
         });
       }
 
       else if (!$(this).hasClass('disabled')) {
         $('.video-container').slideDown();
+        $('html, body').animate({
+          scrollTop: $("#loading-contents").offset().top
+        }, 1000);
       }
+
+      
 
       
       testAPI();
