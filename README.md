@@ -35,6 +35,13 @@ For more information about using Node.js on Heroku, see these Dev Center article
 - [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
 - [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
 
+## Quick Start
+
+Here are a few quick things you can do within 15 minutes to custom the application:
+
+- Simply find the word bank section of (name_of_js_file) and add your own comment/status templates for trolling! Be sure to follow the format of each array, and including single or double quotes is not supported currently and will cause an error with the Facebook API call.
+- Modify the "generateComment()" function. The image url is passed to the function for the photo the comment belongs to, so calling an API with the link or integrating the image in some way would be awesome (See the 'Further Enhancements' section for detailed suggestions).
+
 ## Developer Notes
 
 These are some facts about the application as it stands right now:
@@ -53,24 +60,19 @@ From my understanding, it is due to [loading multiple versions of the Facebook J
 
 - If a generated comment/post contains any form of quotation marks (single or double) it will not post to Facebook and will return with an error.
 
-- 
-
-## Improvements
-
-- Fixing the already "Like"-d issue.
-
 ## Suggestions for Further Enhancements
 
-- Make an API call to Watson or other Visual Recognition services, so that when comments are generated you can have a few words that describe a photo and integrate them into the "troll" comment.
-- Create events on the user's profile (this might not be allowed anymore, though...)
-- Tag friends in the comments/statuses instead of simply mentioning their name.
+- Make an API call to [IBM's Watson](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/services-catalog.html) or other [Visual Recognition](http://blog.mashape.com/list-of-14-image-recognition-apis/) services, so that when comments are generated you can have a few words that describe a photo and integrate them into the "troll" comment.
+- Integrate a user's [events](https://developers.facebook.com/docs/graph-api/reference/v2.2/event) into messages (Facebook only allows a kind of restricted access, though).
+- [Mention/Tag friends](https://developers.facebook.com/docs/opengraph/using-actions/v2.2#mentions) in the comments/statuses instead of simply mentioning their name.
 - [Send messages](https://developers.facebook.com/docs/sharing/reference/send-dialog) to random friends.
 - Improving the bank of comments/statuses that are generated.
-- Getting rid of the bank of comment/status templates and use NLP algorithms to generate them dynamically.
+- Calling an [API](http://iheartquotes.com/api) or [script](http://www.htmlgoodies.com/JSBook/sentence.html) to generate random sentences, possibly incorporate [user's names](http://www.icndb.com/api/).
+- Getting rid of the bank of comment/status templates and use [NLP algorithms](http://blog.mashape.com/list-of-25-natural-language-processing-apis/) to generate them dynamically.
 - Post random photos/links to weird & funny things from the user.
-- Share random status updates from public users (political figures, department stores, artists, etc.)
+- Share random [status updates](https://developers.facebook.com/docs/graph-api/reference/v2.2/status) from public users (political figures, department stores, artists, etc.)
 
 ## Things to Note
 
-- "Taggable Friends" which is used to mention random friends in statuses, requires additional approval to be used in the application.
-- "Animate.css" is already included in the package, so if you wanted to improve on the UI it is available.
+- [Taggable Friends](https://developers.facebook.com/docs/graph-api/reference/v2.2/user/taggable_friends) which is used to mention random friends in statuses, requires additional approval to be used in the application.
+- [Animate.css](http://daneden.github.io/animate.css/) is already included in the package, so if you wanted to improve on the UI it is available.

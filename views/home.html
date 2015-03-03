@@ -1,59 +1,44 @@
-
 <!doctype html>
 <html>
 	<head>
 		<title>troll-me</title>
 
+    <!-- Adjusted mobile viewing -->
     <meta name="viewport" content="width=device-width, target-densitydpi=high-dpi" />
 
+    <!-- Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,100italic,300italic,400italic|Open+Sans:300italic,400italic,600italic,400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'> <!-- Raleway Regular and Bold -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Stylesheets -->
 		<link rel="stylesheet" type="text/css" href="app.css">
 		<link rel="stylesheet" type="text/css" href="vendor/foundation/css/foundation.min.css">
-
 		<link rel="stylesheet" href="animated.css">
+
+    <!-- Custom CSS -->
+    <link href="default.css" rel="stylesheet">
+
+    <!-- Scripts -->
 		<script type="text/javascript" src="vendor/jquery-2.1.3.min.js"></script>
     <script src="vendor/jquery.easing.min.js"></script> 
     <script src="vendor/jquery.scrollTo.js"></script>
     <script src="vendor/wow.min.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="vendor/custom.js"></script>
 
-    <!-- Custom CSS -->
-    <!-- <link href="style.css" rel="stylesheet"> -->
-    <link href="default.css" rel="stylesheet">
 	</head>
 
 	<script type="text/javascript">
 
-  // ********************** These are the arrays of url's to be sent to stupeflex. ******************
-  // Every 30 second interval (6 months) will add exactly one url to each of these arrays.
-  // Note: creating the video will dynmically iterate through each of these.
-  var video_url = [];
-  var video_info = [];
-  var post_1 = [];
-  var post_2 = [];
-  var first_pic = [];
-  var first_pic_info = [];
-  var second_pic = [];
-  var second_pic_info = [];
-  var third_pic = [];
-  var fourth_pic = [];
-  var songs_array = [];
+  // these variables help make sure that the api call is executing in the correct order.
 
-  // these are our extra variables
-  var extra_photos = [];
-  var extra_videos = [];
-  var extra_posts = [];
-
-  // this is how many elements should be in each array at the end of each 6 motnh loop.
   var iteration = 0;
   var photo_api_complete = 0;
-  var video_api_complete = 0;
-  var post_api_complete = 0;
 
-  // ********************************* date variables ************
+  // ********************************* date variables ********************************
+
   var start_year;
   var start_month;
   var start_day;
@@ -61,15 +46,9 @@
   var end_month;
   var end_day;
 
-  // *********************** This determines which extra content to fill in, **********************
-  var photo_index = 0;
-  var post_index = 0;
-  var video_index = 0;
-  var which_one = 0;
-  var check_complete = 0;
-
 // ***************************** FB TROLL - TREEHACKS ***************************************
-var photo_comments = []; // create a map?
+
+var photo_comments = []; 
 var photo_objects = [];
 var photo_link_to_comment = [];
 var like_link_to_comment = [];
@@ -77,6 +56,14 @@ var like_objects = [];
 var like_comments = [];
 var chosen_comments = {};
 var photo_counter = 0;
+var chosen_posts = [];
+var friends = 0, bands = 0, birthday = 0;
+
+
+// ****************************** Bank of comment/status templates *************************************
+
+// To add to the existing bank of words, simply follow the format of each of the arrays,
+// and make sure there are no double or single quotes in your new template. Then you're all set!
 
 var photo_comment_templates = ["what a great day", 
                                "reminds me of the good old days",
@@ -102,8 +89,6 @@ var photo_comment_template_names_alt = ["im going to remember this one for a whi
                                         "you should've seen me when i posted this pic, ",
                                         "my mom gave me some weird questions after this one... remember, ",
                                         "great comment, "];
-
-var chosen_posts = [];
 
 var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
                                " is the only day of the year i get socks from dockers, and i want to keep it that way.",
@@ -141,11 +126,16 @@ var watson_smarty = ["tbh, i just spaced out while looking at this ",
                      "lolz, props to this ",
                      "hoodie allen needs to write a song about "];
 
+// ******************************** Functions for the troll-me application ***********************************
 
-var friends = 0, bands = 0, birthday = 0;
-
-// this function generates a random comment and may/may not take in the
-// name for consideration.
+// EFFECTS: This function generates a random comment and 
+//          may/may not take in the user's name for consideration.
+//          Nothing is done with the img_url, but it is passed to the 
+//          function in case improvements were made that called a visual
+//          recognition API for the photo.
+//
+//          *Doesn't return the same template more than once in each 
+//          'troll-me' call.
 function generateComment(person_name, img_url) {
   var random = Math.floor(Math.random()*30);
 
@@ -427,34 +417,15 @@ function postAll() {
     birthday = 0;
 
     your_trolls = "";
-          photo_comments = [];
-          photo_link_to_comment = [];
-          like_link_to_comment = [];
-          photo_objects = [];      
-          like_objects = [];
-          like_comments = []; 
-          chosen_posts = [];
+    photo_comments = [];
+    photo_link_to_comment = [];
+    like_link_to_comment = [];
+    photo_objects = [];      
+    like_objects = [];
+    like_comments = []; 
+    chosen_posts = [];
 
-
-    video_url.length = 0;
-    video_info.length = 0;
-    post_1.length = 0;
-    post_2.length = 0;
-    first_pic.length = 0;
-    first_pic_info.length = 0;
-    second_pic.length = 0;
-    second_pic_info.length = 0;
-    third_pic.length = 0;
-    fourth_pic.length = 0;
-    extra_photos.length = 0;
     iteration = 0;
-
-    photo_index = 0;
-    post_index = 0;
-    video_index = 0;
-    which_one = 0;
-
-    
 
     // ****************** finding out our starting date ***********************
 
@@ -491,18 +462,9 @@ function postAll() {
       ++end_year;
     }
 
-        // resetting the extra variables for this 6 month period.
-        extra_photos = [];
-        extra_videos = [];
-        extra_posts = [];
-        photo_index = 0;
-        post_index = 0;
-        video_index = 0;
-        api_complete = 0;
+
 
         photo_api_complete = 0;
-        video_api_complete = 0;
-        post_api_complete = 0;
 
         // we need to make an array of comment post requests and append to it
         // everytime then suggest it to the user so they can approve!
@@ -593,18 +555,7 @@ function postAll() {
           }
           if (!(start_year == current_year && start_month == current_month)) {
 
-              // resetting the extra variables for this 6 month period.
-              extra_photos = [];
-              extra_videos = [];
-              extra_posts = [];
-              photo_index = 0;
-              post_index = 0;
-              video_index = 0;
-              api_complete = 0;
-
               photo_api_complete = 0;
-              video_api_complete = 0;
-              post_api_complete = 0;
               check_complete = 0;
 
               // moving to the next 6 month interval.
