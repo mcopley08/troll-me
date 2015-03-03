@@ -49,7 +49,7 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 ```
 Uncaught RangeError: Maximum call stack size exceeded
 ```
-From my understanding, it is due to loading multiple version of the Facebook JavaScript SDK.
+From my understanding, it is due to [loading multiple versions of the Facebook JavaScript SDK](http://neverblog.net/facebook-javascript-sdk-uncaught-rangeerror-maximum-call-stack-size-exceeded-error/).
 
 - If a generated comment/post contains any form of quotation marks (single or double) it will not post to Facebook and will return with an error.
 

@@ -52,6 +52,12 @@ video {
     background-color: #0B243B !important;
 }
 
+.one-edge-shadow {
+    -webkit-box-shadow: 0 6px 8px 0px rgb(80,80,80);
+       -moz-box-shadow: 0 6px 8px 0px rgb(80,80,80);
+            box-shadow: 0 6px 8px 0px rgb(80,80,80), 0 -2px 8px 0px rgb(80,80,80);
+}
+
 .developer {
     letter-spacing: 5px;
     text-transform: uppercase;
