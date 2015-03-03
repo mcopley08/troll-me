@@ -35,6 +35,11 @@ For more information about using Node.js on Heroku, see these Dev Center article
 - [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
 - [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
 
+## Walkthrough of the 'troll-me' Algorithm
+
+- grabs content from a period of 6 months.
+- default is 3 sets of 6 month periods.
+
 ## Quick Start
 
 Here are a few quick things you can do within 15 minutes to custom the application:

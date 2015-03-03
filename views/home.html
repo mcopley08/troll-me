@@ -152,6 +152,7 @@ function generateComment(person_name, img_url) {
       return new_comment;
     }
   }
+
   // random comment - name before
   else if (10 <= random && random < 20) {
     var new_comment = photo_comment_template_names[Math.floor(Math.random()*photo_comment_template_names.length)];
@@ -165,6 +166,7 @@ function generateComment(person_name, img_url) {
       return person_name + new_comment;
     }
   }
+
   // random comment - name after
   else if (20 <= random && random < 30) {
     var new_comment = photo_comment_template_names_alt[Math.floor(Math.random()*photo_comment_template_names.length)];
@@ -180,24 +182,24 @@ function generateComment(person_name, img_url) {
   }
 }
 
-// ************* Function that fills in our empty div with our content we generated. **************
+// ************* Function that fills in our empty div with our content we generated. ******************
 function displayData() {
 
+  // making sure the div is empty, so we don't add to previous suggestions for 'trolls'.
   $('#video-paste').empty();
 
+  // making sure we generated statuses that integrate
+  // friends, bands, and the user's birthday before we continue.
   while (friends != 1 || bands != 1 || birthday != 1) {
     setTimeout(function() { displayData(); }, 500);
     return;
   }
-  console.log("ESTOY AQUIII");
-  console.log(like_comments);
 
+  // this is the variable that will hold all of the new content's html.
   var your_trolls = "";
 
-  // console.log(chosen_comments);
-
+  // adding all of the suggestions for photo comment 'trolls'.
   for (var i = 0; i < photo_comments.length; i++) {
-    // console.log("WERE IN!");
     your_trolls += '<div class = "medium-4 columns">';
     your_trolls += '<ul class="pricing-table">';
     your_trolls += '<li class="title">Photo Comment</li>';
@@ -205,31 +207,21 @@ function displayData() {
     your_trolls += '<li class="description" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
     // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
-    // if (i != 0 && i % 3 == 0) {
-    //   your_trolls += '</div><div class = "row">';
-    // }
   }
 
-  // your_trolls += '</div><div class = "row">';
-
+  // adding all of the suggestions for status update 'trolls'.
   for (var i = 0; i < chosen_posts.length; i++) {
-    // console.log("WERE IN!");
     your_trolls += '<div class = "medium-4 columns">';
     your_trolls += '<ul class="pricing-table">';
     your_trolls += '<li class="title">Status Update</li>';
     your_trolls += '<li class="price">'+ chosen_posts[i] + '</li>';
     your_trolls += '<li class="description" style="font-size: 1.2em">On your wall</li>';
     // your_trolls += '<li class="bullet-item">1 Database</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="upload_to_facebook(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
-    // if (i != 0 && i % 3 == 0) {
-    //   your_trolls += '</div><div class="row">';
-    // }
+    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
   }
 
-  // your_trolls += '</div><div class = "row">';
-
+  // adding all of the suggestions for liking comment 'trolls'.
   for (var i = 0; i < like_comments.length; i++) {
-    // console.log("WERE IN!");
     your_trolls += '<div class = "medium-4 columns">';
     your_trolls += '<ul class="pricing-table">';
     your_trolls += '<li class="title">Like a comment</li>';
@@ -237,17 +229,16 @@ function displayData() {
     your_trolls += '<li class="description" style="font-size: 1.2em">See the comment <a href="' + like_link_to_comment[i] + '" target="_blank">here</a></li>';
     // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postLike(\'' + like_objects[i] + '\', this);">Troll!</a></li></ul></div>';
-    // if (i != 0 && i % 3 == 0) {
-    //   your_trolls += '</div><div class = "row">';
-    // }
   }
 
+  // adding the 'post all' button to the html variable.
   your_trolls += '</div><div class="row"><div class="medium-offset-2 medium-8 columns text-center">';
   your_trolls += '<a target="_blank"><button class="button radius spotify login-button" onclick="postAll();">Post <strong>ALL of them!</strong></button></a>';
 
   // updating the results
   $('#video-paste').append(your_trolls);
 
+  // making the slider go up and down while the content fills up.
   if (!$('#loading-contents').hasClass('none')) {
     $.when( $('.video-container').slideUp() ).then(function() {
       $('#loading-contents').addClass('none');
@@ -255,11 +246,13 @@ function displayData() {
       $('.video-container').delay(400).slideDown(1200);
     });
   }
+
   // changing 'start trolling' to 'troll again'
   if ($('#submit-video').text() == "Start Trolling!") {
     $('#submit-video').text("Troll Again!");
   }
 
+  // resetting the arrays if the 'troll again' button is pressed.
   console.log(chosen_posts); 
   your_trolls = "";
   photo_comments = [];
@@ -270,16 +263,13 @@ function displayData() {
   like_objects = [];
   like_comments = []; 
 
-  // if (!$('#submit-video').hasClass('disabled')) {
-  //   $('.video-container').slideDown();
-  // }  
-  console.log(photo_comments);
-
+  // console.log(photo_comments);
 }
 
-// ******************** Function to actally post to FB ***********************
+// ********************************* Functions to actally post the trolls to FB ***********************
+
+// this function is called to post a photo comment.
 function postComment(obj_id, new_msg, btn) {
-  console.log("in the function!");
   var first_param = "/" + obj_id + "/comments";
   FB.api(first_param, "POST", { "message": new_msg },
     function (response) {
@@ -291,6 +281,23 @@ function postComment(obj_id, new_msg, btn) {
   );
 }
 
+// this function is called to post a status update.
+function postStatus(status_msg, btn) {
+  FB.api(
+    "/me/feed",
+    "POST",
+    {
+      "message": status_msg
+    },
+    function (response) {
+      if (response && !response.error) {
+        // alert('Post successful!');
+        $(btn).fadeOut("slow");
+      }
+  });
+}
+
+// this function is called to execute a 'like'.
 function postLike(obj_id, btn) {
   var first_param = "/" + obj_id + "/likes";
   FB.api(
@@ -304,6 +311,7 @@ function postLike(obj_id, btn) {
   );
 }
 
+// this executes all of the generated trolls to the user's profile. 
 function postAll() {
   var items = document.querySelectorAll(".trollz");
   for (var i = 0; i < items.length; i++) {
@@ -311,48 +319,41 @@ function postAll() {
   }
 }
 
+// ********** Functions for loading and checking the state of the Facebook API connection *************
 
-  // *************************************************************************************************
-
-  // Getting the current day, month, and year.
-  var current_date = new Date();
-  var current_day = current_date.getDate();
-  var current_month = current_date.getMonth() + 1; // b/c its 0 indexed.
-  var current_year = current_date.getFullYear();
-
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      var access_token = response.authResponse.accessToken;
-      console.log("Connected: " + access_token);
-      // testAPI();
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      console.log('Not authorized');
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      console.log('Please log ' + 'into Facebook.');
-    }
+// This is called with the results from from FB.getLoginStatus().
+function statusChangeCallback(response) {
+  console.log('statusChangeCallback');
+  console.log(response);
+  // The response object is returned with a status field that lets the
+  // app know the current login status of the person.
+  // Full docs on the response object can be found in the documentation
+  // for FB.getLoginStatus().
+  if (response.status === 'connected') {
+    // Logged into your app and Facebook.
+    var access_token = response.authResponse.accessToken;
+    console.log("Connected: " + access_token);
+    // testAPI();
+  } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+    console.log('Not authorized');
+  } else {
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+    console.log('Please log ' + 'into Facebook.');
   }
+}
 
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
+// This function is called when someone finishes with the Login
+// Button.  See the onlogin handler attached to it in the sample
+// code below.
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
 
-  window.fbAsyncInit = function() {
+window.fbAsyncInit = function() {
   FB.init({
     appId      : '480747342080039',
     cookie     : true,  // enable cookies to allow the server to access 
@@ -377,39 +378,34 @@ function postAll() {
     statusChangeCallback(response);
   });
 
-  };
+};
 
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+// Load the SDK asynchronously
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
 
-  function upload_to_facebook(status_msg, btn) {
-    FB.api(
-      "/me/feed",
-      "POST",
-      {
-        "message": status_msg
-      },
-    function (response) {
-      if (response && !response.error) {
-        // alert('Post successful!');
-        $(btn).fadeOut("slow");
-      }
-    }
-  );
+// *********** Setting up the date so we grab content from each 6 month time period ***************
 
-  }
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome! Fetching your information.... ');
+// Getting the current day, month, and year.
+var current_date = new Date();
+var current_day = current_date.getDate();
+var current_month = current_date.getMonth() + 1; // b/c its 0 indexed.
+var current_year = current_date.getFullYear();
 
+// **************** This is the function that is called when 'troll-me' is pressed **************
+
+// This makes all of the API calls, generates the content, and is essentially the driver
+// for the web application.
+
+function testAPI() {
+
+  console.log('Welcome! Fetching your information.... ');
 
     // ********************** Clearing the data before **********************
     friends = 0;
@@ -899,7 +895,7 @@ and provide them with a summary of what was posted to their timeline and the lin
 
     $(document).on('click', '#share-to-fb', function() {
       console.log('here');
-      upload_to_facebook($(this).attr('value'));
+      postStatus($(this).attr('value'));
     });
 
     $('.duration').change(function() {
