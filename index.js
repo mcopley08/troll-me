@@ -7,12 +7,6 @@ var app = express();
 // parse application/json
 app.use(bodyParser.json())
 
-var client_id = '41c249feb1414615b629d220c25047ee'; // Your client id
-var client_secret = '61a4d347629f45c7bdb3bfaa4503f665'; // Your secret
-var redirect_uri = 'http://localhost:5000/callback'; // Your redirect uri
-
-var scopes = 'user-read-private user-read-email playlist-read-private user-library-read'
-
 var router = express.Router();
 
 // create application/json parser
