@@ -64,6 +64,7 @@ From my understanding, it is due to loading multiple version of the Facebook Jav
 - Make an API call to Watson or other Visual Recognition services, so that when comments are generated you can have a few words that describe a photo and integrate them into the "troll" comment.
 - Create events on the user's profile (this might not be allowed anymore, though...)
 - Tag friends in the comments/statuses instead of simply mentioning their name.
+- [Send messages](https://developers.facebook.com/docs/sharing/reference/send-dialog) to random friends.
 - Improving the bank of comments/statuses that are generated.
 - Getting rid of the bank of comment/status templates and use NLP algorithms to generate them dynamically.
 - Post random photos/links to weird & funny things from the user.
@@ -72,3 +73,4 @@ From my understanding, it is due to loading multiple version of the Facebook Jav
 ## Things to Note
 
 - "Taggable Friends" which is used to mention random friends in statuses, requires additional approval to be used in the application.
+- "Animate.css" is already included in the package, so if you wanted to improve on the UI it is available.

@@ -52,11 +52,23 @@ video {
     background-color: #0B243B !important;
 }
 
+.developer {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 1.5em;
+}
+
+.developer:hover {
+    cursor: pointer; 
+    cursor: hand;
+}
+
 .info {
     letter-spacing: 5px;
     text-transform: uppercase;
     color: white;
-    font-size: 1.5em !important;
+    font-size: 1.5em;
 }
 
 .duration {
