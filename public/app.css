@@ -1,5 +1,4 @@
 
-
 body {
 	font-family: 'Lato', sans-serif;
     height: 100%;
@@ -46,6 +45,20 @@ video {
     position: relative;
     left: 50%;
     margin-left: -250px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5){
+
+  html,
+  body{
+    width:100%;
+    overflow-x:hidden;
+  }
+
 }
 
 .cta-button > .button {
