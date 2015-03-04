@@ -64,10 +64,10 @@ displayData();
 The following are issues that I've been aware of, but haven't fixed quite yet:
 
 - If a user presses ```Troll Now!``` multiple times, the following error message will show up:
-```
-Uncaught RangeError: Maximum call stack size exceeded
-```
-From my understanding, it is due to [loading multiple versions of the Facebook JavaScript SDK](http://neverblog.net/facebook-javascript-sdk-uncaught-rangeerror-maximum-call-stack-size-exceeded-error/).
+	```
+	Uncaught RangeError: Maximum call stack size exceeded
+	```
+	From my understanding, it is due to [loading multiple versions of the Facebook JavaScript SDK](http://neverblog.net/facebook-javascript-sdk-uncaught-rangeerror-maximum-call-stack-size-exceeded-error/).
 
 - If a generated comment/post contains **any form of quotation marks (single or double)** it will not post to Facebook and will return with an error.
 
