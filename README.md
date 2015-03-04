@@ -18,7 +18,7 @@ It is recommended that you are familiar with the [Getting Started with Node on H
 ```
 for (var i = 0; i < Math.min(1, response.data.length); i++) {
 ```
-is the number of photos it grabs for comments, as well as the number of random comments it grabs to like - the way it is set up, they both rely on this parameter. You can easily change this number to your desired amount. 
+  is the number of photos it grabs for comments, as well as the number of random comments it grabs to like - the way it is set up, they both rely on this parameter. You can easily change this number to your desired amount. 
 
 3. After this, it will generate three status updates using information from the user's profile:  
   + Incorporating the user's birthday.  
@@ -35,12 +35,12 @@ is the number of photos it grabs for comments, as well as the number of random c
 
 > There is a specific order of calls that are made to achieve the desired output. It is described below:
 
-1. testAPI() - calls photo_API_request(checkLength, final_check);
-2. photo_API_request() - calls checkLength(final_check);
-3. checkLength() - calls final_check();
-4. final_check() - either calls photo_API_request(checkLength, final_check) again (repeating steps 2 through 4), or calls populatePosts().
-5. populatePosts() 
-6. displayData()
+1. ```testAPI()``` - calls ```photo_API_request(checkLength, final_check);```
+2. ```photo_API_request()``` - calls ```checkLength(final_check);```
+3. ```checkLength()``` - calls ```final_check();```
+4. ```final_check()``` - either calls ```photo_API_request(checkLength, final_check)``` again (repeating steps 2 through 4), or calls ```populatePosts();```
+5. ```populatePosts()```
+6. ```displayData()```
 
 One call to the ```testAPI()``` function will execute steps 1 through 5 in order, and then after it returns you need to call ```displayData()```.
 
@@ -73,7 +73,7 @@ From my understanding, it is due to [loading multiple versions of the Facebook J
 
 ## Suggestions for Further Enhancements
 
-- Having a modal pop-up on the 'troll-me' website to see where the photo comment/photo like is going to be executed.
+- Having a modal pop-up on the 'troll-me' website to see where the photo comment/photo like is going to be executed. This cannot be done in an ```iframe``` because Facebook doesn't allow this, however you can create a custom view with the [meta-data you get from each photo object](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) in the Facebook API calls.
 - Make an API call to [IBM's Watson](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/services-catalog.html) or other [Visual Recognition](http://blog.mashape.com/list-of-14-image-recognition-apis/) services, so that when comments are generated you can have a few words that describe a photo and integrate them into the "troll" comment.
 - Integrate a user's [events](https://developers.facebook.com/docs/graph-api/reference/v2.2/event) into messages (Facebook only allows a kind of restricted access, though).
 - [Mention/Tag friends](https://developers.facebook.com/docs/opengraph/using-actions/v2.2#mentions) in the comments/statuses instead of simply mentioning their name.
@@ -92,4 +92,4 @@ From my understanding, it is due to [loading multiple versions of the Facebook J
 - [Animate.css](http://daneden.github.io/animate.css/) is already included in the package, so if you wanted to improve on the UI it is available.
 
 ## IMPORTANT NOTE
-Do **NOT** change this application to generate anything with profanity, or any material that is offensive, or sexual.
+Do **NOT** change this application to generate anything with profanity, or any material that is offensive or sexual.
