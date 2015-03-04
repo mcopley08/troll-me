@@ -187,8 +187,6 @@ function photo_API_request(callback, callback_2) {
       }
     }
 
-    console.log(response.data);
-
     // This loop adds one generated photo comment and one random photo
     // comment to like into their respectful arrays. 
     // Change the first parameter to Math.min() in order to grab the desired number
@@ -333,6 +331,9 @@ function populatePosts() {
   // grabbing the user's music interests.
   FB.api("/me/music", function(response) {
 
+    console.log("MUSIC");
+    console.log(response.data);
+
     var random = Math.floor(Math.random()*response.data.length);
     random_band = response.data[random].name;
 
@@ -348,6 +349,9 @@ function populatePosts() {
 
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
+
+    console.log("FRIENDS");
+    console.log(response.data);
 
     var random = Math.floor(Math.random()*response.data.length);
     random_friend = response.data[random].name;
