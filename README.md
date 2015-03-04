@@ -15,10 +15,10 @@ It is recommended that you are familiar with the [Getting Started with Node on H
 1. The algorithm will start drawing user information in three 6 month intervals, starting from the interval 18 to 12 months ago, then 12 to 6 months ago, then 6 months to the present. It does this to make sure it trolls a wide time span across the user's timeline. **The number of intervals is customizable.** There is a variable called ```how_long_ago``` in **troll_me_algorithm.js** that represents the number of years to go back in the timeline. The default is 1.5, and it must only be whole or half numbers.
 
 2. In every six month time interval, it grabs 25 photos from the user's profile in that time period, then deletes all of the photos that don't have any comments. Then, it will grab one random photo to make a photo comment, and another random photo to like a random comment. It will add these photo objects to their appropriate arrays. **The number of photos to comment on/comments to like is customizable.** The first parameter to the ```Math.min()``` in the following line:
-```
-for (var i = 0; i < Math.min(1, response.data.length); i++) {
-```
-  is the number of photos it grabs for comments, as well as the number of random comments it grabs to like - the way it is set up, they both rely on this parameter. You can easily change this number to your desired amount. 
+	```
+	for (var i = 0; i < Math.min(1, response.data.length); i++) {
+	```
+	is the number of photos it grabs for comments, as well as the number of random comments it grabs to like - the way it is set up, they both rely on this parameter. You can easily change this number to your desired amount. 
 
 3. After this, it will generate three status updates using information from the user's profile:  
   + Incorporating the user's birthday.  
