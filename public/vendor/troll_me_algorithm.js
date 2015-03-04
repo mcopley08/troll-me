@@ -332,9 +332,10 @@ function populatePosts() {
   FB.api("/me/music", function(response) {
 
     console.log("MUSIC");
-    console.log(response.data);
+    
 
     var random = Math.floor(Math.random()*response.data.length);
+    console.log(response.data[random].name);
     random_band = response.data[random].name;
 
     // explaination for even/odd separation in function above.
@@ -351,9 +352,10 @@ function populatePosts() {
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
     console.log("FRIENDS");
-    console.log(response.data);
+    
 
     var random = Math.floor(Math.random()*response.data.length);
+    console.log(response.data[random].name);
     random_friend = response.data[random].name;
 
     chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
