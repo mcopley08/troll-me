@@ -331,7 +331,7 @@ function populatePosts() {
   // grabbing the user's music interests.
   FB.api("/me/music", function(response) {    
 
-    if (typeof response.data[random].name != "undefined") {
+    if (typeof response.data[random] != "undefined") {
 
       var random = Math.floor(Math.random()*response.data.length);
       random_band = response.data[random].name;
@@ -344,14 +344,14 @@ function populatePosts() {
         chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[Math.floor(Math.random()*post_band_templates_alt.length)]);
       }       
     }   
-    
+
     bands = 1;
   });
 
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
-    if (typeof response.data[random].name != "undefined") {
+    if (typeof response.data[random] != "undefined") {
       var random = Math.floor(Math.random()*response.data.length);
       random_friend = response.data[random].name;
 
