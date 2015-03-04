@@ -329,36 +329,35 @@ function populatePosts() {
   });
 
   // grabbing the user's music interests.
-  FB.api("/me/music", function(response) {
+  FB.api("/me/music", function(response) {    
 
-    console.log("MUSIC");
+    if (typeof response.data[random].name != "undefined") {
+
+      var random = Math.floor(Math.random()*response.data.length);
+      random_band = response.data[random].name;
+
+      // explaination for even/odd separation in function above.
+      if (random % 2 == 0) {
+        chosen_posts.push(post_band_templates[Math.floor(Math.random()*post_band_templates.length)] + random_band.replace("'","\'"));
+      }
+      else {
+        chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[Math.floor(Math.random()*post_band_templates_alt.length)]);
+      }       
+    }   
     
-
-    var random = Math.floor(Math.random()*response.data.length);
-    console.log(response.data[random].name);
-    random_band = response.data[random].name;
-
-    // explaination for even/odd separation in function above.
-    if (random % 2 == 0) {
-      chosen_posts.push(post_band_templates[Math.floor(Math.random()*post_band_templates.length)] + random_band.replace("'","\'"));
-    }
-    else {
-      chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[Math.floor(Math.random()*post_band_templates_alt.length)]);
-    }          
     bands = 1;
   });
 
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
-    console.log("FRIENDS");
+    if (typeof response.data[random].name != "undefined") {
+      var random = Math.floor(Math.random()*response.data.length);
+      random_friend = response.data[random].name;
+
+      chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
+    }
     
-
-    var random = Math.floor(Math.random()*response.data.length);
-    console.log(response.data[random].name);
-    random_friend = response.data[random].name;
-
-    chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
     friends = 1;
   });
 }
