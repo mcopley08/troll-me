@@ -55,6 +55,8 @@ displayData();
 
 > Here are a few quick things you can do within 15 minutes to customize the application:
 
+- To edit the **troll-me** algorithm, edit ```public/vendor/troll_me_algorithm.js```. To edit the UI of the website and/or the jQuery that executes on certain events, edit ```views/home.html```.
+
 - Simply find the word bank section of **troll_me_algorithm.js** and add your own comment/status templates for trolling! Be sure to follow the format of each array, and **_including single or double quotes is not supported currently and will cause an error_** with the Facebook API call.
 
 - Modify the ```generateComment()``` function. The image url is passed to the function for the photo the comment belongs to, so calling an API with the link or integrating the image in some way would be awesome (see the **Further Enhancements** section for detailed suggestions).
