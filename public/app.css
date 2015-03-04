@@ -1,10 +1,10 @@
 html
 {
-    width: 100%;
-    height: 100%;
     margin: 0px;
     padding: 0px;
-    overflow: scroll; /* fixes mobile view */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 /* hides scrollbar on mobile */
@@ -12,10 +12,17 @@ html
     width: 0 !important
 }
 
+html > body {
+
+}
+
 body {
 	font-family: 'Lato', sans-serif;
     height: 100%;
     width: 100%;
+/*    overflow-x: hidden;
+*/    /*overflow-y:hidden;*/
+    /*overflow: scroll;*/
 }
 
 header {
@@ -23,14 +30,17 @@ header {
 
     width: 100%;
     height: 100%;
+    overflow-x: hidden;
 	background-size: cover;
     background-position: center;
 	font-family: 'Lato', sans-serif !important;
 	color: #fff !important;
+
 }
 
 section {
-	margin: 5rem 0;
+	margin: 5rem 0;    overflow-x: hidden;
+
 }
 
 h1 {
