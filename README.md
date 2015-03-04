@@ -73,7 +73,7 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 
 ## Suggestions for Further Enhancements
 
-- Having a modal pop-up on the 'troll-me' website to see where the photo comment/photo like is going to be executed. This cannot be done in an ```iframe``` because Facebook doesn't allow this, however you can create a custom view with the [meta-data you get from each photo object](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) in the Facebook API calls.
+- Having a [modal](http://foundation.zurb.com/docs/components/reveal.html) pop-up on the 'troll-me' website to see where the photo comment/photo like is going to be executed. This cannot be done in an ```iframe``` because Facebook doesn't allow this, however you can create a custom view with the [meta-data you get from each photo object](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) in the Facebook API calls.
 
 - Make an API call to [IBM's Watson](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/services-catalog.html) or other [Visual Recognition](http://blog.mashape.com/list-of-14-image-recognition-apis/) services, so that when comments are generated you can have a few words that describe a photo and integrate them into the "troll" comment.
 

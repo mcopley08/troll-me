@@ -6,6 +6,30 @@
     <!-- Adjusted mobile viewing -->
     <meta name="viewport" content="width=device-width, target-densitydpi=high-dpi" />
 
+    <!-- Linking the Favicon -->
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon"> <!-- 16 by 16 -->
+    <link rel="icon" href="img/favicon.png" type="image/x-icon"> <!-- 16 by 16 -->
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/img/favicons/favicon-96x96.png" sizes="96x96">
+    <!-- <link rel="icon" type="image/png" href="/img/favicons/favicon-16x16.png" sizes="16x16"> -->
+    <link rel="manifest" href="/img/favicons/manifest.json">
+    <!-- <link rel="shortcut icon" href="/img/favicons/favicon.ico"> -->
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/img/favicons/mstile-144x144.png">
+    <meta name="msapplication-config" content="/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
     <!-- Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,100italic,300italic,400italic|Open+Sans:300italic,400italic,600italic,400,300,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
@@ -106,15 +130,15 @@
 
 		</section>
 
-    <!-- Section: about -->
-    <section id="about" class="home-section text-center" style="margin-bottom:30px">
+    <!-- Section: GitHub -->
+    <section id="github" class="home-section text-center">
 
       <!-- Looking to Contribute? Header -->
       <div class="heading-about">
         <div class="container">
         <div class="row">
           <div class="large-10 large-offset-1 columns">
-            <div class="wow bounceInDown" data-wow-delay="0.4s">
+            <div class="wow fadeInDown" data-wow-delay="0.4s">
             <div class="section-heading">
             <h2 style="display:inline">Looking to Contribute? </h2>
             <img src="img/programming.png" alt="" class="img-responsive" style="margin-bottom:18px; display:inline"/>
@@ -150,15 +174,86 @@
                 </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+    <!-- /Section: GitHub -->
 
-          <!-- Attributing the Flaticon website for the free favicons. -->
-          <br><br>
-          <div>*Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-        </div>   
+    <!-- Section: about -->
+    <section id="about" class="home-section text-center" style="margin-bottom: 15px">
+
+      <!-- Heading -->
+      <div class="heading-about">
+        <div class="container">
+          <div class="row">
+            <div class="large-10 large-offset-1 columns">
+              <div class="wow fadeInUp" data-wow-delay="0.4s">
+              <div class="section-heading">
+              <h1>Say Hello!</h1>
+              <i class="fa fa-2x fa-angle-down"></i>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
+      <div class="container">
+
+        <div class="row">
+          <!-- Developer Bio & Image -->
+          <div class="medium-offset-4 medium-4 columns">
+            <div class="wow fadeInUp" data-wow-delay="0.2s">
+                <div class="team boxed-grey">
+                  <div class="inner">
+                    <p>Michael Copley</p>
+                    <h5 class="subtitle">Web Developer/Designer</h5>
+                    <div class="avatar text-center"><a href="http://www-personal.umich.edu/~mdcopley/"><img src="img/team/michael_copley1.jpg" alt="" class="img-responsive img-circle" style="border-radius:125px"/></a></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <!-- Line separator -->
+          <div class="row">
+            <div class="large-12 columns">
+              <hr class="marginbot-50">
+            </div>
+          </div>
+
+        </div>  
+
+        <!-- Donate Coffee Section -->
+        <div class="container">
+          <div class="row">
+            <div class="large-10 large-offset-1 columns">
+              <div class="wow fadeInUp" data-wow-delay="0.4s">
+                <div class="section-heading">
+                  <i class="fa fa-2x fa-angle-down"></i>
+                  <h2 id="coffee" class="donate" onclick="window.open('http://bit.ly/1KbK1IO', '_blank')">donate a coffee </h2>
+                  <img src="img/coffee.png" alt="" class="img-responsive hover-click" style="margin-bottom:8px" onclick="window.open('http://bit.ly/1KbK1IO', '_blank')"/>
+                  <h2 id="burger" class="donate" onclick="window.open('http://bit.ly/1zU4JCW', '_blank')"> | donate a burger </h2>
+                  <img src="img/burger.png" alt="" class="img-responsive hover-click" style="margin-bottom:8px" onclick="window.open('http://bit.ly/1zU4JCW', '_blank')"/>
+                  <h2 id="textbook" class="donate" onclick="window.open('http://bit.ly/1DBSxIb', '_blank')"> | donate a textbook </h2>
+                  <img src="img/textbook.png" alt="" class="img-responsive hover-click" style="margin-bottom:8px" onclick="window.open('http://bit.ly/1DBSxIb', '_blank')"/>
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Attributing the Flaticon website for the free favicons. -->
+          <div class="row">
+            <div class="medium-10 medium-centered columns">
+              <br><br>
+              <div>*Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+            </div>
+          </div> 
+
+        </div>
+      </div>
     </section>
-    <!-- /Section: about -->
+  <!-- /Section: about -->
 
 	<script type="text/javascript">
 

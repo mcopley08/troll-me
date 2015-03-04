@@ -70,11 +70,28 @@ video {
     cursor: hand;
 }
 
+.hover-click {
+    cursor: pointer; 
+    cursor: hand;
+}
+
 .info {
     letter-spacing: 5px;
     text-transform: uppercase;
     color: white;
     font-size: 1.5em;
+}
+
+.donate {
+    letter-spacing: 5px;
+    color: black;
+    font-size: 1.2em;
+    display: inline;
+}
+
+.donate:hover {
+    cursor: pointer;
+    cursor: hand;
 }
 
 .duration {
