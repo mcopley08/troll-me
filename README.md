@@ -105,5 +105,7 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 
 - [Animate.css](http://daneden.github.io/animate.css/) is already included in the package, so if you wanted to improve on the UI it is available.
 
-## IMPORTANT NOTE
-Do **NOT** change this application to generate anything with profanity, or any material that is offensive or sexual.
+## IMPORTANT NOTES
+> Do **NOT** change the application in such a way that the algorithm will post to the user's Facebook profile _without_ asking them for permission beforehand.
+> Do **NOT** change this application to generate anything with profanity, or any material that is offensive or sexual.
+

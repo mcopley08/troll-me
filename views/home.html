@@ -299,7 +299,7 @@
 				FB.login(function(response) {
 					if (response.authResponse) {
 						console.log(response.authResponse);
-						console.log('Welcome!  Fetching your information.... ');
+						console.log('Welcome! Fetching your information.... ');
 						//$.cookie('FBID', response.authResponse.userId);
 						//FB.api('/me', function(response) {
 						//	console.log('Good to see you, ' + response.name + '.');
@@ -307,7 +307,7 @@
 					} else {
 						console.log('User cancelled login or did not fully authorize.');
 					}
-				}, {scope: 'user_friends, user_photos, user_likes, user_birthday, publish_actions'});
+				}, {scope: 'user_photos, user_likes, user_birthday, publish_actions'});
 			}
 		});
 
