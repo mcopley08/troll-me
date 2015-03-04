@@ -35,17 +35,37 @@ For more information about using Node.js on Heroku, see these Dev Center article
 - [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
 - [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
 
-## Walkthrough of the 'troll-me' Algorithm
+> ## Walkthrough of the 'troll-me' Algorithm
 
-- grabs content from a period of 6 months.
-- default is 3 sets of 6 month periods.
+> Once the 'Start Trolling!' button is pressed,
+
+1. The algorithm will start drawing user information in three 6 month intervals, starting from the interval 18 to 12 months ago, then 12 to 6 months ago, then 6 months to the present. It does this to make sure it trolls a wide time span across the user's timeline. **The number of intervals is customizable.** There is a variable called ```how_long_ago``` in **troll_me_algorithm.js** that represents the number of years to go back in the timeline. The default is 1.5, and it must only be whole or half numbers.
+
+2. In every six month time interval, it grabs 25 photos from the user's profile in that time period, then deletes all of the photos that don't have any comments. Then, it will grab one random photo to make a photo comment, and another random photo to like a random comment. It will add these photo objects to their appropriate arrays. **The number of photos to comment on/comments to like is customizable.** The first parameter to the ```Math.min()``` in the following line:
+```
+for (var i = 0; i < Math.min(1, response.data.length); i++) {
+```
+is the number of photos it grabs for comments, as well as the number of random comments it grabs to like - they change together the way it is set up. You can easily change this number to your desired amount. 
+
+3. After this, it will generate three status updates using information from the user's profile:  
+  + Incorporating the user's birthday.  
+  + Taking into account one of the user's music interests.  
+  + Attributing a random quote to one of your friends (from the [Taggable Friends](https://developers.facebook.com/docs/graph-api/reference/v2.2/user/taggable_friends) API call).  
+
+  and put them into the appropriate arrays.
+
+4. It will then call the ```displayData()``` function and it will generate the html to provide the user with their options of suggested trolls. Once it is complete, it is displayed to the user.
+
+5. The user can then select whether or not they want to execute any (or all) of the suggested 'trolls'. They also have the option to generate a new batch of 'trolls' if they press the **Troll Again!** button, however if this is pressed a number of times there is an issue with this (see the **Known Issues** section below).
+
 
 ## Quick Start
 
-Here are a few quick things you can do within 15 minutes to custom the application:
+> Here are a few quick things you can do within 15 minutes to customize the application:
 
-- Simply find the word bank section of (name_of_js_file) and add your own comment/status templates for trolling! Be sure to follow the format of each array, and including single or double quotes is not supported currently and will cause an error with the Facebook API call.
-- Modify the "generateComment()" function. The image url is passed to the function for the photo the comment belongs to, so calling an API with the link or integrating the image in some way would be awesome (See the 'Further Enhancements' section for detailed suggestions).
+- Simply find the word bank section of **troll_me_algorithm.js** and add your own comment/status templates for trolling! Be sure to follow the format of each array, and **_including single or double quotes is not supported currently and will cause an error_** with the Facebook API call.
+
+- Modify the ```generateComment()``` function. The image url is passed to the function for the photo the comment belongs to, so calling an API with the link or integrating the image in some way would be awesome (see the **Further Enhancements** section for detailed suggestions).
 
 ## Developer Notes
 
@@ -57,13 +77,13 @@ These are some facts about the application as it stands right now:
 
 The following are issues that I've been aware of, but haven't fixed quite yet:
 
-- If you press "Troll Now!" multiple times, the following error message will show up:
+- If a user presses ```Troll Now!``` multiple times, the following error message will show up:
 ```
 Uncaught RangeError: Maximum call stack size exceeded
 ```
 From my understanding, it is due to [loading multiple versions of the Facebook JavaScript SDK](http://neverblog.net/facebook-javascript-sdk-uncaught-rangeerror-maximum-call-stack-size-exceeded-error/).
 
-- If a generated comment/post contains any form of quotation marks (single or double) it will not post to Facebook and will return with an error.
+- If a generated comment/post contains **any form of quotation marks (single or double)** it will not post to Facebook and will return with an error.
 
 ## Suggestions for Further Enhancements
 

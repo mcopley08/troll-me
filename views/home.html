@@ -422,6 +422,7 @@ function testAPI() {
     chosen_posts = [];
 
     iteration = 0;
+    photo_api_complete = 0;
 
     // ****************** finding out our starting date ***********************
 
@@ -457,10 +458,6 @@ function testAPI() {
       end_month = end_month % 12;
       ++end_year;
     }
-
-
-
-        photo_api_complete = 0;
 
         // we need to make an array of comment post requests and append to it
         // everytime then suggest it to the user so they can approve!
@@ -515,7 +512,7 @@ function testAPI() {
               random_pic = Math.floor(Math.random()*response.data.length);
 
               // sneaking some likes in there as well!
-              var random_com; // = Math.floor(Math.random()*response.data[random_pic].comments.data.length);
+              var random_com; 
 
               // trying ten times (to avoid infinite loop if user likes all comments) to pick
               // a comment that the user hasn't already liked - then after gets a new photo.
@@ -569,7 +566,7 @@ function testAPI() {
 
           }
           else {
-            console.dir(photo_comments);
+            // console.dir(photo_comments);
             populatePosts();
           }
 
@@ -654,13 +651,13 @@ function testAPI() {
 
           // var random = Math.floor(Math.random()*101);
           // displayData();
-          console.log("FINISHING LOG POSTS");
+          // console.log("FINISHING LOG POSTS");
 
         }
 
         photo_API_request(checkLength, final_check); 
 
-        console.log("we got here COMPLETE");
+        // console.log("we got here COMPLETE");
 
         // console.dir(first_pic.length);
 
