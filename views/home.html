@@ -28,803 +28,88 @@
     <!-- Custom Theme JavaScript -->
     <script src="vendor/custom.js"></script>
 
+    <!-- Facebook JavaScript SDK - do not modify -->
+    <script src="vendor/facebook_sdk.js"></script>
+
+    <!-- troll-me algorithm JavaScript -->
+    <script src="vendor/troll_me_algorithm.js"></script>
+
 	</head>
-
-	<script type="text/javascript">
-
-  // these variables help make sure that the api call is executing in the correct order.
-
-  var iteration = 0;
-  var photo_api_complete = 0;
-
-  // ********************************* date variables ********************************
-
-  var start_year;
-  var start_month;
-  var start_day;
-  var end_year;
-  var end_month;
-  var end_day;
-
-// ***************************** FB TROLL - TREEHACKS ***************************************
-
-var photo_comments = []; 
-var photo_objects = [];
-var photo_link_to_comment = [];
-var like_link_to_comment = [];
-var like_objects = [];
-var like_comments = [];
-var chosen_comments = {};
-var photo_counter = 0;
-var chosen_posts = [];
-var friends = 0, bands = 0, birthday = 0;
-
-
-// ****************************** Bank of comment/status templates *************************************
-
-// To add to the existing bank of words, simply follow the format of each of the arrays,
-// and make sure there are no double or single quotes in your new template. Then you're all set!
-
-var photo_comment_templates = ["what a great day", 
-                               "reminds me of the good old days",
-                               "this always reminds me of when i used to live in palo alto", 
-                               "i ate so many white castles after this... lol...",
-                               "sometimes when i think about this photo i get queezy..",
-                               "im going to print this out and put it all over my face/pillowcase. but probably just my face.",
-                               "try plugging an ethernet cable into THAT!",
-                               "i just cant even..",
-                               "great pic... one of my best memories..",
-                               "my shopping list for this week: hibiscus plants, reeses puffs (peanut butter chocolate flavour), fruit roll ups. dont let me forget.",
-                               "try looking at this picture and listening to notorious b.i.g.",
-                               "selling an ATV for $400 obo - runs great, my kids loved it as well."];
-var photo_comment_template_names = [", what are u doing today?", 
-                                    ", i definitely agree with you.", 
-                                    ", excuse me..?  hahaha just-kidding.",
-                                    ", you left your john deere trucker hat at my place",
-                                    ", you still have my copy of mario sunshine! ha-ha.",
-                                    ", so true, lol"];
-var photo_comment_template_names_alt = ["im going to remember this one for a while, ", 
-                                        "hahahaha, omg ", 
-                                        "im not quite sure id say that... ",
-                                        "you should've seen me when i posted this pic, ",
-                                        "my mom gave me some weird questions after this one... remember, ",
-                                        "great comment, "];
-
-var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
-                               " is the only day of the year i get socks from dockers, and i want to keep it that way.",
-                               " gives me an excuse to spend $35 on doritos and say to myself: its okay, today is MY day"];
-
-var post_birthday_templates_alt = ["take a wild guess at what happens on the following data, and ill give you a hint, it has to do it being my birthday: ",
-                                   "ill give you $10 if you chill with me on: "];
-
-var post_band_templates = ["i should really do more than eat sun chips and listen to ",
-                           "is it a bird? is it a plane? nooooo you're on strike 2 - its: ",
-                           "todays goals: drink a liter of water, try not to be intimidated by my own dog, listen to: ",
-                           "hella fresh (definition): ",
-                           "tell your parents to listen to: "];
-
-var post_band_templates_alt = [" is the reason i never get my homework done, but im okay with it. its a mutual relationship.",
-                               " was playing music when i had my first kiss. on the cheek. from my mom.",
-                               ", homemade baklava, pictures of sad monkeys. all of those are essential.",
-                               " and i have been together for 18 month now, time flies when youre scared about your future..",
-                               " should do a cover of that weird-ass witch doctor song."];
-
-var funny_quotes = ['I just ate some garlic, so I cant talk. -',
-                    'I hate when Im on a flight and I wake up with a water bottle next to me like oh great now I gotta be responsible for this water bottle. -',
-                    'You put the boom-boom into my heart, You send my soul sky high when your lovin starts - ',
-                    'It’s grind-day, from Friday, to next Friday. I been up straight for nine days, I need a spa day -',
-                    'Tomorrow is Saturday, and Sunday comes after ... wards - I dont want this weekend to end!!! -',
-                    'just picked up some dish detergent from target. -',
-                    'my dad says the amount of nutella i eat in a weak is unattractive. -',
-                    'from my understanding, groundhogs day is more of an illuminati thing. but dont quote me on that.. -'];
-
-var watson_smarty = ["tbh, i just spaced out while looking at this ",
-                     "sometimes i wish i could just live in this picture with all of the ",
-                     "just imagined getting hit by this ",
-                     "lets sing songs off of p!nks debut album and find more pictures of this ",
-                     "i am not using complex computational algorithms to determine that this picture is of a ",
-                     "lolz, props to this ",
-                     "hoodie allen needs to write a song about "];
-
-// ******************************** Functions for the troll-me application ***********************************
-
-// EFFECTS: This function generates a random comment and 
-//          may/may not take in the user's name for consideration.
-//          Nothing is done with the img_url, but it is passed to the 
-//          function in case improvements were made that called a visual
-//          recognition API for the photo.
-//
-//          *Doesn't return the same template more than once in each 
-//          'troll-me' call.
-function generateComment(person_name, img_url) {
-  var random = Math.floor(Math.random()*30);
-
-  // random comment - no name
-  if (0 <= random && random < 10) {
-    var new_comment = photo_comment_templates[Math.floor(Math.random()*photo_comment_templates.length)];
-
-    // if we've already chosen this one, call the function again to get a new template.
-    if (new_comment in chosen_comments) {
-      return generateComment(person_name);
-    }
-    else {
-      chosen_comments[new_comment] = true;
-      return new_comment;
-    }
-  }
-
-  // random comment - name before
-  else if (10 <= random && random < 20) {
-    var new_comment = photo_comment_template_names[Math.floor(Math.random()*photo_comment_template_names.length)];
-
-    // if we've already chosen this one, call the function again to get a new template.
-    if (new_comment in chosen_comments) {
-      return generateComment(person_name);
-    }
-    else {
-      chosen_comments[new_comment] = true;
-      return person_name + new_comment;
-    }
-  }
-
-  // random comment - name after
-  else if (20 <= random && random < 30) {
-    var new_comment = photo_comment_template_names_alt[Math.floor(Math.random()*photo_comment_template_names.length)];
-
-    // if we've already chosen this one, call the function again to get a new template.
-    if (new_comment in chosen_comments) {
-      return generateComment(person_name);
-    }
-    else {
-      chosen_comments[new_comment] = true;
-      return new_comment + person_name;
-    }
-  }
-}
-
-// ************* Function that fills in our empty div with our content we generated. ******************
-function displayData() {
-
-  // making sure the div is empty, so we don't add to previous suggestions for 'trolls'.
-  $('#video-paste').empty();
-
-  // making sure we generated statuses that integrate
-  // friends, bands, and the user's birthday before we continue.
-  while (friends != 1 || bands != 1 || birthday != 1) {
-    setTimeout(function() { displayData(); }, 500);
-    return;
-  }
-
-  // this is the variable that will hold all of the new content's html.
-  var your_trolls = "";
-
-  // adding all of the suggestions for photo comment 'trolls'.
-  for (var i = 0; i < photo_comments.length; i++) {
-    your_trolls += '<div class = "medium-4 columns">';
-    your_trolls += '<ul class="pricing-table">';
-    your_trolls += '<li class="title">Photo Comment</li>';
-    your_trolls += '<li class="price">'+ photo_comments[i] + '</li>';
-    your_trolls += '<li class="description" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
-    // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
-  }
-
-  // adding all of the suggestions for status update 'trolls'.
-  for (var i = 0; i < chosen_posts.length; i++) {
-    your_trolls += '<div class = "medium-4 columns">';
-    your_trolls += '<ul class="pricing-table">';
-    your_trolls += '<li class="title">Status Update</li>';
-    your_trolls += '<li class="price">'+ chosen_posts[i] + '</li>';
-    your_trolls += '<li class="description" style="font-size: 1.2em">On your wall</li>';
-    // your_trolls += '<li class="bullet-item">1 Database</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
-  }
-
-  // adding all of the suggestions for liking comment 'trolls'.
-  for (var i = 0; i < like_comments.length; i++) {
-    your_trolls += '<div class = "medium-4 columns">';
-    your_trolls += '<ul class="pricing-table">';
-    your_trolls += '<li class="title">Like a comment</li>';
-    your_trolls += '<li class="price">'+ like_comments[i] + '</li>';
-    your_trolls += '<li class="description" style="font-size: 1.2em">See the comment <a href="' + like_link_to_comment[i] + '" target="_blank">here</a></li>';
-    // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postLike(\'' + like_objects[i] + '\', this);">Troll!</a></li></ul></div>';
-  }
-
-  // adding the 'post all' button to the html variable.
-  your_trolls += '</div><div class="row"><div class="medium-offset-2 medium-8 columns text-center">';
-  your_trolls += '<a target="_blank"><button class="button radius spotify login-button" onclick="postAll();">Post <strong>ALL of them!</strong></button></a>';
-
-  // updating the results
-  $('#video-paste').append(your_trolls);
-
-  // making the slider go up and down while the content fills up.
-  if (!$('#loading-contents').hasClass('none')) {
-    $.when( $('.video-container').slideUp() ).then(function() {
-      $('#loading-contents').addClass('none');
-      $('#video-contents').removeClass('none');
-      $('.video-container').delay(400).slideDown(1200);
-    });
-  }
-
-  // changing 'start trolling' to 'troll again'
-  if ($('#submit-video').text() == "Start Trolling!") {
-    $('#submit-video').text("Troll Again!");
-  }
-
-  // resetting the arrays if the 'troll again' button is pressed.
-  console.log(chosen_posts); 
-  your_trolls = "";
-  photo_comments = [];
-  chosen_posts = [];
-  photo_link_to_comment = [];
-  like_link_to_comment = [];
-  photo_objects = [];      
-  like_objects = [];
-  like_comments = []; 
-
-  // console.log(photo_comments);
-}
-
-// ********************************* Functions to actally post the trolls to FB ***********************
-
-// this function is called to post a photo comment.
-function postComment(obj_id, new_msg, btn) {
-  var first_param = "/" + obj_id + "/comments";
-  FB.api(first_param, "POST", { "message": new_msg },
-    function (response) {
-      if (response && !response.error) {
-        // alert("it was successful!");
-        $(btn).fadeOut("slow");
-      }
-    }
-  );
-}
-
-// this function is called to post a status update.
-function postStatus(status_msg, btn) {
-  FB.api(
-    "/me/feed",
-    "POST",
-    {
-      "message": status_msg
-    },
-    function (response) {
-      if (response && !response.error) {
-        // alert('Post successful!');
-        $(btn).fadeOut("slow");
-      }
-  });
-}
-
-// this function is called to execute a 'like'.
-function postLike(obj_id, btn) {
-  var first_param = "/" + obj_id + "/likes";
-  FB.api(
-    first_param, "POST",
-    function (response) {
-      if (response && !response.error) {
-        // alert("holllaaaa!");
-        $(btn).fadeOut("slow");
-      }
-    }
-  );
-}
-
-// this executes all of the generated trolls to the user's profile. 
-function postAll() {
-  var items = document.querySelectorAll(".trollz");
-  for (var i = 0; i < items.length; i++) {
-      items[i].click();
-  }
-}
-
-// ********** Functions for loading and checking the state of the Facebook API connection *************
-
-// This is called with the results from from FB.getLoginStatus().
-function statusChangeCallback(response) {
-  console.log('statusChangeCallback');
-  console.log(response);
-  // The response object is returned with a status field that lets the
-  // app know the current login status of the person.
-  // Full docs on the response object can be found in the documentation
-  // for FB.getLoginStatus().
-  if (response.status === 'connected') {
-    // Logged into your app and Facebook.
-    var access_token = response.authResponse.accessToken;
-    console.log("Connected: " + access_token);
-    // testAPI();
-  } else if (response.status === 'not_authorized') {
-    // The person is logged into Facebook, but not your app.
-    console.log('Not authorized');
-  } else {
-    // The person is not logged into Facebook, so we're not sure if
-    // they are logged into this app or not.
-    console.log('Please log ' + 'into Facebook.');
-  }
-}
-
-// This function is called when someone finishes with the Login
-// Button.  See the onlogin handler attached to it in the sample
-// code below.
-function checkLoginState() {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-}
-
-window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '480747342080039',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.2' // use version 2.2
-  });
-
-  // Now that we've initialized the JavaScript SDK, we call 
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
-
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-
-};
-
-// Load the SDK asynchronously
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-
-// *********** Setting up the date so we grab content from each 6 month time period ***************
-
-// Getting the current day, month, and year.
-var current_date = new Date();
-var current_day = current_date.getDate();
-var current_month = current_date.getMonth() + 1; // b/c its 0 indexed.
-var current_year = current_date.getFullYear();
-
-// **************** This is the function that is called when 'troll-me' is pressed **************
-
-// This makes all of the API calls, generates the content, and is essentially the driver
-// for the web application.
-
-function testAPI() {
-
-  console.log('Welcome! Fetching your information.... ');
-
-    // ********************** Clearing the data before **********************
-    friends = 0;
-    bands = 0;
-    birthday = 0;
-
-    your_trolls = "";
-    photo_comments = [];
-    photo_link_to_comment = [];
-    like_link_to_comment = [];
-    photo_objects = [];      
-    like_objects = [];
-    like_comments = []; 
-    chosen_posts = [];
-
-    iteration = 0;
-    photo_api_complete = 0;
-
-    // ****************** finding out our starting date ***********************
-
-    // using a test value of 1:30 minutes, in other words, two years of FB data.
-    how_long_ago = 1.5; // years.
-
-    // since
-    start_year = current_year;
-    start_month = current_month;
-    start_day = current_day;
-
-    // if its a whole number, just adjust the year.
-    if (how_long_ago % 1 == 0) {
-      start_year -= how_long_ago;
-    }
-    // otherwise, subtract the year, then adjust the months.
-    else {
-      start_year -= (how_long_ago - 0.5);
-
-      // if subtracting 6 months takes you into the previous year.
-      if (start_month - 6 < 1) {
-        --start_year;
-      }
-      start_month = (start_month + 6) % 12;
-    }
-
-    // until
-    end_year = start_year;
-    end_month = start_month + 6;
-    end_day = start_day;
-
-    if (end_month > 12) {
-      end_month = end_month % 12;
-      ++end_year;
-    }
-
-        // we need to make an array of comment post requests and append to it
-        // everytime then suggest it to the user so they can approve!
-
-        function photo_API_request(callback, callback_2) {
-
-          var FB_photo_request = '/me/photos?since=' + start_year + '-' + start_month + '-' + start_day + '&until=' + end_year + '-' + end_month + '-' + end_day;
-
-          // making the api call - once for all photos
-          FB.api(FB_photo_request, function(response) {
-
-            // sorting the photos by the most comments.
-            response.data.sort(function(a, b) {
-
-              // if its a tie, it doesn't matter which is first.
-              if (typeof a.comments == "undefined")
-                return 1; // so b is ranked higher
-              else if (typeof b.comments == "undefined")
-                return -1; // so a is ranked higher
-
-              return b.comments.data.length - a.comments.data.length;
-            });
-              // console.log(response2.data[0].comments);
-
-            // deleting all photo objects with no comments.
-            for (var i = 0; i < response.data.length; i++) {
-              if (typeof response.data[i].comments == "undefined") {
-                response.data.splice(i, 1);
-                i--;
-              }
-            }
-
-            console.log("CHECK THIS!");
-            console.log(response);
-            console.log(response.data.length);
-
-            // pushing what we do have onto the array.
-            // change the first parameter to Math.min() in order to grab the desired number
-            // of photos in that six month time frame.
-            for (var i = 0; i < Math.min(1, response.data.length); i++) {
-
-              var random_pic = Math.floor(Math.random()*response.data.length);
-              console.log(random_pic);
-
-              photo_objects.push(response.data[random_pic].id);
-              // generating a comment with the person's name who first commented.
-              console.log(response.data[random_pic].comments.data[0].from.name);
-
-              photo_comments.push(generateComment(response.data[random_pic].comments.data[0].from.name, response.data[random_pic].source));
-              photo_link_to_comment.push(response.data[random_pic].link);
-
-              random_pic = Math.floor(Math.random()*response.data.length);
-
-              // sneaking some likes in there as well!
-              var random_com; 
-
-              // trying ten times (to avoid infinite loop if user likes all comments) to pick
-              // a comment that the user hasn't already liked - then after gets a new photo.
-              // gets a new photo a max number of 10 times.
-              for (var j = 0; j < 100; j++) {
-
-                // getting a new picture after 10 tries.
-                if (j % 10 == 0) {
-                  random_pic = Math.floor(Math.random()*response.data.length);
-                }
-
-                random_com = Math.floor(Math.random()*response.data[random_pic].comments.data.length);
-
-                if (!response.data[random_pic].comments.data[random_com].user_likes) {
-                  like_objects.push(response.data[random_pic].comments.data[random_com].id);
-                  like_comments.push(response.data[random_pic].comments.data[random_com].message);
-                  like_link_to_comment.push(response.data[random_pic].link);
-                  break;
-                }
-              }             
-
-            }
-            photo_api_complete = 1;
-            callback(callback_2);
-          });
-        }
-
-        function final_check() {
-
-          while (check_complete != 1) {
-            setTimeout(function() { checkLength(final_check); }, 500);
-            return;
-          }
-          if (!(start_year == current_year && start_month == current_month)) {
-
-              photo_api_complete = 0;
-              check_complete = 0;
-
-              // moving to the next 6 month interval.
-              start_year = end_year;
-              start_month = end_month;
-
-              end_month += 6;
-
-              if (end_month > 12) {
-                end_month = end_month % 12;
-                ++end_year;
-              }
-
-              photo_API_request(checkLength, final_check);
-
-          }
-          else {
-            // console.dir(photo_comments);
-            populatePosts();
-          }
-
-
-        }
-
-        function checkLength(callback) {
-            var my_var;
-            // var done_yet = 0;
-            while (photo_api_complete != 1) {
-              my_var = setTimeout(function() { checkLength(final_check); }, 500);
-              console.log("NOT YET! api is not complete!");
-              return 0;
-            }
-            iteration++;
-
-            check_complete = 1;
-            callback(); // final check.
-        }
-
-        function populatePosts() {
-          chosen_posts = [];
-
-          console.log("STARTING TO LOG POSTS");
-
-          var user_birthday, random_band, random_friend;
-
-          // grabbing the user's birthday.
-          FB.api("/me", function(response) {
-
-            // the upper limit of 100 is an arbitrary random number (it can be anything).
-            var random = Math.floor(Math.random()*101);
-
-            console.log(response.birthday);
-            user_birthday = response.birthday;
-
-            user_birthday = user_birthday.substring(0, user_birthday.length - 5);
-            
-            // the even/odd division is simply there just to randomly select
-            // which bank we're grabbing it from, if we need to b-day info before
-            // or after our template.
-            if (random % 2 == 0) {
-              chosen_posts.push(user_birthday + post_birthday_templates[Math.floor(Math.random()*post_birthday_templates.length)]);
-            }
-            else {
-              chosen_posts.push(post_birthday_templates_alt[Math.floor(Math.random()*post_birthday_templates_alt.length)] + user_birthday);
-            }
-            birthday = 1;
-
-          });
-
-          // grabbing the user's music interests.
-          FB.api("/me/music", function(response) {
-
-            var random = Math.floor(Math.random()*response.data.length);
-            random_band = response.data[random].name;
-
-            console.log(response.data[random].name); 
-
-            if (random % 2 == 0) {
-              chosen_posts.push(post_band_templates[Math.floor(Math.random()*post_band_templates.length)] + random_band.replace("'","\'"));
-            }
-            else {
-              chosen_posts.push(random_band.replace("'","\'") + post_band_templates_alt[Math.floor(Math.random()*post_band_templates_alt.length)]);
-            }          
-            bands = 1;
-
-          });
-
-          // grabbing one of the user's friends.
-          FB.api("/me/taggable_friends?limit=100", function(response) {
-
-            console.log(response);           
-
-            var random = Math.floor(Math.random()*response.data.length);
-            random_friend = response.data[random].name;
-
-            chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
-            friends = 1;
-
-          });
-
-          // var random = Math.floor(Math.random()*101);
-          // displayData();
-          // console.log("FINISHING LOG POSTS");
-
-        }
-
-        photo_API_request(checkLength, final_check); 
-
-        // console.log("we got here COMPLETE");
-
-        // console.dir(first_pic.length);
-
-  } // testAPI()
-
-	</script>
-
-	<script type="text/javascript">
-
-/* 
-
-After each 6 month period loop, check if we had enough in each cagtegory.
-if not, add the extra XML code (that cycles with the above function call) until
-they are filled.
-
-I need to change the way we construct the XML such that it doesn't actually 
-construct the XML code then append it. i should create the XML code as i go and
-store it in the array to make this a lot cleaner. debateably. lolz.
-
-*/
-
-
-// ******************* General Algorithms ***********************************
-
-/*
-
-variables/data sets that i need to store:
-
-a bank of template things to say with the photos (30-ish) - be able to insert name/description of photo.
-a bank of random things to say in the fb message to their friends (25-ish)
-
-1st step: randomly pick older photos from the timeline, and other ppl's names
-            who have commented on them (if time allows, user watson to determine
-            whats in the photos)
-
-2nd step: generate what we are going to message other users
-
-3rd step: generate what the posts are going to say - attribute random quotes to
-            your friends. (call an api for awkward sayings..?)
-
-4th step: actually do the api calls to post the information.
-
-5th step: once the API returns back with a true parameter, display a message to the user
-and provide them with a summary of what was posted to their timeline and the links to them..?
-
-* don't do ANYTHING explicit, or include any profanities!
-
-*/
-
-	</script>
-
 	<body>
-		
 		<header>
-
+      <!-- This is the Facebook Developer Snippet in the top left corner of the homepage. -->
       <div class="row" style="margin-left: 0px; padding-top: 15px">
-
         <div class="medium-6 text-left columns" style="">
-
           <img src="img/fb_logo.png" alt="" class="img-responsive" style="margin-bottom:5px"/>
           <h2 class="info" style="display:inline"> &nbsp;| </h2>
           <h2 id="developer-link" class="developer" style="display:inline" onclick="window.open('https://github.com/mcopley08/troll-me', '_blank')">Developer</h2>
-
         </div>
-
       </div>
 
+      <!-- This is the main page of the web application -->
 			<div class="row">
-				
 				<div class="medium-10 medium-centered text-center columns">
-
 					<div class="top-container">
 
+            <!-- troll-me logo -->
 						<div class="row">
-
               <div class="medium-10 medium-centered text-center columns">
-
   							<h1 class="white" style="display:inline"> 
   								<b>troll </b></h1><h1 class="white" style="padding: 4px; display:inline; border: white 3px solid">ME
   							</h1>
-
             </div>
 
+            <!-- sub-heading -->
             <div class="row" style="margin-top:10px; margin-bottom: 15px">
               <div class="medium-12 medium-centered text-center columns">
   							<h2 class="info">
   								Don't take life too seriously
   							</h2>
               </div>
-
 						</div> 
 
+            <!-- Facebook Login Button, and Start Trolling! button -->
 						<div id="two" class="row login-buttons">
-
 							<div class="medium-6 columns">
-								
 								<button id="facebook-login" class="button radius facebook login-button">Login with <strong>Facebook</strong></button>
-
 							  <div id="fb-root"></div>
-
 							</div>
-
-              <div id="submit-video-div" class="medium-6 columns hidden">
-
-                <button id="submit-video" class="disabled button radius make-video">Start <strong>Trolling!</strong></button>
-
+              <div id="submit-troll-div" class="medium-6 columns hidden">
+                <button id="submit-troll" class="disabled button radius make-video">Start <strong>Trolling!</strong></button>
               </div>
-
 						</div>
 
-						<!-- <div class="row">
-							
-							<button id="submit-video" class="disabled button radius make-video">START TROLLING!</button>
-
-						</div> -->
 					</div>
 				</div>
-
 			</div>
-
 		</header>
 
-		<section class="video-container" style="display: none">
+    <!-- Section: troll-container holds all of the suggested trolls for the user
+    once they've been generated. -->
+		<section class="troll-container" style="display: none">
 
+      <!-- This is the loading content placeholder for when the API calls are being ran. -->
 			<div id="loading-contents">
-				
 				<div class="row">
-					
 					<div class="medium-12 columns" style="height: 240px;">
-					
 						<div id="loader-wrapper">
 							<div id="loader"></div>
 						</div>
-
 					</div>
-
 				</div>
-
 			</div>
 
-			<div id="video-contents" class="none">
-				
-					<div id="video-paste" class="row">
-
-						<!--<video width="320" height="240" controls>
-              <source id="video-source" src="movie.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-            </video>-->
-
-					</div>
-
-				<div class="row">
-
-					<div class="video-share medium-12 columns text-center">
-
-						<!--<p>This is where the share content will go.</p>-->
-
-					</div>
-
-				</div>
-
+      <!-- This is where the html for the suggested trolls will be posted. -->
+			<div id="troll-contents" class="none">
+				<div id="troll-paste" class="row"></div>
 			</div>
 
 		</section>
 
     <!-- Section: about -->
     <section id="about" class="home-section text-center" style="margin-bottom:30px">
+
+      <!-- Looking to Contribute? Header -->
       <div class="heading-about">
         <div class="container">
         <div class="row">
@@ -840,38 +125,47 @@ and provide them with a summary of what was posted to their timeline and the lin
         </div>
         </div>
       </div>
+
+      <!-- This is the section that mentions the project and the link to GitHub. -->
       <div class="container">
 
-      <div class="row">
-        <div class="large-2 large-offset-5 columns">
-          <hr class="marginbot-50">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="medium-10 medium-centered columns">
-          <div class="wow bounceInUp" data-wow-delay="0.2s">
-              <div class="team boxed-grey">
-                <div class="inner">
-                  <p>Fork the project on GitHub, we'd love to see what your ideas are!</p>
-                  <!-- <h5 class="subtitle">Web Developer/Designer</h5> -->
-                  <div class="avatar text-center"><a href="https://github.com/mcopley08/troll-me" target="_blank"><img src="img/github_page_fork.png" alt="" class="img-responsive one-edge-shadow"/></a></div>
-                </div>
-              </div>
+        <!-- creates a divider -->
+        <div class="row">
+          <div class="large-2 large-offset-5 columns">
+            <hr class="marginbot-50">
           </div>
         </div>
 
-        <br><br>
-        <div>*Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+        <div class="row">
 
-      </div>    
-    </div>
+          <!-- Fork on Github, image & link to project page. -->
+          <div class="medium-10 medium-centered columns">
+            <div class="wow bounceInUp" data-wow-delay="0.2s">
+                <div class="team boxed-grey">
+                  <div class="inner">
+                    <p>Fork the project on GitHub, we'd love to see what your ideas are!</p>
+                    <!-- <h5 class="subtitle">Web Developer/Designer</h5> -->
+                    <div class="avatar text-center"><a href="https://github.com/mcopley08/troll-me" target="_blank"><img src="img/github_page_fork.png" alt="" class="img-responsive one-edge-shadow"/></a></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <!-- Attributing the Flaticon website for the free favicons. -->
+          <br><br>
+          <div>*Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+        </div>   
+      </div>
+
     </section>
-  <!-- /Section: about -->
+    <!-- /Section: about -->
 
 	<script type="text/javascript">
+
 	$(document).ready(function() {
 
+    // EFFECTS: Allows an animated.css effect to occur on an 
+    //          element simply by hovering over it.
     function animationHover(element, animation){
       element = $(element);
       element.hover(
@@ -887,45 +181,27 @@ and provide them with a summary of what was posted to their timeline and the lin
       );
     };
 
-    // making the developer thing animate on hover.
+    // making the developer text animate on hover.
     animationHover('#developer-link', 'bounce');
 
-    $(document).on('click', '#share-to-fb', function() {
-      console.log('here');
-      postStatus($(this).attr('value'));
-    });
+    // this makes the facebook-login button fade in when the page loads.
+    $('#facebook-login').delay(400).addClass('animated fadeInUp');
 
-    $('.duration').change(function() {
-      how_long_ago = $(this).val();
-    });
-
-    $('.the_trolls').on('click', function() {
-      var new_msg = $(this).parent().prevAll("li:price").text();
-      console.log(new_msg);
-      postComment(new_msg);
-    })
-
-    var qs = window.location.hash;
-    if (qs.length) {
-      window.close();
-    }
-
-		// $(document).on('change', '.duration', function() {
-      // $('#two').removeClass('hidden');
-      $('#facebook-login').delay(400).addClass('animated fadeInUp');
-
-		// });
-
+		// When the user clicks the login to facebook, it will display the
+    // 'Start Trolling!' button as well as actually logging in the user.
 		$(document).on('click', '#facebook-login', function() {
+
 			if (!$(this).parent().parent().hasClass('hidden')) {
-        $('#submit-video-div').addClass('animated fadeInUp').removeClass('hidden');
-        $('#submit-video').removeClass('disabled');
-				// $('#three').addClass('animated fadeInUp').removeClass('hidden');
+
+        // displaying the 'Start Trolling!' button.
+        $('#submit-troll-div').addClass('animated fadeInUp').removeClass('hidden');
+        $('#submit-troll').removeClass('disabled');
+
+        // Logging the user into facebook.
 				FB.login(function(response) {
 					if (response.authResponse) {
 						console.log(response.authResponse);
 						console.log('Welcome!  Fetching your information.... ');
-						// testAPI();
 						//$.cookie('FBID', response.authResponse.userId);
 						//FB.api('/me', function(response) {
 						//	console.log('Good to see you, ' + response.name + '.');
@@ -938,31 +214,33 @@ and provide them with a summary of what was posted to their timeline and the lin
 		});
 
 
-		// Video loading elements
-		$(document).on('click', '#submit-video', function() {
+		// When 'Start Trolling!' is clicked, it will display the
+    // loader contents and scroll you to that section of the page,
+    // while it runs the algorithm (testAPI(), then displayData()).
+    // displayData() will switch from the loader to the generated
+    // content once it is finished.
+		$(document).on('click', '#submit-troll', function() {
 
-      
+      // If 'Start Trolling!' has already been pressed.
       if ($('#loading-contents').hasClass('none')) {
-        $.when( $('.video-container').slideUp() ).then(function() {
+        $.when( $('.troll-container').slideUp() ).then(function() {
           $('#loading-contents').removeClass('none');
-          $('#video-contents').addClass('none');
-          $('.video-container').slideDown();
+          $('#troll-contents').addClass('none');
+          $('.troll-container').slideDown();
           $('html, body').animate({
             scrollTop: $("#loading-contents").offset().top
           }, 1000);
         });
       }
-
+      // If this is the first time 'Start Trolling!' was pressed.
       else if (!$(this).hasClass('disabled')) {
-        $('.video-container').slideDown();
+        $('.troll-container').slideDown();
         $('html, body').animate({
           scrollTop: $("#loading-contents").offset().top
         }, 1000);
       }
 
-      
-
-      
+      // executing the algorithm.
       testAPI();
       displayData();
 			
@@ -971,7 +249,5 @@ and provide them with a summary of what was posted to their timeline and the lin
 	});
 
 	</script>
-
 	</body>
-
 <html>
