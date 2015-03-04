@@ -74,21 +74,33 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 ## Suggestions for Further Enhancements
 
 - Having a modal pop-up on the 'troll-me' website to see where the photo comment/photo like is going to be executed. This cannot be done in an ```iframe``` because Facebook doesn't allow this, however you can create a custom view with the [meta-data you get from each photo object](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) in the Facebook API calls.
+
 - Make an API call to [IBM's Watson](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/services-catalog.html) or other [Visual Recognition](http://blog.mashape.com/list-of-14-image-recognition-apis/) services, so that when comments are generated you can have a few words that describe a photo and integrate them into the "troll" comment.
+
 - Integrate a user's [events](https://developers.facebook.com/docs/graph-api/reference/v2.2/event) into messages (Facebook only allows a kind of restricted access, though).
+
 - [Mention/Tag friends](https://developers.facebook.com/docs/opengraph/using-actions/v2.2#mentions) in the comments/statuses instead of simply mentioning their name.
+
 - [Send messages](https://developers.facebook.com/docs/sharing/reference/send-dialog) to random friends.
+
 - Improving the bank of comments/statuses that are generated.
+
 - Calling an [API](http://iheartquotes.com/api) or [script](http://www.htmlgoodies.com/JSBook/sentence.html) to generate random sentences, possibly incorporate [user's names](http://www.icndb.com/api/).
+
 - Getting rid of the bank of comment/status templates and use [NLP algorithms](http://blog.mashape.com/list-of-25-natural-language-processing-apis/) to generate them dynamically.
+
 - Post random photos/links to weird & funny things from the user.
+
 - Like more things than simply photo comments, such as photos, statuses, activity, etc.
+
 - Allow the user to choose how far back in the timeline the trolls should be generated for (effectively just letting them change the ```how_long_ago``` variable).
+
 - Share random [status updates](https://developers.facebook.com/docs/graph-api/reference/v2.2/status) from public users (political figures, department stores, artists, etc.)
 
 ## Things to Note
 
 - [Taggable Friends](https://developers.facebook.com/docs/graph-api/reference/v2.2/user/taggable_friends) which is used to mention random friends in statuses, requires additional approval to be used in the application.
+
 - [Animate.css](http://daneden.github.io/animate.css/) is already included in the package, so if you wanted to improve on the UI it is available.
 
 ## IMPORTANT NOTE
