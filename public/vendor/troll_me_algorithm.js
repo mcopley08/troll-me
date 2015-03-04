@@ -187,6 +187,8 @@ function photo_API_request(callback, callback_2) {
       }
     }
 
+    console.log(response.data);
+
     // This loop adds one generated photo comment and one random photo
     // comment to like into their respectful arrays. 
     // Change the first parameter to Math.min() in order to grab the desired number
