@@ -16,6 +16,8 @@ $ node index.js
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
+The current master branch of the project is kept up-to-date at [www.troll-me.com](http://www.troll-me.com).
+
 ## Quick Start
 
 > Here are a few quick things you can do within 15 minutes to customize the application:
