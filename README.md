@@ -2,13 +2,31 @@
 
 Creating a smart AI to troll Facebook friends.
 
-This project is a Node.js app using [Express 4](http://expressjs.com/).
-
-It is recommended that you are familiar with the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article.
-
 ## Getting Started
 
-## Walkthrough of the 'troll-me' Algorithm
+> Make sure you have [Node.js](http://nodejs.org/) installed.
+
+### Running Locally
+
+```
+$ git clone git@github.com:mcopley08/troll-me.git
+$ cd troll-me
+$ node index.js
+```
+
+Your app should now be running on [localhost:5000](http://localhost:5000/).
+
+## Quick Start
+
+> Here are a few quick things you can do within 15 minutes to customize the application:
+
+- To edit the **troll-me** algorithm, edit ```public/vendor/troll_me_algorithm.js```. To edit the UI of the website and/or the jQuery that executes on certain events, edit ```views/home.html```.
+
+- Simply find the word bank section of **troll_me_algorithm.js** and add your own comment/status templates for trolling! Be sure to follow the format of each array, and **_including single or double quotes is not supported currently and will cause an error_** with the Facebook API call.
+
+- Modify the ```generateComment()``` function. The image url is passed to the function for the photo the comment belongs to, so calling an API with the link or integrating the image in some way would be awesome (see the **Further Enhancements** section for detailed suggestions).
+
+## Walkthrough of the **troll-me** Algorithm
 
 > Once the 'Start Trolling!' button is pressed,
 
@@ -50,17 +68,6 @@ testAPI();
 displayData();
 ```
 
-
-## Quick Start
-
-> Here are a few quick things you can do within 15 minutes to customize the application:
-
-- To edit the **troll-me** algorithm, edit ```public/vendor/troll_me_algorithm.js```. To edit the UI of the website and/or the jQuery that executes on certain events, edit ```views/home.html```.
-
-- Simply find the word bank section of **troll_me_algorithm.js** and add your own comment/status templates for trolling! Be sure to follow the format of each array, and **_including single or double quotes is not supported currently and will cause an error_** with the Facebook API call.
-
-- Modify the ```generateComment()``` function. The image url is passed to the function for the photo the comment belongs to, so calling an API with the link or integrating the image in some way would be awesome (see the **Further Enhancements** section for detailed suggestions).
-
 ## Known Issues
 
 The following are issues that I've been aware of, but haven't fixed quite yet:
@@ -72,6 +79,8 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 	From my understanding, it is due to [loading multiple versions of the Facebook JavaScript SDK](http://neverblog.net/facebook-javascript-sdk-uncaught-rangeerror-maximum-call-stack-size-exceeded-error/).
 
 - If a generated comment/post contains **any form of quotation marks (single or double)** it will not post to Facebook and will return with an error.
+
+- There has been an issue with the ```taggable_friends``` Facebook API call - even when users are approved for access, this still returns an error for them. The only effect is that it will generate two statuses instead of three for them, it doesn't break the application.
 
 ## Suggestions for Further Enhancements
 
