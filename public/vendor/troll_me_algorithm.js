@@ -1,3 +1,10 @@
+// ************************************************************************************
+// ************************************************************************************
+// **************************** The troll-me algorithm. *******************************
+// ************************************************************************************
+// ************************************************************************************
+// ************************************************************************************
+
 // these variables help make sure that the algorithm is executing in the correct order.
 
 var iteration = 0;
@@ -16,7 +23,7 @@ var end_day;
 
 // Getting the current day, month, and year.
 var current_date = new Date();
-var current_day = current_date.getDate();
+var current_day = current_date.getDate() + 1; // we want to be able to draw content from the current day, as well.
 var current_month = current_date.getMonth() + 1; // b/c its 0 indexed.
 var current_year = current_date.getFullYear();
 
@@ -31,6 +38,7 @@ var like_comments = [];
 var chosen_comments = {};
 var photo_counter = 0;
 var chosen_posts = [];
+var user_profile_link;
 var friends = 0, bands = 0, birthday = 0;
 
 // ****************************** Bank of comment/status templates *************************************
@@ -253,7 +261,7 @@ function final_check() {
   }
 
   // Call photo_API_request() again if we still have more 6 month intervals.
-  if (!(start_year == current_year && start_month == current_month)) {
+  if (!(end_year == current_year && end_month == current_month)) {
 
       photo_api_complete = 0;
       check_complete = 0;
@@ -309,6 +317,9 @@ function populatePosts() {
   // grabbing the user's birthday.
   FB.api("/me", function(response) {
 
+    // storing the link back to the user's facebook wall.
+    user_profile_link = response.link;
+
     // only grabbing the day and month - in format DD/MM
     user_birthday = response.birthday;
     user_birthday = user_birthday.substring(0, user_birthday.length - 5);
@@ -329,9 +340,9 @@ function populatePosts() {
   });
 
   // grabbing the user's music interests.
-  FB.api("/me/music", function(response) {    
+  FB.api("/me/music", function(response) {   
 
-    if (typeof response.data[random] != "undefined") {
+    if (response.data.length != 0) {
 
       var random = Math.floor(Math.random()*response.data.length);
       random_band = response.data[random].name;
@@ -351,7 +362,7 @@ function populatePosts() {
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
-    if (typeof response.data[random] != "undefined") {
+    if (response.data.length != 0) {
       var random = Math.floor(Math.random()*response.data.length);
       random_friend = response.data[random].name;
 
@@ -402,7 +413,7 @@ function displayData() {
     your_trolls += '<ul class="pricing-table">';
     your_trolls += '<li class="title">Status Update</li>';
     your_trolls += '<li class="price" style="font-size: 1.75em">'+ chosen_posts[i] + '</li>';
-    your_trolls += '<li class="description" style="font-size: 1.2em">On your wall</li>';
+    your_trolls += '<li class="description" style="font-size: 1.2em">On <a href="' + user_profile_link + '" target="_blank">your wall</a></li>';
     // your_trolls += '<li class="bullet-item">1 Database</li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
   }
