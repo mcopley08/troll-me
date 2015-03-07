@@ -23,6 +23,7 @@ module.exports = function(grunt) {
         },
     })
 
+<<<<<<< HEAD
     grunt.loadNpmTasks('grunt-browserify')
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-jade')
@@ -31,6 +32,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-nodemon')
     grunt.loadNpmTasks('grunt-concurrent')
     grunt.loadNpmTasks('grunt-shell')
+=======
+    grunt.loadNpmTasks('grunt-contrib-uglify')
+    grunt.loadNpmTasks('grunt-nodemon')
+    grunt.loadNpmTasks('grunt-concurrent')
+>>>>>>> workflow
     grunt.registerTask('default', ['concurrent'])
     grunt.registerTask('minify', ['uglify'])
 }

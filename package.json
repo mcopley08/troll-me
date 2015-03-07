@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "grunt": "latest",
+<<<<<<< HEAD
     "grunt-browserify": "latest",
     "grunt-concurrent": "latest",
     "grunt-contrib-jade": "latest",
@@ -22,6 +23,11 @@
     "grunt-contrib-watch": "latest",
     "grunt-nodemon": "latest",
     "grunt-shell": "latest"
+=======
+    "grunt-concurrent": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-nodemon": "latest"
+>>>>>>> workflow
   },
   "engines": {
     "node": "0.10.x"
