@@ -11,6 +11,18 @@
     "express": "~4.9.x",
     "jade": "*"
   },
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-browserify": "latest",
+    "grunt-concurrent": "latest",
+    "grunt-contrib-jade": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-stylus": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-nodemon": "latest",
+    "grunt-shell": "latest"
+  },
   "engines": {
     "node": "0.10.x"
   },
