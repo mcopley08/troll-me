@@ -394,7 +394,8 @@ function displayData() {
   }
 
   // this is the variable that will hold all of the new content's html.
-  var your_trolls = "";
+  var your_trolls = '<div class="row"><div class="medium-offset-2 medium-8 columns text-center">';
+  your_trolls += '<h2 style="margin-bottom: 25px">Here\'s what we came up with:</div></div>';
 
   // adding all of the suggestions for photo comment 'trolls'.
   for (var i = 0; i < photo_comments.length; i++) {
@@ -403,8 +404,8 @@ function displayData() {
     your_trolls += '<li class="title">Photo Comment</li>';
     your_trolls += '<li class="price" style="font-size: 1.75em">'+ photo_comments[i] + '</li>';
     your_trolls += '<li class="description" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
-    // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', \'' + photo_comments[i] + '\', this);">Troll!</a></li></ul></div>';
+    your_trolls += '<li class="price text"><textarea class="user_decision" placeholder="What you want to post..."></textarea></li>';
+    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', this.parentNode.previousSibling.childNodes[0].value, this);">Comment!</a></li></ul></div>';
   }
 
   // adding all of the suggestions for status update 'trolls'.
@@ -414,19 +415,19 @@ function displayData() {
     your_trolls += '<li class="title">Status Update</li>';
     your_trolls += '<li class="price" style="font-size: 1.75em">'+ chosen_posts[i] + '</li>';
     your_trolls += '<li class="description" style="font-size: 1.2em">On <a href="' + user_profile_link + '" target="_blank">your wall</a></li>';
-    // your_trolls += '<li class="bullet-item">1 Database</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(\'' + chosen_posts[i] + '\', this)">Troll!</a></li></ul></div>';
+    your_trolls += '<li class="price text"><textarea class="user_decision" placeholder="What you want to post..."></textarea></li>';
+    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(this.parentNode.previousSibling.childNodes[0].value, this)">Post!</a></li></ul></div>';
   }
 
   // adding all of the suggestions for liking comment 'trolls'.
   for (var i = 0; i < like_comments.length; i++) {
     your_trolls += '<div class = "medium-4 columns">';
     your_trolls += '<ul class="pricing-table">';
-    your_trolls += '<li class="title">Like a comment</li>';
+    your_trolls += '<li class="title">Like the comment</li>';
     your_trolls += '<li class="price" style="font-size: 1.75em">'+ like_comments[i] + '</li>';
     your_trolls += '<li class="description" style="font-size: 1.2em">See the comment <a href="' + like_link_to_comment[i] + '" target="_blank">here</a></li>';
     // your_trolls += '<li class="bullet-item" style="display:none">' + photo_objects[i] + '</li>';
-    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postLike(\'' + like_objects[i] + '\', this);">Troll!</a></li></ul></div>';
+    your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postLike(\'' + like_objects[i] + '\', this);">Like!</a></li></ul></div>';
   }
 
   // adding the 'post all' button to the html variable.
@@ -553,6 +554,7 @@ function postComment(obj_id, new_msg, btn) {
     function (response) {
       if (response && !response.error) {
         // alert("it was successful!");
+        btn.parentNode.previousSibling.childNodes[0].disabled = true;
         $(btn).fadeOut("slow");
       }
     }
@@ -572,6 +574,7 @@ function postStatus(status_msg, btn) {
     function (response) {
       if (response && !response.error) {
         // alert('Post successful!');
+        btn.parentNode.previousSibling.childNodes[0].disabled = true;
         $(btn).fadeOut("slow");
       }
   });
