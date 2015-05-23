@@ -404,7 +404,7 @@ function displayData() {
     your_trolls += '<li class="title">Photo Comment</li>';
     your_trolls += '<li class="price" style="font-size: 1.75em">'+ photo_comments[i] + '</li>';
     your_trolls += '<li class="description" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
-    your_trolls += '<li class="price text"><textarea class="user_decision" placeholder="What you want to post..."></textarea></li>';
+    your_trolls += '<li class="price text"><textarea style="font-size: 0.6em" placeholder="What you want to post..."></textarea></li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', this.parentNode.previousSibling.childNodes[0].value, this);">Comment!</a></li></ul></div>';
   }
 
@@ -415,7 +415,7 @@ function displayData() {
     your_trolls += '<li class="title">Status Update</li>';
     your_trolls += '<li class="price" style="font-size: 1.75em">'+ chosen_posts[i] + '</li>';
     your_trolls += '<li class="description" style="font-size: 1.2em">On <a href="' + user_profile_link + '" target="_blank">your wall</a></li>';
-    your_trolls += '<li class="price text"><textarea class="user_decision" placeholder="What you want to post..."></textarea></li>';
+    your_trolls += '<li class="price text"><textarea style="font-size: 0.6em" placeholder="What you want to post..."></textarea></li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(this.parentNode.previousSibling.childNodes[0].value, this)">Post!</a></li></ul></div>';
   }
 

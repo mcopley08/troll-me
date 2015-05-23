@@ -84,6 +84,14 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 
 - There has been an issue with the ```taggable_friends``` Facebook API call - even when users are approved for access, this still returns an error for them. The only effect is that it will generate two statuses instead of three for them, it doesn't break the application.
 
+## Things on the To-Do List
+
+- Create a section of the page right below the home screen explaining the application and how to use it.
+
+- When suggestions are displayed, have a color scheme that goes from dark to light (top to bottom). Right now it looks like a checkerboard.
+
+- Implement copy and paste buttons to make it easier to do this on mobile devices.
+
 ## Suggestions for Further Enhancements
 
 - Having a [modal](http://foundation.zurb.com/docs/components/reveal.html) pop-up on the 'troll-me' website to see where the photo comment/photo like is going to be executed. This cannot be done in an ```iframe``` because Facebook doesn't allow this, however you can create a custom view with the [meta-data you get from each photo object](https://developers.facebook.com/docs/graph-api/reference/v2.2/photo) in the Facebook API calls.
