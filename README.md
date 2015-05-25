@@ -86,8 +86,6 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 
 ## Things on the To-Do List
 
-- Create a section of the page right below the home screen explaining the application and how to use it.
-
 - When suggestions are displayed, have a color scheme that goes from dark to light (top to bottom). Right now it looks like a checkerboard.
 
 - Implement copy and paste buttons to make it easier to do this on mobile devices.
