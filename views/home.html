@@ -40,6 +40,9 @@
 		<link rel="stylesheet" type="text/css" href="vendor/foundation/css/foundation.min.css">
 		<link rel="stylesheet" href="animated.css">
 
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
     <!-- Custom CSS -->
     <link href="default.css" rel="stylesheet">
 
@@ -113,6 +116,36 @@
 
     <!-- Section: troll-container holds all of the suggested trolls for the user
     once they've been generated. -->
+    <section id="about" class="home-section text-center">
+
+      <div class="container row">
+        <div class="medium-11 medium-centered columns">
+
+          <div class="wow fadeIn" data-wow-delay="0.4s">
+            <h2>What does this do?</h2>
+          </div>
+
+          <div class="devider"><i class="fa fa-facebook-official fa-lg"></i></div>
+
+          <div class="wow fadeIn" data-wow-delay="0.4s">
+            <p><b>troll-me</b> is an algorithm that looks through your Facebook profile and 
+            suggests things that you can do to <b>troll</b> people. It will generate comments to
+            post on photos, status updates for your profile, and random photos to like from a while ago. 
+            <br><br>
+            When we suggest comments and statuses, you will be provided with a text field to fill in what
+            you want it to say. We do not pre-fill any of these fields for you.
+            <br><br>
+            *Using this algorithm will NOT post anything to your profile, unless you explicitly press any
+            of the <b>post</b> buttons.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Section: troll-container holds all of the suggested trolls for the user
+    once they've been generated. -->
 		<section class="troll-container" style="display: none">
 
       <!-- This is the loading content placeholder for when the API calls are being ran. -->
@@ -145,7 +178,6 @@
             <div class="section-heading">
             <h2 style="display:inline">Looking to Contribute? </h2>
             <img src="img/programming.png" alt="" class="img-responsive" style="margin-bottom:18px; display:inline"/>
-            <i class="fa fa-2x fa-angle-down"></i>
             </div>
             </div>
           </div>
@@ -170,7 +202,7 @@
             <div class="wow bounceInUp" data-wow-delay="0.2s">
                 <div class="team boxed-grey">
                   <div class="inner">
-                    <p>Fork the project on GitHub, we'd love to see what your ideas are!</p>
+                    <p>Check out the project on GitHub, I'd love to see what your ideas are!</p>
                     <!-- <h5 class="subtitle">Web Developer/Designer</h5> -->
                     <div class="avatar text-center"><a href="https://github.com/mcopley08/troll-me" target="_blank"><img src="img/github_page_fork.png" alt="" class="img-responsive one-edge-shadow"/></a></div>
                   </div>
@@ -193,7 +225,6 @@
               <div class="wow fadeInUp" data-wow-delay="0.4s">
               <div class="section-heading">
               <h1>Say Hello!</h1>
-              <i class="fa fa-2x fa-angle-down"></i>
               </div>
               </div>
             </div>
@@ -232,7 +263,6 @@
             <div class="large-10 large-offset-1 columns">
               <div class="wow fadeInUp" data-wow-delay="0.4s">
                 <div class="section-heading">
-                  <i class="fa fa-2x fa-angle-down"></i>
                   <h2 id="coffee" class="donate" onclick="window.open('http://bit.ly/1KbK1IO', '_blank')">donate a coffee </h2>
                   <img src="img/coffee.png" alt="" class="img-responsive hover-click" style="margin-bottom:8px" onclick="window.open('http://bit.ly/1KbK1IO', '_blank')"/>
                   <h2 id="burger" class="donate" onclick="window.open('http://bit.ly/1zU4JCW', '_blank')"> | donate a burger </h2>

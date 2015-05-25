@@ -205,6 +205,31 @@ video {
 
 }
 
+.devider {
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+.devider i {
+  color: #cccccc;
+}
+
+.devider:before,
+.devider:after {
+  content: "_________";
+  color: #e6e8ea;
+  position: relative;
+  bottom: 6px;
+}
+
+.devider:before {
+  right: 10px;
+}
+
+.devider:after {
+  left: 10px;
+}
+
 /*** loader ***/
 
 #loader-wrapper {
