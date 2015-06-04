@@ -404,6 +404,7 @@ function displayData() {
     your_trolls += '<li class="title">Photo Comment</li>';
     your_trolls += '<li class="content" style="font-size: 1.75em">'+ photo_comments[i] + '</li>';
     your_trolls += '<li class="link-to-fb" style="font-size: 1.2em">See the photo <a href="' + photo_link_to_comment[i] + '" target="_blank">here</a></li>';
+    your_trolls += '<li class="copy-paste"><a class="button trollz" onclick="copy_and_paste(this);">Copy & Paste!</a></li>';
     your_trolls += '<li class="price text"><textarea style="font-size: 0.6em" placeholder="What you want to post..."></textarea></li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postComment(' + photo_objects[i] + ', this.parentNode.previousSibling.childNodes[0].value, this);">Comment!</a></li></ul></div>';
   }
@@ -415,6 +416,7 @@ function displayData() {
     your_trolls += '<li class="title">Status Update</li>';
     your_trolls += '<li class="content" style="font-size: 1.75em">'+ chosen_posts[i] + '</li>';
     your_trolls += '<li class="link-to-fb" style="font-size: 1.2em">On <a href="' + user_profile_link + '" target="_blank">your wall</a></li>';
+    your_trolls += '<li class="copy-paste"><a class="button trollz" onclick="copy_and_paste(this);">Copy & Paste!</a></li>';
     your_trolls += '<li class="price text"><textarea style="font-size: 0.6em" placeholder="What you want to post..."></textarea></li>';
     your_trolls += '<li class="cta-button"><a class="button round trollz" onclick="postStatus(this.parentNode.previousSibling.childNodes[0].value, this)">Post!</a></li></ul></div>';
   }
@@ -604,4 +606,39 @@ function postAll() {
   for (var i = 0; i < items.length; i++) {
       items[i].click();
   }
+}
+
+// EFFECTS: copies the suggestion that was generated and pastes
+//          it into the field for the user.
+function copy_and_paste(btn) {  
+
+  console.log("triggered");
+  
+  // Select the email link anchor text  
+  var emailLink = btn.parentNode.previousSibling.previousSibling.innerHTML;  
+  console.log("twerked");
+  console.log(emailLink);
+
+  // this is the "paste"
+  btn.parentNode.nextSibling.childNodes[0].value = emailLink;
+
+  // some nice UI to let the user know it worked
+  $(btn).fadeOut(function() {
+    
+    btn.text = "Done!";
+    btn.style.setProperty("background-color", "#7BA1D7", "important");
+    $(btn).addClass("disabled");
+    $(btn).fadeIn("slow");
+
+    setTimeout(function() {
+        $(btn).fadeOut("slow", function() {
+          btn.text = "Copy & Paste!";
+          btn.style.setProperty("background-color", "#0B243B", "important");
+          $(btn).removeClass("disabled");
+          $(btn).fadeIn("slow");
+        });
+    }, 1800);
+
+  });
+
 }

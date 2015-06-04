@@ -136,7 +136,7 @@
             you want it to say. We do not pre-fill any of these fields for you.
             <br><br>
             *Using this algorithm will NOT post anything to your profile, unless you explicitly press any
-            of the <b>post</b> buttons.</p>
+            of the <b>post</b> buttons ("Comment!", "Post!", or "Like!".)</p>
           </div>
 
         </div>
@@ -291,6 +291,11 @@
 	<script type="text/javascript">
 
 	$(document).ready(function() {
+
+    // EFFECTS: this code allows us to select the generated comment we provided
+    //          and copy it to the clipboard, then paste it into the text field.
+    // var copySuggestion = document.querySelector('.copy-and-paste-btn');  
+    
 
     // EFFECTS: Allows an animated.css effect to occur on an 
     //          element simply by hovering over it.

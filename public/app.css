@@ -69,6 +69,10 @@ video {
     background-color: #0B243B !important;
 }
 
+.copy-paste > .button {
+    background-color: #0B243B !important;
+}
+
 .one-edge-shadow {
     -webkit-box-shadow: 0 6px 8px 0px rgb(80,80,80);
        -moz-box-shadow: 0 6px 8px 0px rgb(80,80,80);
@@ -242,6 +246,14 @@ video {
 .pricing-table .link-to-fb {
     background-color: #E6E6E6;
     padding: 0.9375rem 1.25rem;
+    text-align: center;
+    color: #333333;
+    font-weight: normal;
+    font-size: 2rem;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; }
+.pricing-table .copy-paste {
+    background-color: #EEEEEE;
+    padding-top: 0.9375rem;
     text-align: center;
     color: #333333;
     font-weight: normal;
