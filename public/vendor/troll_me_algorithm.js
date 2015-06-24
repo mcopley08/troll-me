@@ -213,7 +213,6 @@ function photo_API_request(callback, callback_2) {
       photo_comments.push(generateComment(response.data[random_pic].comments.data[0].from.name, response.data[random_pic].source));
       photo_link_to_comment.push(response.data[random_pic].link);
 
-
       // ********* picking a random photo comment to like. *************
       random_pic = Math.floor(Math.random()*response.data.length);
       var random_com; 
@@ -245,6 +244,7 @@ function photo_API_request(callback, callback_2) {
   });
 }
 
+// 800 432 1359
 
 // EFFECTS: This function checks to see if we've exhausted all of our
 //          six month intervals. If not, it moves to the next one and
@@ -520,7 +520,7 @@ function testAPI() {
     start_year -= (how_long_ago - 0.5);
 
     // if subtracting 6 months takes you into the previous year.
-    if (start_month - 6 < 1) {
+    if (start_month - 6 < 0) {
       --start_year;
     }
     start_month = (start_month + 6) % 12;
