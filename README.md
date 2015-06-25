@@ -11,6 +11,7 @@ Creating a smart AI to troll Facebook friends.
 ```
 $ git clone git@github.com:mcopley08/troll-me.git
 $ cd troll-me
+$ npm install
 $ node index.js
 ```
 
