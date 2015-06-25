@@ -27,6 +27,10 @@ app.get('/', function(req, res) {
   res.render('home', {title: 'home', songs_array: songs_array});
 });
 
+app.post('/', function(req, res) {
+  res.render('home', {title: 'home', songs_array: songs_array});
+});
+
 
 var generateRandomString = function(length) {
   var text = '';
