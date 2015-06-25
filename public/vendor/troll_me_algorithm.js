@@ -54,15 +54,20 @@ var photo_comment_templates = ["what a great day",
                                "im going to print this out and put it all over my face/pillowcase. but probably just my face.",
                                "try plugging an ethernet cable into THAT!",
                                "i just cant even..",
+                               "ayyyyy, lmao",
+                               "if a tree fell in the forest & no one heard it, can jet fuel still melt steel beams?",
                                "great pic... one of my best memories..",
                                "my shopping list for this week: hibiscus plants, reeses puffs (peanut butter chocolate flavour), fruit roll ups. dont let me forget.",
                                "try looking at this picture and listening to notorious b.i.g.",
+                               "not to try & be that guy that promotes his new single, but check me out real quick https://soundcloud.com/zenja/jet-fuel-cant-melt-dank-memes",
                                "selling an ATV for $400 obo - runs great, my kids loved it as well."];
 var photo_comment_template_names = [", what are u doing today?", 
+                                    ", if ur not doing anything later, my mom & i are going to find some rare pepes (ur invited).",
                                     ", i definitely agree with you.", 
                                     ", excuse me..?  hahaha just-kidding.",
                                     ", you left your john deere trucker hat at my place",
                                     ", you still have my copy of mario sunshine! ha-ha.",
+                                    ", im going to join the illuminati later if you want to join.",
                                     ", so true, lol"];
 var photo_comment_template_names_alt = ["im going to remember this one for a while, ", 
                                         "hahahaha, omg ", 
@@ -75,7 +80,7 @@ var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-chee
                                " is the only day of the year i get socks from dockers, and i want to keep it that way.",
                                " gives me an excuse to spend $35 on doritos and say to myself: its okay, today is MY day"];
 
-var post_birthday_templates_alt = ["take a wild guess at what happens on the following data, and ill give you a hint, it has to do it being my birthday: ",
+var post_birthday_templates_alt = ["take a wild guess at what happens on the following date, and ill give you a hint, it has to do with being my birthday: ",
                                    "ill give you $10 if you chill with me on: "];
 
 var post_band_templates = ["i should really do more than eat sun chips and listen to ",
