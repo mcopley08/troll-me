@@ -330,19 +330,25 @@
         $('#submit-troll-div').addClass('animated fadeInUp').removeClass('hidden');
         $('#submit-troll').removeClass('disabled');
 
-        // Logging the user into facebook.
-				FB.login(function(response) {
-					if (response.authResponse) {
-						console.log(response.authResponse);
-						console.log('Welcome! Fetching your information.... ');
-						//$.cookie('FBID', response.authResponse.userId);
-						//FB.api('/me', function(response) {
-						//	console.log('Good to see you, ' + response.name + '.');
-						//});
-					} else {
-						console.log('User cancelled login or did not fully authorize.');
-					}
-				}, {scope: 'user_photos, user_birthday, user_likes, publish_actions'});
+
+        // if they're using chrome for iOS (which is a freaking error for some reason)
+        if( navigator.userAgent.match('CriOS') )
+            window.open('https://www.facebook.com/dialog/oauth?client_id=480747342080039&redirect_uri='+ document.location.href +'&scope=user_photos,user_birthday,user_likes,publish_actions', '', null);
+        else {
+          // Logging the user into facebook.
+          FB.login(function(response) {
+            if (response.authResponse) {
+              console.log(response.authResponse);
+              console.log('Welcome! Fetching your information.... ');
+              //$.cookie('FBID', response.authResponse.userId);
+              //FB.api('/me', function(response) {
+              //  console.log('Good to see you, ' + response.name + '.');
+              //});
+            } else {
+              console.log('User cancelled login or did not fully authorize.');
+            }
+          }, {scope: 'user_photos, user_birthday, user_likes, publish_actions'});
+        }
 			}
 		});
 
