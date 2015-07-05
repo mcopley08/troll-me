@@ -75,6 +75,11 @@ displayData();
 
 The following are issues that I've been aware of, but haven't fixed quite yet:
 
+- When a user tries to login with Facebook on Google Chrome for iOS, this error usually shows up:
+	```
+	```
+	Going into the settings for the iPhone and clearing the browser data and changing the cookie settings will fix it though. [This article](https://discussions.apple.com/thread/4621606?start=0&tstart=0) explains how to resolve the issue.
+
 - If a user presses ```Troll Now!``` multiple times, the following error message will show up:
 	```
 	Uncaught RangeError: Maximum call stack size exceeded
