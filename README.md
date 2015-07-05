@@ -77,6 +77,7 @@ The following are issues that I've been aware of, but haven't fixed quite yet:
 
 - When a user tries to login with Facebook on Google Chrome for iOS, this error usually shows up:
 	```
+	to use facebook please select your settings app → safari → accept cookies → from visited
 	```
 	Going into the settings for the iPhone and clearing the browser data and changing the cookie settings will fix it though. [This article](https://discussions.apple.com/thread/4621606?start=0&tstart=0) explains how to resolve the issue.
 
