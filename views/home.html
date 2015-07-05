@@ -326,15 +326,16 @@
 
 			if (!$(this).parent().parent().hasClass('hidden')) {
 
-        // displaying the 'Start Trolling!' button.
-        $('#submit-troll-div').addClass('animated fadeInUp').removeClass('hidden');
-        $('#submit-troll').removeClass('disabled');
+        
 
 
         // if they're using chrome for iOS (which is a freaking error for some reason)
         if( navigator.userAgent.match('CriOS') ) {
             window.open('https://www.facebook.com/dialog/oauth?client_id=480747342080039&redirect_uri='+ document.location.href +'&scope=user_photos,user_birthday,user_likes,publish_actions', '', null);
-            alert("its chrome on iOS!");
+
+            // displaying the 'Start Trolling!' button.
+            $('#submit-troll-div').addClass('animated fadeInUp').removeClass('hidden');
+            $('#submit-troll').removeClass('disabled');
         }
         else {
           // Logging the user into facebook.
