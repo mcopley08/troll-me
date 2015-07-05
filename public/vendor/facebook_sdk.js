@@ -66,6 +66,7 @@ window.fbAsyncInit = function() {
       $('#submit-troll-div').addClass('animated fadeInUp').removeClass('hidden');
       $('#submit-troll').removeClass('disabled');
       $('#facebook-login').addClass('disabled');
+      $('#facebook-login').hide();
     }
     else {
       // this makes the facebook-login button fade in when the page loads.
