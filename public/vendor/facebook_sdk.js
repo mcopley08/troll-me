@@ -59,6 +59,19 @@ window.fbAsyncInit = function() {
     statusChangeCallback(response);
   });
 
+  // checking to see if the user is logged into FB & authenticated tha application.
+  FB.getLoginStatus(function(response) {
+    if (response.status === 'connected') {
+      // displaying the 'Start Trolling!' button.
+      $('#submit-troll-div').addClass('animated fadeInUp').removeClass('hidden');
+      $('#submit-troll').removeClass('disabled');
+    }
+    else {
+      // this makes the facebook-login button fade in when the page loads.
+      $('#facebook-login').delay(400).addClass('animated fadeInUp');
+    }
+  });
+
 };
 
 // Load the SDK asynchronously
