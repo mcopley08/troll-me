@@ -366,21 +366,23 @@ function populatePosts() {
       }       
     }   
 
+    console.log("music successful");
+
     bands = 1;
   });
 
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
-    // console.log("taggable friends");
-    // if (response.data.length != 0) {
-    //   var random = Math.floor(Math.random()*response.data.length);
-    //   random_friend = response.data[random].name;
+    console.log("taggable friends");
+    if (response.data.length != 0) {
+      var random = Math.floor(Math.random()*response.data.length);
+      random_friend = response.data[random].name;
 
-    //   chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
-    // }
+      chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
+    }
     
-    // friends = 1;
+    friends = 1;
   });
 }
 
