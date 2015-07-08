@@ -181,6 +181,7 @@ function photo_API_request(callback, callback_2) {
   // making the api call to grab photos in the given 6 month time frame.
   FB.api(FB_photo_request, function(response) {
 
+    console.log("sorting photos");
     // sorting the photos by the most comments.
     response.data.sort(function(a, b) {
 
@@ -193,6 +194,7 @@ function photo_API_request(callback, callback_2) {
       return b.comments.data.length - a.comments.data.length;
     });
 
+    console.log("photos with no comments");
     // deleting all photo objects with no comments.
     for (var i = 0; i < response.data.length; i++) {
       if (typeof response.data[i].comments == "undefined") {
@@ -201,6 +203,7 @@ function photo_API_request(callback, callback_2) {
       }
     }
 
+    console.log("a loop i guess");
     // This loop adds one generated photo comment and one random photo
     // comment to like into their respectful arrays. 
     // Change the first parameter to Math.min() in order to grab the desired number
@@ -209,7 +212,6 @@ function photo_API_request(callback, callback_2) {
     for (var i = 0; i < Math.min(1, response.data.length); i++) {
 
       // ************ picking a random photo to comment on *****************
-
       var random_pic = Math.floor(Math.random()*response.data.length);
       photo_objects.push(response.data[random_pic].id);
 
@@ -242,7 +244,7 @@ function photo_API_request(callback, callback_2) {
           like_link_to_comment.push(response.data[random_pic].link);
           break;
         }
-      }             
+      }
     } // end of 'for' loop
 
     photo_api_complete = 1;
@@ -346,7 +348,9 @@ function populatePosts() {
   });
 
   // grabbing the user's music interests.
-  FB.api("/me/music", function(response) {   
+  FB.api("/me/music", function(response) {  
+
+    console.log("grabbing music interests"); 
 
     if (response.data.length != 0) {
 
@@ -368,6 +372,7 @@ function populatePosts() {
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
+    console.log("taggable friends");
     if (response.data.length != 0) {
       var random = Math.floor(Math.random()*response.data.length);
       random_friend = response.data[random].name;
