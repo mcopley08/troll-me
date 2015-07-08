@@ -366,8 +366,6 @@ function populatePosts() {
       }       
     }   
 
-    console.log("music successful");
-
     bands = 1;
   });
 
@@ -384,6 +382,8 @@ function populatePosts() {
     
     friends = 1;
   });
+
+  console.log("populate posts MIGHT BE done");
 }
 
 // ************* Function that fills in our empty div with our content we generated. ******************
@@ -395,6 +395,8 @@ function populatePosts() {
 //          format so that the user can see them, and decide if they want
 //          to execute the 'trolls' that were generated.
 function displayData() {
+
+  console.log("were getting to the data!");
 
   // making sure the div is empty, so we don't add to previous suggestions for 'trolls'.
   $('#troll-paste').empty();
