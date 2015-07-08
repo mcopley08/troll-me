@@ -380,8 +380,11 @@ function populatePosts() {
       chosen_posts.push(funny_quotes[Math.floor(Math.random()*funny_quotes.length)] + random_friend);
     }
     
-    friends = 1;
+    // friends = 1;
   });
+
+  friends = 1; // putting this here now to not throw an error, but when taggable friends is approved
+               // well want to take this out & uncomment it above.
 
   console.log("populate posts MIGHT BE done");
 }
