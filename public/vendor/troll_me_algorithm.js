@@ -181,7 +181,6 @@ function photo_API_request(callback, callback_2) {
   // making the api call to grab photos in the given 6 month time frame.
   FB.api(FB_photo_request, function(response) {
 
-    console.log("sorting photos");
     // sorting the photos by the most comments.
     response.data.sort(function(a, b) {
 
@@ -194,7 +193,6 @@ function photo_API_request(callback, callback_2) {
       return b.comments.data.length - a.comments.data.length;
     });
 
-    console.log("photos with no comments");
     // deleting all photo objects with no comments.
     for (var i = 0; i < response.data.length; i++) {
       if (typeof response.data[i].comments == "undefined") {
@@ -203,7 +201,6 @@ function photo_API_request(callback, callback_2) {
       }
     }
 
-    console.log("a loop i guess");
     // This loop adds one generated photo comment and one random photo
     // comment to like into their respectful arrays. 
     // Change the first parameter to Math.min() in order to grab the desired number
@@ -350,8 +347,6 @@ function populatePosts() {
   // grabbing the user's music interests.
   FB.api("/me/music", function(response) {  
 
-    console.log("grabbing music interests"); 
-
     if (response.data.length != 0) {
 
       var random = Math.floor(Math.random()*response.data.length);
@@ -372,7 +367,6 @@ function populatePosts() {
   // grabbing one of the user's friends, generating a status.
   FB.api("/me/taggable_friends?limit=100", function(response) {
 
-    console.log("taggable friends");
     if (response.data.length != 0) {
       var random = Math.floor(Math.random()*response.data.length);
       random_friend = response.data[random].name;
@@ -386,7 +380,6 @@ function populatePosts() {
   friends = 1; // putting this here now to not throw an error, but when taggable friends is approved
                // well want to take this out & uncomment it above.
 
-  console.log("populate posts MIGHT BE done");
 }
 
 // ************* Function that fills in our empty div with our content we generated. ******************
@@ -398,8 +391,6 @@ function populatePosts() {
 //          format so that the user can see them, and decide if they want
 //          to execute the 'trolls' that were generated.
 function displayData() {
-
-  console.log("were getting to the data!");
 
   // making sure the div is empty, so we don't add to previous suggestions for 'trolls'.
   $('#troll-paste').empty();
