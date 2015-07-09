@@ -72,9 +72,8 @@ var photo_comment_template_names = [", what are u doing today?",
 var photo_comment_template_names_alt = ["im going to remember this one for a while, ", 
                                         "hahahaha, omg ", 
                                         "im not quite sure id say that... ",
-                                        "you should've seen me when i posted this pic, ",
+                                        "you shouldve seen me when i posted this pic, ",
                                         "my mom gave me some weird questions after this one... remember, ",
-                                        "remember when i updanked you behind the tennis courts, ",
                                         "great comment, "];
 
 var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
