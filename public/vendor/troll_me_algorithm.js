@@ -68,7 +68,24 @@ var photo_comment_template_names = [", what are u doing today?",
                                     ", you left your john deere trucker hat at my place",
                                     ", you still have my copy of mario sunshine! ha-ha.",
                                     ", im going to join the illuminati later if you want to join.",
-                                    ", so true, lol"];
+                                    ", so true, lol",
+                                    ", this is classic you",
+                                    ", this is embarassing, but yesterday at lunch i forgot your first name",
+                                    ", is this what you meant when you said you *lost* your gopro?",
+                                    ", i swear i saw this on the front page of reddit earlier this week",
+                                    ", where are you in this pic?????",
+                                    ", why did you post this?",
+                                    ", i have your crocs, still not sure how you got home",
+                                    ", is that Beyonce?",
+                                    ", i literally cannot believe you posted this",
+                                    ", do you remember how long your beard was in middle school?",
+                                    ", do you prefer 2% or soy?",
+                                    ", what's my age again?",
+                                    ", somebody got hacked",
+                                    ", who actually took this pic?",
+                                    ", you've grown up so fast *sobbing*",
+                                    ", that's a nice pic you got over dere",
+                                    ", some nights i stay up cashing in my bad luck"];
 var photo_comment_template_names_alt = ["im going to remember this one for a while, ", 
                                         "hahahaha, omg ", 
                                         "im not quite sure id say that... ",
@@ -155,7 +172,7 @@ function generateComment(person_name, img_url) {
 
   // random comment - name after
   else if (20 <= random && random < 30) {
-    var new_comment = photo_comment_template_names_alt[Math.floor(Math.random()*photo_comment_template_names.length)];
+    var new_comment = photo_comment_template_names_alt[Math.floor(Math.random()*photo_comment_template_names_alt.length)];
 
     // if we've already chosen this one, call the function again to get a new template.
     if (new_comment in chosen_comments) {
