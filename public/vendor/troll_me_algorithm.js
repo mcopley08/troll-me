@@ -343,20 +343,28 @@ function populatePosts() {
 
     // only grabbing the day and month - in format DD/MM
     user_birthday = response.birthday;
-    user_birthday = user_birthday.substring(0, user_birthday.length - 5);
 
-    // the upper limit of 100 is an arbitrary random number (it can be anything).
-    var random = Math.floor(Math.random()*101);
-    
-    // the even/odd separation is simply there just to randomly select
-    // which bank we're grabbing it from, if we need to b-day info before
-    // or after our template.
-    if (random % 2 == 0) {
-      chosen_posts.push(user_birthday + post_birthday_templates[Math.floor(Math.random()*post_birthday_templates.length)]);
+    // making sure they actually provide their birthday on fb - else theres an infinite spinning error
+    if (typeof user_birthday != 'undefined') {
+      user_birthday = user_birthday.substring(0, user_birthday.length - 5);
+
+      // the upper limit of 100 is an arbitrary random number (it can be anything).
+      var random = Math.floor(Math.random()*101);
+      
+      // the even/odd separation is simply there just to randomly select
+      // which bank we're grabbing it from, if we need to b-day info before
+      // or after our template.
+      if (random % 2 == 0) {
+        chosen_posts.push(user_birthday + post_birthday_templates[Math.floor(Math.random()*post_birthday_templates.length)]);
+      }
+      else {
+        chosen_posts.push(post_birthday_templates_alt[Math.floor(Math.random()*post_birthday_templates_alt.length)] + user_birthday);
+      }
     }
     else {
-      chosen_posts.push(post_birthday_templates_alt[Math.floor(Math.random()*post_birthday_templates_alt.length)] + user_birthday);
+      console.log("no birthday status for this user :(");
     }
+    
     birthday = 1;
   });
 
