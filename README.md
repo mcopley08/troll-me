@@ -2,9 +2,11 @@
 
 Creating a smart AI to troll Facebook friends.
 
+[![Build Status](https://travis-ci.org/mcopley08/troll-me.svg?branch=master)](https://travis-ci.org/mcopley08/troll-me)
+
 ## Getting Started
 
-> Make sure you have [Node.js](http://nodejs.org/) installed.
+> Make sure you have [Node.js](http://nodejs.org/) installed. This application only is supported on versions 0.10 and above.
 
 ### Running Locally
 
