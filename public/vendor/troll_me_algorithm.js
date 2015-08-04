@@ -23,7 +23,7 @@ var end_day;
 
 // Getting the current day, month, and year.
 var current_date = new Date();
-var current_day = current_date.getDate() + 1; // we want to be able to draw content from the current day, as well.
+var current_day = current_date.getDate(); // we want to be able to draw content from the current day, as well.
 var current_month = current_date.getMonth() + 1; // b/c its 0 indexed.
 var current_year = current_date.getFullYear();
 
