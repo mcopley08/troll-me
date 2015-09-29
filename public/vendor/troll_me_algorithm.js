@@ -46,7 +46,12 @@ var friends = 0, bands = 0, birthday = 0;
 // To add to the existing bank of words, simply follow the format of each of the arrays,
 // and make sure there are no double or single quotes in your new template. Then you're all set!
 
-var photo_comment_templates = ["what a great day", 
+var photo_comment_templates = ["im going to the store to buy scooby snacks. need anything?",
+                               "didnt u throw up after this? lol",
+                               "brb gotta go to my yoga class",
+                               "prom?",
+                               "omg sry 4 txtng tht was my friend lol",
+                               "what a great day", 
                                "reminds me of the good old days",
                                "this always reminds me of when i used to live in palo alto", 
                                "i ate so many white castles after this... lol...",
