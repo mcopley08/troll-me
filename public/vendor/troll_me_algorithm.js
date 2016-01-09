@@ -99,6 +99,7 @@ var photo_comment_template_names_alt = ["im going to remember this one for a whi
                                         "great comment, "];
 
 var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
+                               " is that time when i dont have to pretend im ordering a cake for my 'friend'.",
                                " is the only day of the year i get socks from dockers, and i want to keep it that way.",
                                " gives me an excuse to spend $35 on doritos and say to myself: its okay, today is MY day"];
 
