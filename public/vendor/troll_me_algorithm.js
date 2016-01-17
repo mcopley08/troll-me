@@ -86,6 +86,7 @@ var photo_comment_template_names = [", what are u doing today?",
                                     ", do you remember how long your beard was in middle school?",
                                     ", do you prefer 2% or soy?",
                                     ", what's my age again?",
+                                    ", do u remember when u and my bff went to red robin without me? lol",
                                     ", somebody got hacked",
                                     ", who actually took this pic?",
                                     ", you've grown up so fast *sobbing*",
@@ -99,7 +100,7 @@ var photo_comment_template_names_alt = ["im going to remember this one for a whi
                                         "great comment, "];
 
 var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-cheese.",
-                               " is that time when i dont have to pretend im ordering a cake for my 'friend'.",
+                               " is the one day i dont have to pretend im ordering a cake for my 'friend'.",
                                " is the only day of the year i get socks from dockers, and i want to keep it that way.",
                                " gives me an excuse to spend $35 on doritos and say to myself: its okay, today is MY day"];
 
