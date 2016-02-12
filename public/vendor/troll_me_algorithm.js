@@ -119,6 +119,7 @@ var post_band_templates_alt = [" is the reason i never get my homework done, but
                                " should do a cover of that weird-ass witch doctor song."];
 
 var funny_quotes = ['I just ate some garlic, so I cant talk. -',
+                    'Dont u love it when ur sitting at a red light and when it turns green all the other lights behind it turn green lol -',
                     'I hate when Im on a flight and I wake up with a water bottle next to me like oh great now I gotta be responsible for this water bottle. -',
                     'You put the boom-boom into my heart, You send my soul sky high when your lovin starts - ',
                     'It’s grind-day, from Friday, to next Friday. I been up straight for nine days, I need a spa day -',
