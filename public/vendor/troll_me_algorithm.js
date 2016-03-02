@@ -66,7 +66,8 @@ var photo_comment_templates = ["im going to the store to buy scooby snacks. need
                                "try looking at this picture and listening to notorious b.i.g.",
                                "not to try & be that guy that promotes his new single, but check me out real quick https://soundcloud.com/zenja/jet-fuel-cant-melt-dank-memes",
                                "selling an ATV for $400 obo - runs great, my kids loved it as well."];
-var photo_comment_template_names = [", what are u doing today?",
+var photo_comment_template_names = [", I love going through these pics and remembering the good days when I was your best friend :)",
+                                    ", what are u doing today?",
                                     ", i bought a new hat, come over and check it out!!",
                                     ", if ur not doing anything later, my mom & i are going to find some rare pepes (ur invited).",
                                     ", i definitely agree with you.", 
