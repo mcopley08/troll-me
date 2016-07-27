@@ -108,7 +108,8 @@ var post_birthday_templates = [" is my birthday, who wants to go to chuck-e-chee
                                " gives me an excuse to spend $35 on doritos and say to myself: its okay, today is MY day"];
 
 var post_birthday_templates_alt = ["take a wild guess at what happens on the following date, and ill give you a hint, it has to do with being my birthday: ",
-                                   "ill give you $10 if you chill with me on: "];
+                                   "ill give you $10 if you chill with me on: ",
+                                   "guys please hang out with me (im cool i promise) on: "];
 
 var post_band_templates = ["i should really do more than eat sun chips and listen to ",
                            "is it a bird? is it a plane? nooooo you're on strike 2 - its: ",
